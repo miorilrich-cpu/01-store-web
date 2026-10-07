@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Miori Studio ☁️✨ | Cozy Hand-drawn Store & Admin</title>
+<title>Miori Studio Cozy Hand-drawn Store & Admin</title>
 <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Google Fonts: Itim, Mali, Prompt -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Itim&family=Mali:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Itim&family=Mali:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 <!-- FontAwesome Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script>
@@ -43,7 +43,7 @@ tailwind.config = {
         'glow-circle': '0 0 18px rgba(226, 151, 146, 0.35)',
       },
       aspectRatio: {
-        'banner': '1122 / 495',
+        'banner': '1122/495',
       }
     }
   }
@@ -68,10 +68,18 @@ body {
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-.custom-border-dashed { border-color: var(--color-border) !important; }
-.custom-primary-bg { background-color: var(--color-primary) !important; }
-.custom-primary-text { color: var(--color-primary) !important; }
-h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
+.custom-border-dashed {
+  border-color: var(--color-border) !important;
+}
+.custom-primary-bg {
+  background-color: var(--color-primary) !important;
+}
+.custom-primary-text {
+  color: var(--color-primary) !important;
+}
+h1, h2, h3, h4, .font-handwritten {
+  font-family: 'Itim', cursive;
+}
 /* Washi Tape Effect */
 .washi-tape {
   position: absolute;
@@ -93,6 +101,7 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
 }
 .music-note-1 { animation: floatMusic 2s infinite ease-out; }
 .music-note-2 { animation: floatMusic 2.2s infinite ease-out 0.6s; }
+
 /* Diary Tab Active Style */
 .tab-diary {
   transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -105,41 +114,59 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
   transform: translateY(-2px);
   border-bottom: 3px solid var(--color-primary);
 }
-/* Admin Tab Styling - Minimalist Cute */
-.admin-tab {
-  transition: all 0.2s ease;
-  background-color: var(--color-card);
-  border: 2px solid var(--color-blush);
-  color: var(--color-text);
-}
-.admin-tab:hover {
-  background-color: var(--color-blush);
-  transform: translateY(-1px);
-}
+/* Admin Tab Styling */
 .admin-tab.active {
   background-color: var(--color-primary);
   color: #ffffff;
   font-weight: bold;
-  border-color: var(--color-primary);
-  box-shadow: 0 4px 12px rgba(226, 151, 146, 0.3);
 }
 /* Custom Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--color-bg); }
-::-webkit-scrollbar-thumb { background: var(--color-blush); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-blush);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
 .tilt-hover {
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.tilt-hover:hover { transform: translateY(-4px) rotate(-1deg); }
-.backdrop-blur-custom { backdrop-filter: blur(8px); }
+.tilt-hover:hover {
+  transform: translateY(-4px) rotate(-1deg);
+}
+.backdrop-blur-custom {
+  backdrop-filter: blur(8px);
+}
+/* Responsive fixes for mobile layout requested by user */
+@media (max-width: 640px) {
+  #page-reviews.bg-cream-card.p-6 {
+    padding: 1rem !important;
+  }
+  /* ปรับขนาดส่วนติดต่อเราให้เล็กลงกว่าแบนเนอร์ */
+  #page-contact .grid-cols-1 > a {
+    max-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* ปรับกล่องบันทึกใจให้เรียวบางลงในมือถือ */
+  #page-reviews .bg-cream-card.p-4 {
+    padding: 0.75rem 1rem !important;
+  }
+}
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-soft-blush selection:text-soft-brown">
+
 <!-- HEADER -->
 <header class="sticky top-0 z-40 bg-warm-cream/95 backdrop-blur-md border-b-2 border-dashed custom-border-dashed pt-3 pb-2 shadow-xs transition-colors">
   <div class="max-w-6xl mx-auto px-4 flex flex-col items-center gap-3">
-    <!-- Top Row: Circular Logo & Brand Info + Music Player & Admin Button -->
+    <!-- Top Row: Circular Logo & Brand Info + Music Player + Admin Button -->
     <div class="w-full flex justify-between items-center gap-2">
       <!-- Circular Logo & Title Section -->
       <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer group min-w-0" onclick="switchTab('store')">
@@ -148,8 +175,8 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
           <div class="w-full h-full rounded-full bg-cream-card border border-soft-blush flex items-center justify-center overflow-hidden">
             <img id="site-logo-img" src="" alt="Miori Logo" class="w-full h-full object-cover hidden">
             <svg id="site-logo-svg" class="w-6 h-6 sm:w-7 sm:h-7 text-blush-dark group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 001.09-.12 4 4 0 003.91-3.88 4 4 0 00-2.88-3.87A5 5 0 0013 7a5 5 0 00-4.7 3.32A4 4 0 003 15z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m-4-1l1.5 1.5M16 4l-1.5 1.5" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 011.09-.12 4 4 0 003.91-3.88 4 4 0 00-2.88-3.87A5 5 0 0013 7a5 5 0 00-4.7 3.32A4 4 0 003 15z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m-4 1-1.5 1.5M16 4l1.5 1.5" />
             </svg>
           </div>
         </div>
@@ -157,37 +184,49 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
           <span id="site-title-text" class="font-handwritten text-lg sm:text-2xl font-bold tracking-wide text-soft-brown flex items-center gap-1.5 truncate">
             Miori Studio <span class="custom-primary-text text-xs sm:text-sm bg-soft-blush px-2 py-0.5 rounded-full shrink-0">みおり</span>
           </span>
-          <p id="site-slogan-text" class="text-[10px] sm:text-[11px] text-muted-brown font-medium -mt-0.5 flex items-center gap-1 truncate">
+          <p id="site-slogan-text" class="text-[10px] sm:text-[11px] text-muted-brown font-medium mt-0.5 flex items-center gap-1 truncate">
             <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-blush-dark inline shrink-0" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/>
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
             </svg>
             <span class="truncate">hand-crafted & japanese cozy items</span>
           </p>
         </div>
       </div>
 
-      <!-- Right Action Buttons (Music Player & Gear Button - Minimized Equal Size) -->
+      <!-- Right Action Buttons (Music Player & Gear Button) -->
       <div class="flex items-center gap-2 shrink-0">
-        <!-- Cute Music Button (Sized like gear button w/ floating note animation) -->
-        <div class="relative">
-          <div id="music-notes" class="absolute -top-3 right-0 pointer-events-none hidden">
+        <!-- Cute SVG Radio Music Player (ปรับให้เหลือเฉพาะปุ่ม เล่น/หยุด เพลงตามต้องการ) -->
+        <div class="relative flex items-center gap-2 bg-pastel-yellow/90 px-2.5 sm:px-3 py-1.5 rounded-2xl border-2 border-soft-brown/15 shadow-scrapbook">
+          <div id="music-notes" class="absolute -top-3 right-3 pointer-events-none hidden">
             <span class="music-note-1 absolute text-blush-dark">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            </span>
+            <span class="music-note-2 absolute -right-3 text-sage-dark">
               <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
             </span>
           </div>
-          <button id="play-btn" onclick="toggleAudio()" title="เปิด/ปิดเพลง" class="w-8 h-8 rounded-xl bg-pastel-yellow/90 hover:bg-soft-blush border-2 border-soft-brown/15 shadow-scrapbook text-soft-brown flex items-center justify-center text-xs transition-all active:scale-95 shrink-0">
-            <i id="play-icon" class="fa-solid fa-play text-blush-dark"></i>
+          <div class="w-8 h-8 rounded-xl bg-soft-blush border border-blush-dark/30 flex items-center justify-center text-blush-dark shadow-xs shrink-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+            </svg>
+          </div>
+          <div class="text-xs hidden sm:block">
+            <p id="music-title" class="font-handwritten font-bold text-xs leading-tight text-soft-brown">Cozy Lofi BGM</p>
+            <p id="music-status" class="text-[10px] text-muted-brown">กดฟังเพลง</p>
+          </div>
+          <button id="play-btn" onclick="toggleAudio()" class="w-7 h-7 rounded-full bg-white hover:bg-soft-blush border border-soft-brown/20 text-soft-brown flex items-center justify-center text-xs transition-transform active:scale-95 shadow-xs ml-1 shrink-0" title="เล่น/หยุดเพลง">
+            <i class="fa-solid fa-play ml-0.5 text-blush-dark"></i>
           </button>
         </div>
 
-        <!-- Admin Access Button (Gear Icon) -->
+        <!-- Admin Access Button -->
         <button onclick="handleAdminButtonClick()" title="หลังบ้าน" class="w-8 h-8 rounded-xl bg-pastel-yellow/90 hover:bg-soft-blush border-2 border-soft-brown/15 shadow-scrapbook text-soft-brown flex items-center justify-center text-xs transition-all active:scale-95 shrink-0">
           <i class="fa-solid fa-gear text-blush-dark"></i>
         </button>
       </div>
     </div>
 
-    <!-- Navigation Tabs Menu (Below Logo) -->
+    <!-- Navigation Tabs Menu -->
     <nav class="w-full flex justify-center pt-1">
       <div class="flex items-center space-x-1 sm:space-x-3 bg-cream-card px-3 py-1.5 rounded-3xl border-2 border-soft-blush shadow-scrapbook">
         <button onclick="switchTab('store')" id="nav-store" class="tab-diary active px-4 py-1.5 rounded-2xl text-xs sm:text-sm text-soft-brown flex items-center gap-2">
@@ -217,9 +256,9 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
 <audio id="bgm-player" loop preload="auto" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
 
 <main class="max-w-6xl mx-auto px-4 py-6 flex-1 w-full">
+
   <!-- ================= PAGE 1: STOREFRONT ================= -->
   <section id="page-store" class="space-y-8">
-    <!-- Banner Container -->
     <div class="relative w-full mt-4">
       <div class="washi-tape -top-3 left-12 rotate-[-6deg]"></div>
       <div class="washi-tape -bottom-3 right-12 rotate-[4deg] bg-washi-yellow"></div>
@@ -234,7 +273,7 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
             เปิดตู้ของสะสมละมุนใจ<br/><span class="text-blush-dark underline decoration-wavy decoration-soft-blush">สไตล์มินิมอลญี่ปุ่น</span>
           </h2>
           <p id="banner-store-desc" class="text-xs sm:text-sm text-muted-brown leading-relaxed hidden sm:block">
-            ทุกชิ้นคัดสรรความน่ารัก อบอุ่น และใส่ใจในรายละเอียด ส่งตรงถึงบ้านคุณ พร้อมโปสการ์ดของแถมพิเศษทุกออเดอร์ 🧸
+            ทุกชิ้นคัดสรรความน่ารัก อบอุ่น และใส่ใจในรายละเอียด ส่งตรงถึงบ้านคุณพร้อมโปสการ์ดของแถมพิเศษทุกออเดอร์
           </p>
           <div class="pt-2 flex items-center gap-3">
             <a href="#product-section" class="px-5 py-2.5 bg-soft-brown hover:bg-blush-dark text-white text-xs sm:text-sm font-handwritten font-bold rounded-2xl shadow-scrapbook hover:scale-105 transition-all flex items-center gap-2">
@@ -243,7 +282,7 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
             </a>
-            <span class="text-xs text-muted-brown hidden sm:inline-block">จัดส่งฟรี เมื่อช้อปครบ 490.-</span>
+            <span class="text-xs text-muted-brown hidden sm:inline-block">✨ จัดส่งฟรี เมื่อช้อปครบ 490.-</span>
           </div>
         </div>
         <div class="hidden md:flex relative w-64 h-full items-center justify-center z-10">
@@ -270,16 +309,11 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
           <p class="text-xs text-muted-brown">เลือกช้อปของน่ารักๆ ตามหมวดหมู่ได้เลยน้า</p>
         </div>
       </div>
-      <!-- Category Chips -->
-      <div id="category-chips-container" class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
-        <!-- Injected via JS -->
-      </div>
+      <div id="category-chips-container" class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none"></div>
     </div>
 
     <!-- Product Cards Grid -->
-    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-      <!-- Injected via JS -->
-    </div>
+    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
   </section>
 
   <!-- ================= PAGE 2: REVIEWS ================= -->
@@ -293,34 +327,36 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
         </div>
       </div>
     </div>
-    <div class="bg-cream-card p-6 sm:p-8 rounded-3xl border-2 border-dashed border-blush-dark custom-border-dashed shadow-scrapbook flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden">
-      <div class="space-y-2 z-10">
-        <span class="inline-flex items-center gap-1 text-xs font-bold bg-soft-blush text-blush-dark px-3 py-1 rounded-full">
+
+    <!-- กล่องบันทึกใจ ปรับให้เรียวบางขึ้นเมื่อเปิดในมือถือ -->
+    <div class="bg-cream-card px-4 py-3 sm:p-8 rounded-3xl border-2 border-dashed border-blush-dark custom-border-dashed shadow-scrapbook flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6 relative overflow-hidden max-w-3xl mx-auto sm:max-w-none">
+      <div class="space-y-1 z-10 text-center sm:text-left">
+        <span class="inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold bg-soft-blush text-blush-dark px-2.5 py-0.5 rounded-full">
           <svg class="w-3.5 h-3.5 inline" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           Customer Love Notes
         </span>
-        <h2 class="font-handwritten text-2xl sm:text-3xl font-bold text-soft-brown">กล่องบันทึกความประทับใจ ✨</h2>
-        <p class="text-xs sm:text-sm text-muted-brown max-w-md">ความสุขเล็กๆ ของลูกค้าที่ได้รับของน่ารักจาก Miori Studio ค่ะ</p>
+        <h2 class="font-handwritten text-lg sm:text-3xl font-bold text-soft-brown">กล่องบันทึกความประทับใจ</h2>
+        <p class="text-[10px] sm:text-sm text-muted-brown max-w-md">ความสุขเล็กๆ ของลูกค้าที่ได้รับของน่ารักจาก Miori Studio ค่ะ</p>
       </div>
-      <div class="z-10 flex flex-col sm:flex-row items-center gap-4">
-        <div class="text-center bg-warm-cream px-4 py-2 rounded-2xl border border-soft-brown/10">
-          <span class="font-handwritten text-3xl font-bold text-soft-brown">4.95</span>
-          <div class="text-yellow-400 text-xs">
+      <div class="z-10 flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+        <div class="text-center bg-warm-cream px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl border border-soft-brown/10">
+          <span class="font-handwritten text-2xl sm:text-3xl font-bold text-soft-brown">4.95</span>
+          <div class="text-yellow-400 text-[10px] sm:text-xs">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
-          <p class="text-[10px] text-muted-brown">จาก 250+ รีวิว</p>
+          <p class="text-[9px] sm:text-[10px] text-muted-brown">จาก 250+ รีวิว</p>
         </div>
-        <button onclick="openReviewModal()" class="px-5 py-3 bg-blush-dark hover:bg-soft-brown text-white text-xs sm:text-sm font-handwritten font-bold rounded-2xl shadow-scrapbook transition-all hover:scale-105 flex items-center gap-2">
+        <button onclick="openReviewModal()" class="px-4 py-2 sm:px-5 sm:py-3 bg-blush-dark hover:bg-soft-brown text-white text-xs sm:text-sm font-handwritten font-bold rounded-2xl shadow-scrapbook transition-all hover:scale-105 flex items-center gap-2">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
           </svg>
-          <span>เขียนรีวิวให้น้องหน่อยนะ</span>
+          <span>เขียนรีวิให้น้องหน่อยนะ</span>
         </button>
       </div>
     </div>
-    <div id="reviews-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
-      <!-- Injected via JS -->
-    </div>
+
+    <!-- โค้ดแสดงกล่องรีวิว (เทปแปะสลับซ้ายขวาตามเงื่อนไข) -->
+    <div id="reviews-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2"></div>
   </section>
 
   <!-- ================= PAGE 3: CONTACT ================= -->
@@ -330,14 +366,15 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
         <div class="w-full h-full rounded-full bg-cream-card border border-soft-blush flex items-center justify-center overflow-hidden">
           <img id="contact-logo-img" src="" alt="Contact Logo" class="w-full h-full object-cover hidden">
           <svg id="contact-logo-svg" class="w-12 h-12 text-blush-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 001.09-.12 4 4 0 003.91-3.88 4 4 0 00-2.88-3.87A5 5 0 0013 7a5 5 0 00-4.7 3.32A4 4 0 003 15z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m-4-1l1.5 1.5M16 4l-1.5 1.5" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 011.09-.12 4 4 0 003.91-3.88 4 4 0 00-2.88-3.87A5 5 0 0013 7a5 5 0 00-4.7 3.32A4 4 0 003 15z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m-4 1-1.5 1.5M16 4l1.5 1.5" />
           </svg>
         </div>
       </div>
-      <h2 id="contact-site-title" class="font-handwritten text-3xl font-bold text-soft-brown">Miori Studio ✨</h2>
-      <p id="contact-site-slogan" class="text-xs text-muted-brown max-w-md mx-auto">" เติมเต็มมุมโปรดในบ้านด้วยของจุ๊กจิ๊กดีไซน์อบอุ่นใจ สไตล์โฮมเมด "</p>
+      <h2 id="contact-site-title" class="font-handwritten text-3xl font-bold text-soft-brown">Miori Studio</h2>
+      <p id="contact-site-slogan" class="text-xs text-muted-brown max-w-md mx-auto">" เติมเต็มมุมโปรดในบ้านด้วยของจุกจิกดีไซน์อบอุ่นใจ สไตล์โฮมเมด "</p>
     </div>
+
     <div class="relative w-full mt-4">
       <div class="washi-tape -top-3 left-10 rotate-[-5deg] bg-washi-pink"></div>
       <div class="washi-tape -bottom-3 right-10 rotate-[3deg] bg-washi-green"></div>
@@ -347,80 +384,81 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-      <a id="link-facebook" href="https://facebook.com" target="_blank" class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark transition-all tilt-hover text-center relative group">
-        <div class="washi-tape -top-2 left-10 rotate-[-4deg]"></div>
-        <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-500 border border-blue-200 mx-auto flex items-center justify-center text-xl mb-3">
+
+    <!-- ส่วนติดต่อเรา ปรับให้ปุ่มโซเชียลมีขนาดเล็กลงและสมส่วนกว่าแบนเนอร์ -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto px-2">
+      <a id="link-facebook" href="https://facebook.com" target="_blank" class="bg-cream-card p-3.5 sm:p-4 rounded-2xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark transition-all tilt-hover text-center relative group block">
+        <div class="washi-tape -top-2 left-8 rotate-[-4deg]"></div>
+        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-500 border border-blue-200 mx-auto flex items-center justify-center text-base mb-2">
           <i class="fa-brands fa-facebook-f"></i>
         </div>
-        <h4 class="font-handwritten font-bold text-soft-brown text-base">Facebook Page</h4>
-        <p id="text-facebook" class="text-xs text-muted-brown">@miori.studio.official</p>
-        <span class="inline-block mt-3 text-[11px] font-bold text-blush-dark bg-soft-blush/50 px-3 py-1 rounded-full">ทักแชทคุยกับน้อง 🌸</span>
+        <h4 class="font-handwritten font-bold text-soft-brown text-sm">Facebook Page</h4>
+        <p id="text-facebook" class="text-[11px] text-muted-brown">@miori.studio.official</p>
+        <span class="inline-block mt-2 text-[10px] font-bold text-blush-dark bg-soft-blush/50 px-2 py-0.5 rounded-full">ทักแชทคุยกับน้อง</span>
       </a>
-      <a id="link-instagram" href="https://instagram.com" target="_blank" class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark transition-all tilt-hover text-center relative group">
-        <div class="washi-tape -top-2 right-10 rotate-[5deg] bg-washi-yellow"></div>
-        <div class="w-12 h-12 rounded-2xl bg-pink-50 text-pink-500 border border-pink-200 mx-auto flex items-center justify-center text-xl mb-3">
+      
+      <a id="link-instagram" href="https://instagram.com" target="_blank" class="bg-cream-card p-3.5 sm:p-4 rounded-2xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark transition-all tilt-hover text-center relative group block">
+        <div class="washi-tape -top-2 right-8 rotate-[5deg] bg-washi-yellow"></div>
+        <div class="w-9 h-9 rounded-xl bg-pink-50 text-pink-500 border border-pink-200 mx-auto flex items-center justify-center text-base mb-2">
           <i class="fa-brands fa-instagram"></i>
         </div>
-        <h4 class="font-handwritten font-bold text-soft-brown text-base">Instagram</h4>
-        <p id="text-instagram" class="text-xs text-muted-brown">@miori_cozy_space</p>
-        <span class="inline-block mt-3 text-[11px] font-bold text-blush-dark bg-soft-blush/50 px-3 py-1 rounded-full">ดูรูปภาพไอเดียแต่งห้อง 🎨</span>
+        <h4 class="font-handwritten font-bold text-soft-brown text-sm">Instagram</h4>
+        <p id="text-instagram" class="text-[11px] text-muted-brown">@miori_cozy_space</p>
+        <span class="inline-block mt-2 text-[10px] font-bold text-blush-dark bg-soft-blush/50 px-2 py-0.5 rounded-full">ดูรูปภาพไอเดียแต่งห้อง</span>
       </a>
-      <a id="link-line" href="https://line.me" target="_blank" class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark transition-all tilt-hover text-center relative group">
-        <div class="washi-tape -top-2 left-12 rotate-[-2deg] bg-washi-green"></div>
-        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-500 border border-emerald-200 mx-auto flex items-center justify-center text-xl mb-3">
+      
+      <a id="link-line" href="https://line.me" target="_blank" class="bg-cream-card p-3.5 sm:p-4 rounded-2xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark transition-all tilt-hover text-center relative group block">
+        <div class="washi-tape -top-2 left-8 rotate-[-2deg] bg-washi-green"></div>
+        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-500 border border-emerald-200 mx-auto flex items-center justify-center text-base mb-2">
           <i class="fa-brands fa-line"></i>
         </div>
-        <h4 class="font-handwritten font-bold text-soft-brown text-base">LINE Official</h4>
-        <p id="text-line" class="text-xs text-muted-brown">@mioristudio</p>
-        <span class="inline-block mt-3 text-[11px] font-bold text-blush-dark bg-soft-blush/50 px-3 py-1 rounded-full">รับคูปองส่วนลดพิเศษ 🎁</span>
+        <h4 class="font-handwritten font-bold text-soft-brown text-sm">LINE Official</h4>
+        <p id="text-line" class="text-[11px] text-muted-brown">@mioristudio</p>
+        <span class="inline-block mt-2 text-[10px] font-bold text-blush-dark bg-soft-blush/50 px-2 py-0.5 rounded-full">รับคูปองส่วนลดพิเศษ</span>
       </a>
     </div>
   </section>
 
-  <!-- ================= PAGE 4: ADMIN DASHBOARD (REDESIGNED MINIMALIST & CUTE) ================= -->
+  <!-- ================= PAGE 4: ADMIN DASHBOARD ================= -->
   <section id="page-admin" class="hidden space-y-6">
-    <!-- Admin Top Greeting Card -->
-    <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook flex flex-wrap items-center justify-between gap-4 relative overflow-hidden">
-      <div class="washi-tape -top-3 left-8 rotate-[-3deg] bg-washi-pink"></div>
-      <div class="flex items-center gap-3.5 z-10">
-        <div class="w-12 h-12 rounded-2xl bg-soft-blush text-blush-dark flex items-center justify-center text-xl shadow-xs">
+    <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-soft-blush text-blush-dark flex items-center justify-center text-xl">
           <i class="fa-solid fa-user-gear"></i>
         </div>
         <div>
-          <h2 class="font-handwritten text-2xl font-bold text-soft-brown">ระบบหลังบ้านร้านค้า (Admin Panel) ✨</h2>
+          <h2 class="font-handwritten text-2xl font-bold text-soft-brown">ระบบหลังบ้านร้านค้า (Admin Panel)</h2>
           <p class="text-xs text-muted-brown">จัดการสินค้า หมวดหมู่ รูปภาพ แบนเนอร์ ข้อมูลร้าน และธีมสีได้แบบเรียลไทม์</p>
         </div>
       </div>
-      <button onclick="adminLogout()" class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-500 text-xs font-bold rounded-2xl border border-red-200 transition-colors flex items-center gap-1.5 z-10 shadow-xs">
+      <button onclick="adminLogout()" class="px-4 py-2 bg-red-100 hover:bg-red-200 text-red-600 text-xs font-bold rounded-2xl border border-red-200 transition-colors flex items-center gap-1.5">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span>ออกจากระบบ</span>
       </button>
     </div>
 
-    <!-- Admin Sub-Nav Tabs (Redesigned Minimalist & Cute Style) -->
-    <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-      <button onclick="switchAdminSubTab('products')" id="admin-tab-products" class="admin-tab active px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-handwritten font-bold flex items-center gap-2 shadow-scrapbook">
-        <i class="fa-solid fa-box-archive text-blush-dark"></i> จัดการสินค้า
+    <!-- Admin Sub-Nav Tabs -->
+    <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+      <button onclick="switchAdminSubTab('products')" id="admin-tab-products" class="admin-tab active px-4 py-2 rounded-2xl text-xs sm:text-sm bg-warm-cream text-soft-brown border-2 border-soft-blush transition-all">
+        จัดการสินค้า
       </button>
-      <button onclick="switchAdminSubTab('categories')" id="admin-tab-categories" class="admin-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-handwritten font-bold flex items-center gap-2 shadow-scrapbook">
-        <i class="fa-solid fa-tags text-blush-dark"></i> จัดการหมวดหมู่
+      <button onclick="switchAdminSubTab('categories')" id="admin-tab-categories" class="admin-tab px-4 py-2 rounded-2xl text-xs sm:text-sm bg-warm-cream text-soft-brown border-2 border-soft-blush transition-all">
+        จัดการหมวดหมู่
       </button>
-      <button onclick="switchAdminSubTab('banners')" id="admin-tab-banners" class="admin-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-handwritten font-bold flex items-center gap-2 shadow-scrapbook">
-        <i class="fa-solid fa-image text-blush-dark"></i> โลโก้ & แบนเนอร์
+      <button onclick="switchAdminSubTab('banners')" id="admin-tab-banners" class="admin-tab px-4 py-2 rounded-2xl text-xs sm:text-sm bg-warm-cream text-soft-brown border-2 border-soft-blush transition-all">
+        จัดการโลโก้ & แบนเนอร์
       </button>
-      <button onclick="switchAdminSubTab('theme')" id="admin-tab-theme" class="admin-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-handwritten font-bold flex items-center gap-2 shadow-scrapbook">
-        <i class="fa-solid fa-palette text-blush-dark"></i> ปรับแต่งธีมสี
+      <button onclick="switchAdminSubTab('theme')" id="admin-tab-theme" class="admin-tab px-4 py-2 rounded-2xl text-xs sm:text-sm bg-warm-cream text-soft-brown border-2 border-soft-blush transition-all">
+        ปรับแต่งธีมสีเว็บไซต์
       </button>
-      <button onclick="switchAdminSubTab('info')" id="admin-tab-info" class="admin-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-handwritten font-bold flex items-center gap-2 shadow-scrapbook">
-        <i class="fa-solid fa-pen-to-square text-blush-dark"></i> แก้ไขข้อมูลทีละจุด
+      <button onclick="switchAdminSubTab('info')" id="admin-tab-info" class="admin-tab px-4 py-2 rounded-2xl text-xs sm:text-sm bg-warm-cream text-soft-brown border-2 border-soft-blush transition-all">
+        แก้ไขข้อมูลทีละจุด
       </button>
     </div>
 
     <!-- SUB-TAB 1: PRODUCT MANAGEMENT -->
     <div id="admin-sub-products" class="space-y-6">
-      <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-4 relative">
-        <div class="washi-tape -top-3 right-10 rotate-[2deg] bg-washi-yellow"></div>
+      <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-4">
         <h3 id="admin-prod-form-title" class="font-handwritten text-xl font-bold text-soft-brown flex items-center gap-2">
           <i class="fa-solid fa-plus-circle text-blush-dark"></i>
           <span>เพิ่มสินค้าชิ้นใหม่</span>
@@ -430,39 +468,37 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-bold text-soft-brown mb-1">ชื่อสินค้า *</label>
-              <input type="text" id="admin-prod-name" required placeholder="เช่น โคมไฟทิวลิปอบอุ่น" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali">
+              <input type="text" id="admin-prod-name" required placeholder="เช่น โคมไฟทิวลิปอบอุ่น" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
             </div>
             <div>
               <label class="block text-xs font-bold text-soft-brown mb-1">หมวดหมู่ *</label>
-              <select id="admin-prod-category" required class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali">
-                <!-- Injected via JS -->
-              </select>
+              <select id="admin-prod-category" required class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream"></select>
             </div>
             <div>
               <label class="block text-xs font-bold text-soft-brown mb-1">ราคาสินค้า (บาท) *</label>
-              <input type="number" id="admin-prod-price" required placeholder="290" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali">
+              <input type="number" id="admin-prod-price" required placeholder="290" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
             </div>
             <div>
               <label class="block text-xs font-bold text-soft-brown mb-1">ข้อความ Badge สติกเกอร์</label>
-              <input type="text" id="admin-prod-badge" placeholder="เช่น Recommended" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali">
+              <input type="text" id="admin-prod-badge" placeholder="เช่น Recommended" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
             </div>
             <div>
               <label class="block text-xs font-bold text-soft-brown mb-1">ชื่อปุ่มกดสินค้า</label>
-              <input type="text" id="admin-prod-btn-text" placeholder="สั่งซื้อผ่าน LINE / Inbox" value="สั่งซื้อผ่าน LINE / Inbox" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali">
+              <input type="text" id="admin-prod-btn-text" placeholder="สั่งซื้อผ่าน LINE / Inbox" value="สั่งซื้อผ่าน LINE / Inbox" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
             </div>
             <div>
               <label class="block text-xs font-bold text-soft-brown mb-1">ลิงก์ปุ่มกดสินค้า (URL)</label>
-              <input type="text" id="admin-prod-btn-link" placeholder="https://line.me/..." class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali">
+              <input type="text" id="admin-prod-btn-link" placeholder="https://line.me/..." class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
             </div>
           </div>
           <div>
             <label class="block text-xs font-bold text-soft-brown mb-1">คำอธิบายสินค้า</label>
-            <textarea id="admin-prod-desc" rows="2" placeholder="รายละเอียดน่ารักๆ ของสินค้า..." class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream resize-none font-mali"></textarea>
+            <textarea id="admin-prod-desc" rows="2" placeholder="รายละเอียดน่ารักๆ ของสินค้า..." class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream resize-none"></textarea>
           </div>
           <div>
-            <label class="block text-xs font-bold text-soft-brown mb-1">อัปโหลดรูปภาพสินค้า (เลือกจากคลังรูปในมือถือ)</label>
+            <label class="block text-xs font-bold text-soft-brown mb-1">อัปโหลดรูปภาพสินค้า</label>
             <div class="flex flex-col sm:flex-row items-center gap-3">
-              <input type="file" id="admin-prod-file" accept="image/*" onchange="previewImageFile(this, 'admin-prod-img-preview')" class="text-xs text-soft-brown file:mr-3 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-xs file:font-bold file:bg-soft-blush file:text-soft-brown hover:file:bg-blush-dark hover:file:text-white cursor-pointer w-full bg-warm-cream rounded-2xl border border-soft-blush p-1">
+              <input type="file" id="admin-prod-file" accept="image/*" onchange="previewImageFile(this, 'admin-prod-img-preview')" class="text-xs text-soft-brown file:mr-3 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-xs file:font-bold file:bg-soft-blush file:text-soft-brown hover:file:bg-blush-dark hover:file:text-white cursor-pointer w-full">
               <img id="admin-prod-img-preview" src="" class="w-16 h-16 object-cover rounded-xl border-2 border-soft-blush hidden">
             </div>
           </div>
@@ -478,13 +514,11 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
 
       <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-4">
         <h3 class="font-handwritten text-lg font-bold text-soft-brown">รายการสินค้าทั้งหมด</h3>
-        <div id="admin-products-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- Injected via JS -->
-        </div>
+        <div id="admin-products-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
     </div>
 
-    <!-- SUB-TAB 2: CATEGORY MANAGEMENT -->
+    <!-- SUB-TAB 1.5: CATEGORY MANAGEMENT -->
     <div id="admin-sub-categories" class="hidden space-y-6">
       <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-6">
         <h3 class="font-handwritten text-xl font-bold text-soft-brown flex items-center gap-2">
@@ -492,61 +526,59 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
           <span>จัดการหมวดหมู่สินค้า</span>
         </h3>
         <form onsubmit="handleAddCategory(event)" class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-3">
-          <h4 class="font-bold text-xs text-soft-brown">➕ เพิ่มหมวดหมู่ใหม่</h4>
+          <h4 class="font-bold text-xs text-soft-brown">เพิ่มหมวดหมู่ใหม่</h4>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <input type="text" id="new-cat-id" required placeholder="รหัสอังกฤษ เช่น lighting" class="text-xs px-3.5 py-2.5 rounded-xl border-2 border-soft-blush bg-white focus:outline-none focus:border-blush-dark font-mali">
-            <input type="text" id="new-cat-name" required placeholder="ชื่อหมวดหมู่ เช่น โคมไฟ & แสงสว่าง 💡" class="text-xs px-3.5 py-2.5 rounded-xl border-2 border-soft-blush bg-white focus:outline-none focus:border-blush-dark font-mali">
+            <input type="text" id="new-cat-id" required placeholder="รหัสอังกฤษ เช่น lighting" class="text-xs px-3.5 py-2.5 rounded-xl border-2 border-soft-blush bg-white focus:outline-none focus:border-blush-dark">
+            <input type="text" id="new-cat-name" required placeholder="ชื่อหมวดหมู่ เช่น โคมไฟ" class="text-xs px-3.5 py-2.5 rounded-xl border-2 border-soft-blush bg-white focus:outline-none focus:border-blush-dark">
           </div>
-          <button type="submit" class="px-4 py-2 bg-blush-dark hover:bg-soft-brown text-white text-xs font-bold rounded-xl shadow-xs transition-colors">เพิ่มหมวดหมู่</button>
+          <button type="submit" class="px-4 py-2 bg-blush-dark hover:bg-soft-brown text-white text-xs font-bold rounded-xl shadow-xs">เพิ่มหมวดหมู่</button>
         </form>
         <div class="space-y-2">
-          <h4 class="font-bold text-xs text-soft-brown">📌 หมวดหมู่ที่มีอยู่</h4>
-          <div id="admin-categories-list" class="space-y-2">
-            <!-- Injected via JS -->
-          </div>
+          <h4 class="font-bold text-xs text-soft-brown">หมวดหมู่ที่มีอยู่</h4>
+          <div id="admin-categories-list" class="space-y-2"></div>
         </div>
       </div>
     </div>
 
-    <!-- SUB-TAB 3: LOGO & BANNER MANAGEMENT -->
+    <!-- SUB-TAB 2: LOGO & BANNER MANAGEMENT -->
     <div id="admin-sub-banners" class="hidden space-y-6">
       <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-6">
         <h3 class="font-handwritten text-xl font-bold text-soft-brown flex items-center gap-2">
           <i class="fa-solid fa-image text-blush-dark"></i>
-          <span>เปลี่ยนรูปโลโก้ & รูปแบนเนอร์ (อัปโหลดจากคลังภาพ)</span>
+          <span>เปลี่ยนรูปโลโก้ & รูปแบนเนอร์</span>
         </h3>
         <div class="space-y-2 p-4 bg-warm-cream rounded-2xl border border-soft-blush">
           <h4 class="font-bold text-xs text-soft-brown">1. รูปโลโก้ร้านค้า (ทรงวงกลม)</h4>
-          <div class="flex items-center gap-4 flex-wrap">
+          <div class="flex items-center gap-4">
             <input type="file" id="admin-logo-file" accept="image/*" class="text-xs file:py-2 file:px-4 file:rounded-2xl file:border-0 file:bg-soft-blush file:text-soft-brown cursor-pointer">
-            <button onclick="uploadSiteLogo()" class="px-4 py-2 bg-blush-dark hover:bg-soft-brown text-white text-xs font-bold rounded-2xl transition-colors">อัปโหลดโลโก้</button>
+            <button onclick="uploadSiteLogo()" class="px-4 py-2 bg-blush-dark text-white text-xs font-bold rounded-2xl">อัปโหลดโลโก้</button>
           </div>
         </div>
         <div class="space-y-2 p-4 bg-warm-cream rounded-2xl border border-soft-blush">
           <h4 class="font-bold text-xs text-soft-brown">2. รูปแบนเนอร์หน้าหลัก (สัดส่วน 1122 x 495)</h4>
           <div class="flex flex-col gap-2">
             <input type="file" id="admin-banner-store-file" accept="image/*" class="text-xs file:py-2 file:px-4 file:rounded-2xl file:border-0 file:bg-soft-blush file:text-soft-brown cursor-pointer">
-            <button onclick="uploadBannerImage('store')" class="px-4 py-2 bg-blush-dark hover:bg-soft-brown text-white text-xs font-bold rounded-2xl w-max transition-colors">เปลี่ยนแบนเนอร์หน้าร้าน</button>
+            <button onclick="uploadBannerImage('store')" class="px-4 py-2 bg-blush-dark text-white text-xs font-bold rounded-2xl w-max">เปลี่ยนแบนเนอร์หน้าร้าน</button>
           </div>
         </div>
         <div class="space-y-2 p-4 bg-warm-cream rounded-2xl border border-soft-blush">
-          <h4 class="font-bold text-xs text-soft-brown">3. รูปแบนเนอร์หน้ารีวิว (สัดส่วน 1122 x 495)</h4>
+          <h4 class="font-bold text-xs text-soft-brown">3. รูปแบนเนอร์หน้ารีวิว</h4>
           <div class="flex flex-col gap-2">
             <input type="file" id="admin-banner-reviews-file" accept="image/*" class="text-xs file:py-2 file:px-4 file:rounded-2xl file:border-0 file:bg-soft-blush file:text-soft-brown cursor-pointer">
-            <button onclick="uploadBannerImage('reviews')" class="px-4 py-2 bg-blush-dark hover:bg-soft-brown text-white text-xs font-bold rounded-2xl w-max transition-colors">เปลี่ยนแบนเนอร์หน้ารีวิว</button>
+            <button onclick="uploadBannerImage('reviews')" class="px-4 py-2 bg-blush-dark text-white text-xs font-bold rounded-2xl w-max">เปลี่ยนแบนเนอร์หน้ารีวิว</button>
           </div>
         </div>
         <div class="space-y-2 p-4 bg-warm-cream rounded-2xl border border-soft-blush">
-          <h4 class="font-bold text-xs text-soft-brown">4. รูปแบนเนอร์หน้าติดต่อเรา (สัดส่วน 1122 x 495)</h4>
+          <h4 class="font-bold text-xs text-soft-brown">4. รูปแบนเนอร์หน้าติดต่อเรา</h4>
           <div class="flex flex-col gap-2">
             <input type="file" id="admin-banner-contact-file" accept="image/*" class="text-xs file:py-2 file:px-4 file:rounded-2xl file:border-0 file:bg-soft-blush file:text-soft-brown cursor-pointer">
-            <button onclick="uploadBannerImage('contact')" class="px-4 py-2 bg-blush-dark hover:bg-soft-brown text-white text-xs font-bold rounded-2xl w-max transition-colors">เปลี่ยนแบนเนอร์หน้าติดต่อ</button>
+            <button onclick="uploadBannerImage('contact')" class="px-4 py-2 bg-blush-dark text-white text-xs font-bold rounded-2xl w-max">เปลี่ยนแบนเนอร์หน้าติดต่อ</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SUB-TAB 4: THEME COLOR CUSTOMIZER -->
+    <!-- SUB-TAB 3: THEME COLOR CUSTOMIZER -->
     <div id="admin-sub-theme" class="hidden space-y-6">
       <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-6">
         <div class="flex items-center justify-between">
@@ -554,48 +586,48 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
             <i class="fa-solid fa-palette text-blush-dark"></i>
             <span>ปรับแต่งโทนสีเว็บไซต์ได้ทุกจุด</span>
           </h3>
-          <button onclick="resetThemeColors()" class="px-3 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-bold rounded-xl transition-colors">รีเซ็ตโทนสี</button>
+          <button onclick="resetThemeColors()" class="px-3 py-1.5 bg-gray-200 text-gray-700 text-xs font-bold rounded-xl">รีเซ็ตโทนสี</button>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-2">
             <span class="text-xs font-bold text-soft-brown block">สีพื้นหลังหลัก (Background)</span>
             <div class="flex items-center gap-2">
-              <input type="color" id="theme-color-bg" value="#FAF6F0" onchange="syncColorInput('bg', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0 bg-transparent">
+              <input type="color" id="theme-color-bg" value="#FAF6F0" onchange="syncColorInput('bg', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0">
               <input type="text" id="theme-hex-bg" value="#FAF6F0" oninput="applyThemeColor('bg', this.value)" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white focus:outline-none">
             </div>
           </div>
           <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-2">
             <span class="text-xs font-bold text-soft-brown block">สีการ์ด & ป๊อปอัป (Card BG)</span>
             <div class="flex items-center gap-2">
-              <input type="color" id="theme-color-card" value="#FFFDF9" onchange="syncColorInput('card', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0 bg-transparent">
+              <input type="color" id="theme-color-card" value="#FFFDF9" onchange="syncColorInput('card', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0">
               <input type="text" id="theme-hex-card" value="#FFFDF9" oninput="applyThemeColor('card', this.value)" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white focus:outline-none">
             </div>
           </div>
           <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-2">
-            <span class="text-xs font-bold text-soft-brown block">สีปุ่ม & ไฮไลต์ (Primary Pink)</span>
+            <span class="text-xs font-bold text-soft-brown block">สีปุ่ม & ไฮไลด์ (Primary Pink)</span>
             <div class="flex items-center gap-2">
-              <input type="color" id="theme-color-primary" value="#E29792" onchange="syncColorInput('primary', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0 bg-transparent">
+              <input type="color" id="theme-color-primary" value="#E29792" onchange="syncColorInput('primary', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0">
               <input type="text" id="theme-hex-primary" value="#E29792" oninput="applyThemeColor('primary', this.value)" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white focus:outline-none">
             </div>
           </div>
           <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-2">
-            <span class="text-xs font-bold text-soft-brown block">บลัชออนพาสเทล (Soft Blush)</span>
+            <span class="text-xs font-bold text-soft-brown block">สีบลัชออนพาสเทล (Soft Blush)</span>
             <div class="flex items-center gap-2">
-              <input type="color" id="theme-color-blush" value="#F7E7E6" onchange="syncColorInput('blush', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0 bg-transparent">
+              <input type="color" id="theme-color-blush" value="#F7E7E6" onchange="syncColorInput('blush', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0">
               <input type="text" id="theme-hex-blush" value="#F7E7E6" oninput="applyThemeColor('blush', this.value)" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white focus:outline-none">
             </div>
           </div>
           <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-2">
             <span class="text-xs font-bold text-soft-brown block">สีข้อความตัวหนังสือ (Text Color)</span>
             <div class="flex items-center gap-2">
-              <input type="color" id="theme-color-text" value="#65524D" onchange="syncColorInput('text', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0 bg-transparent">
+              <input type="color" id="theme-color-text" value="#65524D" onchange="syncColorInput('text', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0">
               <input type="text" id="theme-hex-text" value="#65524D" oninput="applyThemeColor('text', this.value)" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white focus:outline-none">
             </div>
           </div>
           <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-2">
             <span class="text-xs font-bold text-soft-brown block">สีเส้นขอบปรุ (Dashed Border)</span>
             <div class="flex items-center gap-2">
-              <input type="color" id="theme-color-border" value="#E29792" onchange="syncColorInput('border', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0 bg-transparent">
+              <input type="color" id="theme-color-border" value="#E29792" onchange="syncColorInput('border', this.value)" class="w-10 h-10 rounded-xl cursor-pointer border-0">
               <input type="text" id="theme-hex-border" value="#E29792" oninput="applyThemeColor('border', this.value)" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white focus:outline-none">
             </div>
           </div>
@@ -603,14 +635,13 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
       </div>
     </div>
 
-    <!-- SUB-TAB 5: STORE INFO (Granular Point-by-Point Editor) -->
+    <!-- SUB-TAB 4: STORE INFO -->
     <div id="admin-sub-info" class="hidden space-y-6">
       <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-6">
         <h3 class="font-handwritten text-xl font-bold text-soft-brown flex items-center gap-2">
           <i class="fa-solid fa-pen-to-square text-blush-dark"></i>
           <span>แก้ไขข้อมูลทีละจุด (Point-by-Point Editor)</span>
         </h3>
-        <p class="text-xs text-muted-brown">คุณสามารถเลือกแก้ไขข้อความทุกๆ ข้อความ ในแต่ละส่วนของเว็บไซต์ได้อย่างอิสระ</p>
         <form onsubmit="handleSaveStoreInfo(event)" class="space-y-6">
           <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-4">
             <h4 class="font-handwritten font-bold text-sm text-soft-brown flex items-center gap-1.5 border-b border-soft-blush pb-2">
@@ -619,65 +650,68 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-bold text-soft-brown mb-1">ชื่อร้านค้า (Site Title)</label>
-                <input type="text" id="admin-info-title" value="Miori Studio" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white font-mali">
+                <input type="text" id="admin-info-title" value="Miori Studio" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white">
               </div>
               <div>
                 <label class="block text-xs font-bold text-soft-brown mb-1">สโลแกนร้านค้า (Slogan)</label>
-                <input type="text" id="admin-info-slogan" value="hand-crafted & japanese cozy items" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white font-mali">
+                <input type="text" id="admin-info-slogan" value="hand-crafted & japanese cozy items" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white">
               </div>
             </div>
           </div>
+
           <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-4">
             <h4 class="font-handwritten font-bold text-sm text-soft-brown flex items-center gap-1.5 border-b border-soft-blush pb-2">
-              <i class="fa-solid fa-share-nodes text-blush-dark"></i> ช่องทางโซเชียลมีเดีย (Social Media)
+              <i class="fa-solid fa-share-nodes text-blush-dark"></i> ช่องทางโซเชียลมีเดีย
             </h4>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-bold text-soft-brown mb-1">Facebook Handle / ชื่อแสดง</label>
-                <input type="text" id="admin-info-fb" value="@miori.studio.official" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white font-mali">
+                <label class="block text-xs font-bold text-soft-brown mb-1">Facebook Handle</label>
+                <input type="text" id="admin-info-fb" value="@miori.studio.official" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white">
               </div>
               <div>
                 <label class="block text-xs font-bold text-soft-brown mb-1">ลิงก์ Facebook URL</label>
-                <input type="text" id="admin-info-fb-link" value="https://facebook.com" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white font-mali">
+                <input type="text" id="admin-info-fb-link" value="https://facebook.com" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white">
               </div>
               <div>
-                <label class="block text-xs font-bold text-soft-brown mb-1">Instagram Handle / ชื่อแสดง</label>
-                <input type="text" id="admin-info-ig" value="@miori_cozy_space" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white font-mali">
+                <label class="block text-xs font-bold text-soft-brown mb-1">Instagram Handle</label>
+                <input type="text" id="admin-info-ig" value="@miori_cozy_space" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white">
               </div>
               <div>
                 <label class="block text-xs font-bold text-soft-brown mb-1">ลิงก์ Instagram URL</label>
-                <input type="text" id="admin-info-ig-link" value="https://instagram.com" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white font-mali">
+                <input type="text" id="admin-info-ig-link" value="https://instagram.com" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white">
               </div>
               <div>
-                <label class="block text-xs font-bold text-soft-brown mb-1">LINE Official Account / ชื่อแสดง</label>
-                <input type="text" id="admin-info-line" value="@mioristudio" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white font-mali">
+                <label class="block text-xs font-bold text-soft-brown mb-1">LINE Official Account</label>
+                <input type="text" id="admin-info-line" value="@mioristudio" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white">
               </div>
               <div>
                 <label class="block text-xs font-bold text-soft-brown mb-1">ลิงก์ LINE URL</label>
-                <input type="text" id="admin-info-line-link" value="https://line.me" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white font-mali">
+                <input type="text" id="admin-info-line-link" value="https://line.me" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white">
               </div>
             </div>
           </div>
+
           <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-4">
             <h4 class="font-handwritten font-bold text-sm text-soft-brown flex items-center gap-1.5 border-b border-soft-blush pb-2">
-              <i class="fa-solid fa-music text-blush-dark"></i> เครื่องเล่นเพลงพื้นหลัง (BGM Player)
+              <i class="fa-solid fa-music text-blush-dark"></i> เครื่องเล่นเพลงพื้นหลัง
             </h4>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="sm:col-span-2">
-                <label class="block text-xs font-bold text-soft-brown mb-1">ชื่อเพลง (Music Title)</label>
-                <input type="text" id="admin-music-title" value="Cozy Lofi BGM" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white font-mali">
+                <label class="block text-xs font-bold text-soft-brown mb-1">ชื่อเพลง</label>
+                <input type="text" id="admin-music-title" value="Cozy Lofi BGM" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white">
               </div>
               <div class="sm:col-span-2">
                 <label class="block text-xs font-bold text-soft-brown mb-1">ลิงก์ไฟล์เพลง (.mp3 URL)</label>
-                <input type="text" id="admin-music-url" value="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white font-mali">
+                <input type="text" id="admin-music-url" value="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-white">
               </div>
             </div>
           </div>
+
           <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-2">
-            <button type="button" onclick="resetAllDataToDefault()" class="px-4 py-2 bg-red-100 hover:bg-red-200 text-red-600 text-xs font-bold rounded-2xl transition-colors">
+            <button type="button" onclick="resetAllDataToDefault()" class="px-4 py-2 bg-red-100 text-red-600 text-xs font-bold rounded-2xl">
               ⚠️ รีเซ็ตข้อมูลทั้งหมดเป็นค่าเริ่มต้น
             </button>
-            <button type="submit" class="px-5 py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-bold rounded-2xl shadow-scrapbook transition-colors">
+            <button type="submit" class="px-5 py-2.5 bg-blush-dark text-white text-xs font-bold rounded-2xl shadow-scrapbook">
               บันทึกการแก้ไขทีละจุด
             </button>
           </div>
@@ -687,32 +721,32 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
   </section>
 </main>
 
-<!-- MODAL: ADMIN LOGIN -->
+<!-- MODAL: ADMIN LOGIN (ปรับสไตล์ให้มินิมอลน่ารักขึ้น) -->
 <div id="admin-login-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-cream-card rounded-3xl max-w-sm w-full p-6 relative border-4 border-white shadow-soft-float space-y-4">
+  <div class="bg-cream-card rounded-[2rem] max-w-sm w-full p-6 relative border-2 border-soft-blush shadow-soft-float space-y-4">
     <div class="washi-tape -top-3 left-1/2 -translate-x-1/2 bg-washi-pink"></div>
-    <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-soft-blush hover:bg-blush-dark hover:text-white text-soft-brown flex items-center justify-center transition-colors">✕</button>
+    <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-soft-blush hover:bg-blush-dark hover:text-white text-soft-brown flex items-center justify-center transition-colors text-xs">✕</button>
     <div class="text-center space-y-1">
-      <div class="w-12 h-12 rounded-full bg-soft-blush text-blush-dark mx-auto flex items-center justify-center text-xl">
+      <div class="w-10 h-10 rounded-2xl bg-soft-blush text-blush-dark mx-auto flex items-center justify-center text-lg">
         <i class="fa-solid fa-lock"></i>
       </div>
       <h3 class="font-handwritten text-xl font-bold text-soft-brown">เข้าสู่ระบบหลังบ้าน</h3>
-      <p class="text-xs text-muted-brown">เข้าใช้งานเฉพาะเจ้าของร้าน Miori Studio</p>
+      <p class="text-[11px] text-muted-brown">พื้นที่ลับสำหรับเจ้าของร้าน Miori Studio น่ารักๆ</p>
     </div>
-    <form onsubmit="handleAdminLogin(event)" class="space-y-3 pt-2">
+    <form onsubmit="handleAdminLogin(event)" class="space-y-3 pt-1">
       <div>
-        <label class="block text-xs font-bold text-soft-brown mb-1">Gmail แอดมิน</label>
-        <input type="email" id="login-email" value="admin@gmail.com" required placeholder="admin@gmail.com" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali">
+        <label class="block text-[11px] font-bold text-soft-brown mb-1">Gmail แอดมิน</label>
+        <input type="email" id="login-email" value="admin@gmail.com" required placeholder="admin@gmail.com" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
       </div>
       <div>
-        <label class="block text-xs font-bold text-soft-brown mb-1">รหัสผ่าน</label>
-        <input type="password" id="login-password" value="admin123" required placeholder="••••••••" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali">
+        <label class="block text-[11px] font-bold text-soft-brown mb-1">รหัสผ่าน</label>
+        <input type="password" id="login-password" value="admin123" required placeholder="........" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
       </div>
-      <div class="bg-warm-cream p-2.5 rounded-xl border border-soft-blush text-[10px] text-muted-brown text-center font-mali">
-        🔑 รหัสเข้าชมตัวอย่าง: <br/><b>Gmail:</b> admin@gmail.com | <b>Pass:</b> admin123
+      <div class="bg-warm-cream p-2.5 rounded-2xl border border-soft-blush text-[10px] text-muted-brown text-center leading-relaxed">
+        รหัสเข้าชมตัวอย่าง: <br/><b>Gmail:</b> admin@gmail.com | <b>Pass:</b> admin123
       </div>
       <button type="submit" class="w-full py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-2xl shadow-scrapbook transition-colors">
-        เข้าสู่ระบบ 🔓
+        เข้าสู่ระบบ
       </button>
     </form>
   </div>
@@ -722,9 +756,7 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
 <div id="product-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
   <div class="bg-cream-card rounded-3xl max-w-md w-full p-6 relative border-4 border-white shadow-soft-float space-y-4">
     <button onclick="closeProductModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-soft-blush hover:bg-blush-dark hover:text-white text-soft-brown flex items-center justify-center transition-colors">✕</button>
-    <div id="modal-product-content">
-      <!-- Content inserted via JS -->
-    </div>
+    <div id="modal-product-content"></div>
   </div>
 </div>
 
@@ -745,7 +777,7 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
     <form onsubmit="submitReview(event)" class="space-y-3 pt-2">
       <div>
         <label class="block text-xs font-bold text-soft-brown mb-1">ชื่อ/นามสมมุติของคุณ</label>
-        <input type="text" id="review-name" placeholder="เช่น คุณแป้งเค้ก 🍰" required class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali">
+        <input type="text" id="review-name" placeholder="เช่น คุณแป้งเค้ก" required class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali">
       </div>
       <div>
         <label class="block text-xs font-bold text-soft-brown mb-1">ความประทับใจ</label>
@@ -761,10 +793,10 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
       </div>
       <div>
         <label class="block text-xs font-bold text-soft-brown mb-1">ข้อความรีวิว</label>
-        <textarea id="review-comment" rows="3" placeholder="แกะกล่องแล้วประทับใจมากๆ ค่ะ ห่อมาน่ารักมากเลย..." required class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali resize-none"></textarea>
+        <textarea id="review-comment" rows="3" placeholder="แกะกล่องแล้วประทับใจมากๆ ค่ะ..." required class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali resize-none"></textarea>
       </div>
       <button type="submit" class="w-full py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-2xl shadow-scrapbook transition-colors">
-        ส่งโปสการ์ดรีวิว ✨
+        ส่งโปสการ์ดรีวิว
       </button>
     </form>
   </div>
@@ -772,23 +804,23 @@ h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
 
 <!-- TOAST NOTIFICATION -->
 <div id="toast" class="fixed bottom-6 right-6 z-50 bg-soft-brown text-white px-4 py-3 rounded-2xl shadow-soft-float text-xs font-bold flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none border-2 border-soft-blush">
-  <svg class="w-4 h-4 text-blush-dark" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg>
+  <svg class="w-4 h-4 text-blush-dark" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
   <span id="toast-msg">บันทึกข้อมูลเรียบร้อย</span>
 </div>
 
 <!-- FOOTER -->
 <footer class="bg-cream-card border-t-2 border-dashed border-soft-blush py-6 mt-12 text-center text-xs text-muted-brown space-y-2">
-  <p class="font-handwritten font-bold text-soft-brown text-sm">☁️ Miori Studio ~ Cozy Handcrafted Shop</p>
-  <p>© 2026 Miori Studio. All Rights Reserved. Crafted with Pastel Aesthetics ✨</p>
+  <p class="font-handwritten font-bold text-soft-brown text-sm">~ Miori Studio ~ Cozy Handcrafted Shop</p>
+  <p>© 2026 Miori Studio. All Rights Reserved. Crafted with Pastel Aesthetics</p>
 </footer>
 
 <script>
-//--- INITIAL DEFAULT MOCK DATA ---
 const DEFAULT_CATEGORIES = [
-  { id: 'decor', name: 'ของแต่งบ้าน & ห้องนอน 🛋️' },
-  { id: 'stationery', name: 'เครื่องเขียน & สมุดโน้ต 📖' },
-  { id: 'candle', name: 'เทียนหอม & อโรม่า 🕯️' }
+  { id: 'decor', name: 'ของแต่งบ้าน & ห้องนอน' },
+  { id: 'stationery', name: 'เครื่องเขียน & สมุดโน้ต' },
+  { id: 'candle', name: 'เทียนหอม & อโรม่า' }
 ];
+
 const DEFAULT_PRODUCTS = [
   {
     id: 1,
@@ -796,7 +828,7 @@ const DEFAULT_PRODUCTS = [
     category: "decor",
     price: 390,
     rating: 5.0,
-    badge: "Popular ✨",
+    badge: "Popular",
     btnText: "สั่งซื้อผ่าน LINE / Inbox",
     btnLink: "https://line.me",
     img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=500&q=80",
@@ -808,7 +840,7 @@ const DEFAULT_PRODUCTS = [
     category: "stationery",
     price: 240,
     rating: 4.9,
-    badge: "Handmade 🎀",
+    badge: "Handmade",
     btnText: "สั่งซื้อผ่าน LINE / Inbox",
     btnLink: "https://line.me",
     img: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=500&q=80",
@@ -820,45 +852,47 @@ const DEFAULT_PRODUCTS = [
     category: "candle",
     price: 290,
     rating: 5.0,
-    badge: "Best Aroma 🌿",
+    badge: "Best Aroma",
     btnText: "สั่งซื้อผ่าน LINE / Inbox",
     btnLink: "https://line.me",
     img: "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=500&q=80",
-    desc: "เทียนหอมออแกนิค กลิ่นขนมปังอบใหม่และวนิลาอ่อนๆ ให้ความรู้สึกผ่อนคลาย เหมือนอยู่คาเฟ่ออบอุ่น"
+    desc: "เทียนหอมออร์แกนิกกลิ่นขนมปังอบใหม่และวนิลาอ่อนๆ ให้ความรู้สึกผ่อนคลายเหมือนอยู่คาเฟ่อบอุ่น"
   },
   {
     id: 4,
-    name: "แก้วเซรามิกปั้นมือ ลายหมีน้อย Bear Cup 🐻",
+    name: "แก้วเซรามิกปั้นมือ ลายหมีน้อย Bear Cup",
     category: "decor",
     price: 320,
     rating: 4.8,
-    badge: "Cutie Item 🌸",
+    badge: "Cutie Item",
     btnText: "สั่งซื้อผ่าน LINE / Inbox",
     btnLink: "https://line.me",
     img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80",
-    desc: "แก้วกาแฟทำมือทรงหน้าหมีคาดจานรองเข้าเซต เข้าไมโครเวฟได้ จิบกาแฟยามเช้าอย่างมีสไตล์"
+    desc: "แก้วกาแฟทำมือทรงหน้าหมี คาดจานรองเข้าเซต เข้าไมโครเวฟได้ จิบกาแฟยามเช้าอย่างมีสไตล์"
   }
 ];
+
 const DEFAULT_REVIEWS = [
   {
     id: 1,
-    name: "คุณแนนซี่ 🌸",
+    name: "คุณแนนซี",
     rating: 5,
     date: "25 ต.ค. 2026",
-    comment: "แกะกล่องออกมาประทับใจมากค่ะ ! มีเทปวาชิแปะกล่องน่ารักมาก โคมไฟทิวลิปสว่างละมุนสุดๆ",
+    comment: "แกะกล่องออกมาประทับใจมากค่ะ! มีเทปวาชิแปะกล่องน่ารักมาก โคมไฟทิวลิปสว่างละมุนสุดๆ",
     color: "bg-pastel-yellow",
     rotation: "rotate-[-2deg]"
   },
   {
     id: 2,
-    name: "คุณคิน 🧸",
+    name: "คุณคิณ",
     rating: 5,
     date: "22 ต.ค. 2026",
-    comment: "เทียนหอมกลิ่นหอมฟุ้งทั่วห้องเลยครับ กลิ่นเหมือนขนมปังอบจริงๆ ไว้จะกลับมาอุดหนุนใหม่แน่นอนครับ",
+    comment: "เทียนหอมกลิ่นหอมฟุ้งทั่วห้องเลยครับ กลิ่นเหมือนขนมปังอบจริงๆ ไว้จะกลับมาอุดหนุนใหม่แน่นอน",
     color: "bg-soft-blush",
     rotation: "rotate-[2deg]"
   }
 ];
+
 const DEFAULT_INFO = {
   title: "Miori Studio",
   slogan: "hand-crafted & japanese cozy items",
@@ -871,6 +905,7 @@ const DEFAULT_INFO = {
   musicTitle: "Cozy Lofi BGM",
   musicUrl: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"
 };
+
 const DEFAULT_THEME = {
   bg: "#FAF6F0",
   card: "#FFFDF9",
@@ -880,7 +915,6 @@ const DEFAULT_THEME = {
   border: "#E29792"
 };
 
-// --- APP STATE ---
 let categories = JSON.parse(localStorage.getItem('miori_categories')) || DEFAULT_CATEGORIES;
 let products = JSON.parse(localStorage.getItem('miori_products')) || DEFAULT_PRODUCTS;
 let reviewsData = JSON.parse(localStorage.getItem('miori_reviews')) || DEFAULT_REVIEWS;
@@ -891,40 +925,41 @@ let currentCategory = 'all';
 let selectedRating = 5;
 let isAudioPlaying = false;
 
-// --- LOAD STORE SETTINGS TO DOM ---
 function applyAllSavedSettings() {
   document.getElementById('site-title-text').childNodes[0].nodeValue = storeInfo.title + " ";
-  document.getElementById('contact-site-title').innerText = storeInfo.title + " ✨";
+  document.getElementById('contact-site-title').innerText = storeInfo.title;
   document.getElementById('site-slogan-text').childNodes[2].nodeValue = " " + storeInfo.slogan;
-  document.getElementById('contact-site-slogan').innerText = `"${storeInfo.slogan}"`;
-  
+  document.getElementById('contact-site-slogan').innerText = '" ' + storeInfo.slogan + ' "';
   document.getElementById('text-facebook').innerText = storeInfo.fb;
   document.getElementById('link-facebook').href = storeInfo.fbLink || "https://facebook.com";
   document.getElementById('text-instagram').innerText = storeInfo.ig;
   document.getElementById('link-instagram').href = storeInfo.igLink || "https://instagram.com";
   document.getElementById('text-line').innerText = storeInfo.line;
   document.getElementById('link-line').href = storeInfo.lineLink || "https://line.me";
+  document.getElementById('music-title').innerText = storeInfo.musicTitle || "Cozy Lofi BGM";
   
   const bgmPlayer = document.getElementById('bgm-player');
   if (storeInfo.musicUrl && bgmPlayer.src !== storeInfo.musicUrl) {
     bgmPlayer.src = storeInfo.musicUrl;
   }
-  
+
   const savedStoreBanner = localStorage.getItem('miori_banner_store');
   if (savedStoreBanner) {
     document.getElementById('banner-store-img').src = savedStoreBanner;
     document.getElementById('banner-store-img').classList.remove('hidden');
     document.getElementById('banner-store-overlay').classList.add('bg-white/70', 'p-4', 'rounded-2xl', 'backdrop-blur-xs');
   }
+
   const savedReviewsBanner = localStorage.getItem('miori_banner_reviews');
   if (savedReviewsBanner) {
     document.getElementById('banner-reviews-img').src = savedReviewsBanner;
   }
+
   const savedContactBanner = localStorage.getItem('miori_banner_contact');
   if (savedContactBanner) {
     document.getElementById('banner-contact-img').src = savedContactBanner;
   }
-  
+
   const savedLogo = localStorage.getItem('miori_logo');
   if (savedLogo) {
     document.getElementById('site-logo-img').src = savedLogo;
@@ -942,22 +977,23 @@ function applyAllSavedSettings() {
     if (input) input.value = val;
     if (hexInput) hexInput.value = val;
   }
+
   renderCategoryChips();
   renderAdminCategorySelect();
   populateInfoFormInputs();
 }
 
 function populateInfoFormInputs() {
-  document.getElementById('admin-info-title').value = storeInfo.title || '';
-  document.getElementById('admin-info-slogan').value = storeInfo.slogan || '';
-  document.getElementById('admin-info-fb').value = storeInfo.fb || '';
-  document.getElementById('admin-info-fb-link').value = storeInfo.fbLink || '';
-  document.getElementById('admin-info-ig').value = storeInfo.ig || '';
-  document.getElementById('admin-info-ig-link').value = storeInfo.igLink || '';
-  document.getElementById('admin-info-line').value = storeInfo.line || '';
-  document.getElementById('admin-info-line-link').value = storeInfo.lineLink || '';
-  document.getElementById('admin-music-title').value = storeInfo.musicTitle || '';
-  document.getElementById('admin-music-url').value = storeInfo.musicUrl || '';
+  document.getElementById('admin-info-title').value = storeInfo.title || "";
+  document.getElementById('admin-info-slogan').value = storeInfo.slogan || "";
+  document.getElementById('admin-info-fb').value = storeInfo.fb || "";
+  document.getElementById('admin-info-fb-link').value = storeInfo.fbLink || "";
+  document.getElementById('admin-info-ig').value = storeInfo.ig || "";
+  document.getElementById('admin-info-ig-link').value = storeInfo.igLink || "";
+  document.getElementById('admin-info-line').value = storeInfo.line || "";
+  document.getElementById('admin-info-line-link').value = storeInfo.lineLink || "";
+  document.getElementById('admin-music-title').value = storeInfo.musicTitle || "";
+  document.getElementById('admin-music-url').value = storeInfo.musicUrl || "";
 }
 
 function applyThemeColor(type, color, save = true) {
@@ -976,30 +1012,38 @@ function syncColorInput(type, color) {
   applyThemeColor(type, color, true);
 }
 
-// --- AUDIO PLAYER CONTROLS ---
+function resetThemeColors() {
+  themeColors = {...DEFAULT_THEME};
+  localStorage.setItem('miori_theme', JSON.stringify(themeColors));
+  for (const [key, val] of Object.entries(themeColors)) {
+    applyThemeColor(key, val, false);
+  }
+  showToast("🔄 รีเซ็ตโทนสีเป็นค่าเริ่มต้นเรียบร้อย");
+}
+
 function toggleAudio() {
   const player = document.getElementById('bgm-player');
-  const playIcon = document.getElementById('play-icon');
+  const playBtn = document.getElementById('play-btn');
+  const musicStatus = document.getElementById('music-status');
   const musicNotes = document.getElementById('music-notes');
   if (isAudioPlaying) {
     player.pause();
     isAudioPlaying = false;
-    playIcon.className = "fa-solid fa-play text-blush-dark";
+    playBtn.innerHTML = '<i class="fa-solid fa-play ml-0.5 text-blush-dark"></i>';
+    musicStatus.innerText = 'หยุดชั่วคราว';
     musicNotes.classList.add('hidden');
-    showToast("⏸️ หยุดเล่นเพลงชั่วคราว");
   } else {
     player.play().then(() => {
       isAudioPlaying = true;
-      playIcon.className = "fa-solid fa-pause text-blush-dark";
+      playBtn.innerHTML = '<i class="fa-solid fa-pause text-blush-dark"></i>';
+      musicStatus.innerText = 'กำลังเล่นเพลง...';
       musicNotes.classList.remove('hidden');
-      showToast("🎵 กำลังเล่นเพลง Lofi ชิลๆ...");
     }).catch(err => {
       showToast("⚠️ ไม่สามารถเล่นไฟล์เพลงนี้ได้ กรุณาตรวจสอบลิงก์เพลง");
     });
   }
 }
 
-// --- TAB SWITCHER ---
 function switchTab(tabName) {
   document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
   document.querySelectorAll('.tab-diary').forEach(btn => btn.classList.remove('active'));
@@ -1010,18 +1054,17 @@ function switchTab(tabName) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// --- CATEGORY RENDERING ---
 function renderCategoryChips() {
   const container = document.getElementById('category-chips-container');
   container.innerHTML = `
-    <button onclick="filterCategory('all')" class="cat-chip ${currentCategory === 'all' ? 'active bg-soft-blush font-bold border-blush-dark' : 'bg-white'} px-4 py-2 rounded-2xl text-xs sm:text-sm text-soft-brown border-2 border-soft-blush shadow-scrapbook hover:bg-soft-blush transition-all whitespace-nowrap flex items-center gap-1.5 font-handwritten">
-      <span>ทั้งหมด (All) 🧸</span>
+    <button onclick="filterCategory('all')" class="cat-chip ${currentCategory === 'all' ? 'active bg-soft-blush font-bold border-blush-dark' : 'bg-white'} px-4 py-2 rounded-2xl text-xs sm:text-sm text-soft-brown border-2 border-soft-blush shadow-scrapbook hover:bg-soft-blush transition-all whitespace-nowrap flex items-center gap-1.5">
+      <span>ทั้งหมด (All)</span>
     </button>
   `;
   categories.forEach(cat => {
     const isActive = currentCategory === cat.id;
     container.innerHTML += `
-      <button onclick="filterCategory('${cat.id}')" class="cat-chip ${isActive ? 'active bg-soft-blush font-bold border-blush-dark' : 'bg-white'} px-4 py-2 rounded-2xl text-xs sm:text-sm text-soft-brown border-2 border-soft-blush shadow-scrapbook hover:bg-soft-blush transition-all whitespace-nowrap flex items-center gap-1.5 font-handwritten">
+      <button onclick="filterCategory('${cat.id}')" class="cat-chip ${isActive ? 'active bg-soft-blush font-bold border-blush-dark' : 'bg-white'} px-4 py-2 rounded-2xl text-xs sm:text-sm text-soft-brown border-2 border-soft-blush shadow-scrapbook hover:bg-soft-blush transition-all whitespace-nowrap flex items-center gap-1.5">
         <span>${cat.name}</span>
       </button>
     `;
@@ -1031,25 +1074,16 @@ function renderCategoryChips() {
 function renderAdminCategorySelect() {
   const select = document.getElementById('admin-prod-category');
   if (!select) return;
-  select.innerHTML = '';
+  select.innerHTML = "";
   categories.forEach(cat => {
     select.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
   });
 }
 
-// --- RENDER PRODUCTS ---
 function renderProducts() {
   const grid = document.getElementById('product-grid');
-  grid.innerHTML = '';
-  const filtered = currentCategory === 'all' 
-    ? products 
-    : products.filter(p => p.category === currentCategory);
-  
-  if (filtered.length === 0) {
-    grid.innerHTML = `<div class="col-span-full text-center py-10 text-muted-brown text-xs">ยังไม่มีสินค้าในหมวดหมู่นี้จ้า 🌸</div>`;
-    return;
-  }
-
+  grid.innerHTML = "";
+  const filtered = currentCategory === 'all' ? products : products.filter(p => p.category === currentCategory);
   filtered.forEach((product) => {
     const card = document.createElement('div');
     card.className = "bg-cream-card rounded-3xl p-3.5 border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark transition-all duration-300 tilt-hover flex flex-col justify-between group relative";
@@ -1058,7 +1092,7 @@ function renderProducts() {
         <div class="relative aspect-square rounded-2xl overflow-hidden bg-warm-cream border border-soft-brown/10">
           <img src="${product.img}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x400/F7E7E6/65524D?text=Miori+Item'">
           <span class="absolute top-2 left-2 bg-white/90 text-soft-brown font-handwritten font-bold text-[10px] px-2.5 py-0.5 rounded-full shadow-xs border border-soft-blush">
-            ${product.badge || 'New ✨'}
+            ${product.badge || 'New'}
           </span>
         </div>
         <div>
@@ -1075,7 +1109,7 @@ function renderProducts() {
         <span class="font-handwritten font-bold text-soft-brown text-base">฿${product.price}</span>
         <button onclick="openProductModal(${product.id})" class="px-3 py-1.5 bg-soft-blush hover:bg-blush-dark hover:text-white text-soft-brown text-xs font-handwritten font-bold rounded-xl transition-colors flex items-center gap-1">
           <span>ดูน้อง</span>
-          <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg>
+          <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </button>
       </div>
     `;
@@ -1089,7 +1123,6 @@ function filterCategory(cat) {
   renderProducts();
 }
 
-// --- PRODUCT MODAL ---
 function openProductModal(id) {
   const product = products.find(p => p.id === id);
   if (!product) return;
@@ -1103,10 +1136,10 @@ function openProductModal(id) {
       </div>
       <div>
         <span class="text-[11px] font-bold text-blush-dark bg-soft-blush px-3 py-1 rounded-full">
-          ${product.badge || 'Handmade 🧸'}
+          ${product.badge || 'Handmade'}
         </span>
         <h3 class="font-handwritten text-xl font-bold text-soft-brown mt-2">${product.name}</h3>
-        <p class="text-xs text-muted-brown mt-1 leading-relaxed">${product.desc || 'ชิ้นงานทำมือและของน่ารักจาก Miori Studio'}</p>
+        <p class="text-xs text-muted-brown mt-1 leading-relaxed">${product.desc || 'สินค้าทำมือและของน่ารักจาก Miori Studio'}</p>
       </div>
       <div class="flex items-center justify-between pt-3 border-t-2 border-dashed border-soft-blush">
         <div>
@@ -1122,19 +1155,23 @@ function openProductModal(id) {
   `;
   document.getElementById('product-modal').classList.remove('hidden');
 }
+
 function closeProductModal() {
   document.getElementById('product-modal').classList.add('hidden');
 }
 
-// --- RENDER REVIEWS ---
 function renderReviews() {
   const container = document.getElementById('reviews-container');
-  container.innerHTML = '';
-  reviewsData.forEach(rev => {
+  container.innerHTML = "";
+  reviewsData.forEach((rev, index) => {
+    // ปรับตำแหน่งเทปวาชิให้แปะสลับซ้าย/ขวาตามที่ขอ
+    const isEven = (index % 2 === 0);
+    const tapePositionClass = isEven ? '-top-2.5 left-8 rotate-[-3deg]' : '-top-2.5 right-8 rotate-[3deg]';
+    
     const card = document.createElement('div');
-    card.className = `${rev.color || 'bg-cream-card'} p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook relative ${rev.rotation || ''} space-y-3`;
+    card.className = `${rev.color || 'bg-cream-card'} p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook relative ${rev.rotation || ""} space-y-3`;
     card.innerHTML = `
-      <div class="washi-tape -top-2.5 left-8 rotate-[-3deg]"></div>
+      <div class="washi-tape ${tapePositionClass}"></div>
       <div class="flex justify-between items-start">
         <div>
           <h4 class="font-handwritten font-bold text-soft-brown text-base">${rev.name}</h4>
@@ -1153,9 +1190,11 @@ function renderReviews() {
 function openReviewModal() {
   document.getElementById('review-modal').classList.remove('hidden');
 }
+
 function closeReviewModal() {
   document.getElementById('review-modal').classList.add('hidden');
 }
+
 function setStarRating(rating) {
   selectedRating = rating;
   const stars = document.querySelectorAll('#star-selector i');
@@ -1167,6 +1206,7 @@ function setStarRating(rating) {
     }
   });
 }
+
 function submitReview(event) {
   event.preventDefault();
   const name = document.getElementById('review-name').value;
@@ -1179,8 +1219,8 @@ function submitReview(event) {
     rating: selectedRating,
     date: "วันนี้",
     comment: comment,
-    color: colors[Math.floor(Math.random() * colors.length)],
-    rotation: rotations[Math.floor(Math.random() * rotations.length)]
+    color: colors[Math.floor(Math.random()*colors.length)],
+    rotation: rotations[Math.floor(Math.random()*rotations.length)]
   };
   reviewsData.unshift(newRev);
   localStorage.setItem('miori_reviews', JSON.stringify(reviewsData));
@@ -1191,7 +1231,6 @@ function submitReview(event) {
   setStarRating(5);
 }
 
-// --- ADMIN LOGIN / AUTH ---
 function handleAdminButtonClick() {
   if (isAdminLoggedIn) {
     switchTab('admin');
@@ -1199,9 +1238,11 @@ function handleAdminButtonClick() {
     document.getElementById('admin-login-modal').classList.remove('hidden');
   }
 }
+
 function closeAdminLoginModal() {
   document.getElementById('admin-login-modal').classList.add('hidden');
 }
+
 function handleAdminLogin(event) {
   event.preventDefault();
   const email = document.getElementById('login-email').value;
@@ -1213,11 +1254,12 @@ function handleAdminLogin(event) {
     switchTab('admin');
     renderAdminProductsTable();
     renderAdminCategoriesList();
-    showToast("🔓 เข้าสู่ระบบหลังบ้านสำเร็จ!");
+    showToast("🎉 เข้าสู่ระบบหลังบ้านสำเร็จ!");
   } else {
-    showToast("⚠️ Gmail หรือรหัสผ่านไม่ถูกต้อง");
+    showToast("❌ Gmail หรือรหัสผ่านไม่ถูกต้อง");
   }
 }
+
 function adminLogout() {
   isAdminLoggedIn = false;
   localStorage.removeItem('miori_admin_logged');
@@ -1225,7 +1267,6 @@ function adminLogout() {
   showToast("👋 ออกจากระบบเรียบร้อย");
 }
 
-// --- ADMIN SUB-TABS ---
 function switchAdminSubTab(subTabName) {
   ['products', 'categories', 'banners', 'theme', 'info'].forEach(t => {
     const sub = document.getElementById(`admin-sub-${t}`);
@@ -1239,7 +1280,6 @@ function switchAdminSubTab(subTabName) {
   if (targetBtn) targetBtn.classList.add('active');
 }
 
-// --- ADMIN PRODUCT MANAGEMENT ---
 function previewImageFile(input, previewId) {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
@@ -1276,8 +1316,8 @@ function handleSaveProduct(event) {
         prod.btnLink = btnLink || prod.btnLink;
         prod.desc = desc;
         if (imgUrl) prod.img = imgUrl;
+        showToast("✨ แก้ไขข้อมูลสินค้าสำเร็จ!");
       }
-      showToast("✨ แก้ไขข้อมูลสินค้าสำเร็จ!");
     } else {
       const newProd = {
         id: Date.now(),
@@ -1285,14 +1325,14 @@ function handleSaveProduct(event) {
         category: category,
         price: price,
         rating: 5.0,
-        badge: badge || 'New ✨',
+        badge: badge || 'New',
         btnText: btnText || 'สั่งซื้อผ่าน LINE / Inbox',
         btnLink: btnLink || 'https://line.me',
         img: imgUrl || 'https://placehold.co/400x400/F7E7E6/65524D?text=Miori+Item',
         desc: desc
       };
       products.unshift(newProd);
-      showToast("🌸 เพิ่มสินค้าใหม่สำเร็จ!");
+      showToast("✨ เพิ่มสินค้าใหม่สำเร็จ!");
     }
     localStorage.setItem('miori_products', JSON.stringify(products));
     renderProducts();
@@ -1307,35 +1347,44 @@ function handleSaveProduct(event) {
     }
     reader.readAsDataURL(fileInput.files[0]);
   } else {
-    const existingImg = id ? products.find(p => p.id == id)?.img : '';
+    const existingImg = id ? (products.find(p => p.id == id)?.img || "") : "";
     saveProcess(existingImg);
   }
 }
 
+function resetProductForm() {
+  document.getElementById('admin-prod-id').value = "";
+  document.getElementById('admin-prod-name').value = "";
+  document.getElementById('admin-prod-price').value = "";
+  document.getElementById('admin-prod-badge').value = "";
+  document.getElementById('admin-prod-btn-text').value = 'สั่งซื้อผ่าน LINE / Inbox';
+  document.getElementById('admin-prod-btn-link').value = "";
+  document.getElementById('admin-prod-desc').value = "";
+  document.getElementById('admin-prod-file').value = "";
+  document.getElementById('admin-prod-img-preview').classList.add('hidden');
+  document.getElementById('admin-prod-form-title').innerHTML = '<i class="fa-solid fa-plus-circle text-blush-dark"></i><span>เพิ่มสินค้าชิ้นใหม่</span>';
+}
+
 function renderAdminProductsTable() {
-  const listContainer = document.getElementById('admin-products-list');
-  listContainer.innerHTML = '';
-  if (products.length === 0) {
-    listContainer.innerHTML = `<div class="col-span-full text-center py-6 text-muted-brown text-xs">ยังไม่มีสินค้าในระบบ</div>`;
-    return;
-  }
+  const container = document.getElementById('admin-products-list');
+  if (!container) return;
+  container.innerHTML = "";
   products.forEach(p => {
-    const card = document.createElement('div');
-    card.className = "bg-warm-cream p-3 rounded-2xl border border-soft-blush flex items-center justify-between gap-3 shadow-xs";
-    card.innerHTML = `
-      <div class="flex items-center gap-3 min-w-0">
-        <img src="${p.img}" class="w-12 h-12 rounded-xl object-cover shrink-0 border border-soft-blush" onerror="this.src='https://placehold.co/100x100/F7E7E6/65524D?text=Img'">
-        <div class="min-w-0">
-          <h5 class="font-bold text-xs text-soft-brown truncate">${p.name}</h5>
-          <p class="text-[10px] text-muted-brown">฿${p.price} | หมวด: ${p.category}</p>
+    container.innerHTML += `
+      <div class="bg-warm-cream p-3 rounded-2xl border border-soft-blush flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5 overflow-hidden">
+          <img src="${p.img}" class="w-12 h-12 object-cover rounded-xl shrink-0" onerror="this.src='https://placehold.co/100x100'">
+          <div class="min-w-0">
+            <h5 class="font-handwritten font-bold text-soft-brown text-xs truncate">${p.name}</h5>
+            <p class="text-[10px] text-muted-brown">฿${p.price} • ${p.category}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button onclick="editProduct(${p.id})" class="p-1.5 bg-white text-blue-600 rounded-xl border border-blue-200 text-xs" title="แก้ไข"><i class="fa-solid fa-pen"></i></button>
+          <button onclick="deleteProduct(${p.id})" class="p-1.5 bg-white text-red-600 rounded-xl border border-red-200 text-xs" title="ลบ"><i class="fa-solid fa-trash"></i></button>
         </div>
       </div>
-      <div class="flex items-center gap-1.5 shrink-0">
-        <button onclick="editProduct(${p.id})" class="px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-600 text-[10px] font-bold rounded-xl transition-colors">แก้ไข</button>
-        <button onclick="deleteProduct(${p.id})" class="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-500 text-[10px] font-bold rounded-xl transition-colors">ลบ</button>
-      </div>
     `;
-    listContainer.appendChild(card);
   });
 }
 
@@ -1346,13 +1395,10 @@ function editProduct(id) {
   document.getElementById('admin-prod-name').value = p.name;
   document.getElementById('admin-prod-category').value = p.category;
   document.getElementById('admin-prod-price').value = p.price;
-  document.getElementById('admin-prod-badge').value = p.badge || '';
-  document.getElementById('admin-prod-btn-text').value = p.btnText || '';
-  document.getElementById('admin-prod-btn-link').value = p.btnLink || '';
-  document.getElementById('admin-prod-desc').value = p.desc || '';
-  const preview = document.getElementById('admin-prod-img-preview');
-  preview.src = p.img;
-  preview.classList.remove('hidden');
+  document.getElementById('admin-prod-badge').value = p.badge || "";
+  document.getElementById('admin-prod-btn-text').value = p.btnText || "";
+  document.getElementById('admin-prod-btn-link').value = p.btnLink || "";
+  document.getElementById('admin-prod-desc').value = p.desc || "";
   document.getElementById('admin-prod-form-title').innerHTML = '<i class="fa-solid fa-pen text-blush-dark"></i><span>แก้ไขข้อมูลสินค้า</span>';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1363,18 +1409,10 @@ function deleteProduct(id) {
     localStorage.setItem('miori_products', JSON.stringify(products));
     renderProducts();
     renderAdminProductsTable();
-    showToast("🗑️ ลบสินค้าเรียบร้อยแล้ว");
+    showToast("🗑️ ลบสินค้าเรียบร้อย");
   }
 }
 
-function resetProductForm() {
-  document.getElementById('admin-prod-id').value = '';
-  document.querySelector('#admin-sub-products form').reset();
-  document.getElementById('admin-prod-img-preview').classList.add('hidden');
-  document.getElementById('admin-prod-form-title').innerHTML = '<i class="fa-solid fa-plus-circle text-blush-dark"></i><span>เพิ่มสินค้าชิ้นใหม่</span>';
-}
-
-// --- ADMIN CATEGORY MANAGEMENT ---
 function handleAddCategory(event) {
   event.preventDefault();
   const id = document.getElementById('new-cat-id').value.trim().toLowerCase();
@@ -1388,74 +1426,67 @@ function handleAddCategory(event) {
   renderCategoryChips();
   renderAdminCategorySelect();
   renderAdminCategoriesList();
-  document.getElementById('new-cat-id').value = '';
-  document.getElementById('new-cat-name').value = '';
-  showToast("🌸 เพิ่มหมวดหมู่ใหม่เรียบร้อย!");
+  document.getElementById('new-cat-id').value = "";
+  document.getElementById('new-cat-name').value = "";
+  showToast("✨ เพิ่มหมวดหมู่สำเร็จ!");
 }
 
 function renderAdminCategoriesList() {
   const container = document.getElementById('admin-categories-list');
-  container.innerHTML = '';
+  if (!container) return;
+  container.innerHTML = "";
   categories.forEach(cat => {
-    const row = document.createElement('div');
-    row.className = "flex items-center justify-between p-3 bg-white rounded-xl border border-soft-blush text-xs shadow-xs";
-    row.innerHTML = `
-      <span><b>${cat.name}</b> (รหัส: ${cat.id})</span>
-      <button onclick="deleteCategory('${cat.id}')" class="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-500 rounded-lg text-[10px] font-bold transition-colors">ลบ</button>
+    container.innerHTML += `
+      <div class="flex items-center justify-between p-2.5 bg-white rounded-xl border border-soft-blush text-xs">
+        <span><b>${cat.name}</b> <span class="text-muted-brown">(${cat.id})</span></span>
+        ${categories.length > 1 ? `<button onclick="deleteCategory('${cat.id}')" class="text-red-500 hover:text-red-700 px-2 py-1"><i class="fa-solid fa-trash"></i></button>` : ""}
+      </div>
     `;
-    container.appendChild(row);
   });
 }
 
 function deleteCategory(id) {
-  if (categories.length <= 1) {
-    showToast("⚠️ ต้องมีหมวดแม่อย่างน้อย 1 หมวดหมู่");
-    return;
-  }
-  if (confirm("ต้องการลบหมวดหมู่นี้ใช่หรือไม่?")) {
+  if (confirm("การลบหมวดหมู่อาจส่งผลต่อสินค้าในหมวดนี้ ยืนยันการลบ?")) {
     categories = categories.filter(c => c.id !== id);
     localStorage.setItem('miori_categories', JSON.stringify(categories));
     renderCategoryChips();
     renderAdminCategorySelect();
     renderAdminCategoriesList();
+    renderProducts();
     showToast("🗑️ ลบหมวดหมู่เรียบร้อย");
   }
 }
 
-// --- ADMIN LOGO & BANNER UPLOAD ---
 function uploadSiteLogo() {
-  const fileInput = document.getElementById('admin-logo-file');
-  if (fileInput.files && fileInput.files[0]) {
+  const input = document.getElementById('admin-logo-file');
+  if (input.files && input.files[0]) {
     const reader = new FileReader();
     reader.onload = function(e) {
-      const dataUrl = e.target.result;
-      localStorage.setItem('miori_logo', dataUrl);
+      localStorage.setItem('miori_logo', e.target.result);
       applyAllSavedSettings();
-      showToast("✨ อัปเปลี่ยนโลโก้สำเร็จ!");
+      showToast("✨ อัปโหลดโลโก้ร้านค้าสำเร็จ!");
     }
-    reader.readAsDataURL(fileInput.files[0]);
+    reader.readAsDataURL(input.files[0]);
   } else {
-    showToast("⚠️ กรุณาเลือกไฟล์รูปโลโก้ก่อน");
+    showToast("⚠️ กรุณาเลือกไฟล์รูปภาพโลโก้");
   }
 }
 
-function uploadBannerImage(pageType) {
-  const fileInput = document.getElementById(`admin-banner-${pageType}-file`);
-  if (fileInput.files && fileInput.files[0]) {
+function uploadBannerImage(type) {
+  const input = document.getElementById(`admin-banner-${type}-file`);
+  if (input.files && input.files[0]) {
     const reader = new FileReader();
     reader.onload = function(e) {
-      const dataUrl = e.target.result;
-      localStorage.setItem(`miori_banner_${pageType}`, dataUrl);
+      localStorage.setItem(`miori_banner_${type}`, e.target.result);
       applyAllSavedSettings();
-      showToast(`✨ เปลี่ยนแบนเนอร์${pageType === 'store' ? 'หน้าร้าน' : pageType === 'reviews' ? 'หน้ารีวิว' : 'หน้าติดต่อ'}สำเร็จ!`);
+      showToast(`✨ เปลี่ยนแบนเนอร์${type === 'store' ? 'หน้าร้าน' : type === 'reviews' ? 'หน้ารีวิว' : 'หน้าติดต่อ'}สำเร็จ!`);
     }
-    reader.readAsDataURL(fileInput.files[0]);
+    reader.readAsDataURL(input.files[0]);
   } else {
-    showToast("⚠️ กรุณาเลือกไฟล์รูปแบนเนอร์ก่อน");
+    showToast("⚠️ กรุณาเลือกไฟล์รูปภาพแบนเนอร์");
   }
 }
 
-// --- ADMIN INFO POINT-BY-POINT SAVE ---
 function handleSaveStoreInfo(event) {
   event.preventDefault();
   storeInfo.title = document.getElementById('admin-info-title').value;
@@ -1468,21 +1499,14 @@ function handleSaveStoreInfo(event) {
   storeInfo.lineLink = document.getElementById('admin-info-line-link').value;
   storeInfo.musicTitle = document.getElementById('admin-music-title').value;
   storeInfo.musicUrl = document.getElementById('admin-music-url').value;
-
+  
   localStorage.setItem('miori_info', JSON.stringify(storeInfo));
   applyAllSavedSettings();
-  showToast("✨ บันทึกข้อมูลร้านค้าเรียบร้อย!");
-}
-
-function resetThemeColors() {
-  themeColors = { ...DEFAULT_THEME };
-  localStorage.removeItem('miori_theme');
-  applyAllSavedSettings();
-  showToast("🔄 รีเซ็ตโทนสีเป็นค่าเริ่มต้นแล้ว");
+  showToast("✨ บันทึกข้อมูลเรียบร้อยแล้ว!");
 }
 
 function resetAllDataToDefault() {
-  if (confirm("⚠️ คุณต้องการรีเซ็ตข้อมูลทั้งหมดกลับเป็นค่าเริ่มต้นหรือไม่? ข้อมูลที่คุณแก้ไขจะหายไปทั้งหมด")) {
+  if (confirm("⚠️ คุณต้องการรีเซ็ตข้อมูลทั้งหมดกลับเป็นค่าเริ่มต้นใช่หรือไม่? ข้อมูลที่แก้ไขทั้งหมดจะหายไป")) {
     localStorage.clear();
     location.reload();
   }
@@ -1490,16 +1514,14 @@ function resetAllDataToDefault() {
 
 function showToast(msg) {
   const toast = document.getElementById('toast');
-  const toastMsg = document.getElementById('toast-msg');
-  toastMsg.innerText = msg;
+  document.getElementById('toast-msg').innerText = msg;
   toast.classList.remove('translate-y-20', 'opacity-0');
   setTimeout(() => {
     toast.classList.add('translate-y-20', 'opacity-0');
   }, 3000);
 }
 
-// --- INITIAL ON LOAD ---
-window.addEventListener('DOMContentLoaded', () => {
+window.onload = function() {
   applyAllSavedSettings();
   renderProducts();
   renderReviews();
@@ -1507,7 +1529,7 @@ window.addEventListener('DOMContentLoaded', () => {
     renderAdminProductsTable();
     renderAdminCategoriesList();
   }
-});
+};
 </script>
 </body>
 </html>
