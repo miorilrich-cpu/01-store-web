@@ -15,12 +15,12 @@ tailwind.config={theme:{extend:{colors:{
 'pastel-peach':'#FFE5EC', 'sage-green': '#E1ECE5','sage-dark': '#81A690', 'pastel-yellow':'#FFF0F5', 'muted-brown': '#8B6868',
 'ctrl-btn':'var(--color-ctrl)', 'rev-box':'var(--color-revbox)'},
 fontFamily:{mali:['Mali', 'cursive'], itim:['Itim', 'cursive'], k2d: ['K2D','sans-serif']},
-boxShadow:{scrapbook:'4px 6px 0 rgba(214,122,143,0.15)', 'soft-float':'0 12px 28px -6px rgba(255,154,162,0.3)', 'glow-circle':'0 0 18px rgba(255,154,162,0.4)'},
+boxShadow:{scrapbook:'4px 6px 0 rgba(214,122,143,.15)', 'soft-float':'0 12px 28px -6px rgba(255,154,162,.3)', 'glow-circle':'0 0 18px rgba(255,154,162,.4)'},
 aspectRatio:{banner:'1122/495'}}}
 </script>
 <style>
 :root{--color-bg:#FFF9FB;--color-card:#FFFFFF;--color-primary:#FF7096;--color-blush:#FFE4E9;--color-text:#5C4040;--color-border:#FFB6C1;--color-ctrl:#FFE4E9;--color-revbox:#FFFFFF}
-body{font-family: 'Mali', 'K2D', cursive; background-color:var(--color-bg); color:var(--color-text); background-image:radial-gradient(var(--color-border) 0.8px,transparent 0.8px); background-size:26px 26px; overflow-x:hidden}
+body{font-family: 'Mali', 'K2D', cursive; background-color:var(--color-bg); color:var(--color-text);background-image:radial-gradient(var(--color-border) .8px,transparent .8px); background-size:26px 26px; overflow-x:hidden}
 h1,h2,h3,h4,.font-handwritten{font-family:'Itim', cursive}
 .custom-border-dashed{border-color:var(--color-border)!important}
 .custom-primary-text{color:var(--color-primary)!important}
@@ -38,14 +38,14 @@ input[type=color].inp{height:40px;padding:2px}
 .editing .admin-only{display:inline-flex!important}
 .editing #review-btn-container {display:none!important}
 [data-edit]{white-space:pre-line}
-.ebtn{width:1.75rem; height: 1.75rem; border-radius:9999px;background:#fff;border:1.5px solid var(--color-primary);color:var(--color-text); font-size:.7rem; display:inline-flex; align-items:center; justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.12); cursor:pointer}
+.ebtn{width:1.75rem; height:1.75rem; border-radius:9999px;background:#fff;border:1.5px solid var(--color-primary);color:var(--color-text); font-size:.7rem; display:inline-flex; align-items:center; justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.12); cursor:pointer}
 .ebtn:hover{background:var(--color-blush)}
-.ebtn-l{width:auto;height:1.9rem; padding:0 0.75rem; gap:.35rem;font-weight:700}
+.ebtn-l{width:auto;height:1.9rem; padding:0 .75rem; gap:.35rem;font-weight:700}
 .btn-cute-minimal {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 18px;
+  padding: 12px 20px;
   background-color: #FFFFFF;
   border: 2px solid #FFB6C1;
   color: #5C4040;
@@ -53,7 +53,7 @@ input[type=color].inp{height:40px;padding:2px}
   font-size: 14px;
   font-weight: bold;
   border-radius: 9999px;
-  box-shadow: 0 4px 10px rgba(255, 154, 162, 0.15);
+  box-shadow: 0 4px 10px rgba(255, 154, 162, 0.2);
   transition: all 0.2s ease;
   cursor: pointer;
   width: 100%;
@@ -62,7 +62,7 @@ input[type=color].inp{height:40px;padding:2px}
   background-color: #FFE4E9;
   border-color: #FF7096;
   transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(255, 154, 162, 0.3);
+  box-shadow: 0 6px 14px rgba(255,154,162,0.3);
 }
 </style>
 </head>
@@ -179,7 +179,7 @@ input[type=color].inp{height:40px;padding:2px}
 </div>
 </div>
 <h2 data-edit="siteTitle" class="font-handwritten text-3xl font-bold">Miori Studio</h2>
-<p data-edit="contactSlogan" class="text-xs text-muted-brown max-w-md mx-auto">" เติมเต็มมุมโปรดในบ้านด้วยของจุกจิกดีไซน์อบอุ่นใจ สไตล์โฮมเมด "</p>
+<p data-edit="contactSlogan" class="text-xs text-muted-brown max-w-md mx-auto">" เติมเต็มมุมโปรดในบ้านด้วยของจุกจิกดีไซน์อบอุ่นใจ สไดล์โฮมเมด "</p>
 <button class="admin-only ebtn ebtn-l mx-auto" onclick="editSection('contactHead')"><i class="fa-solid fa-pen"></i> แก้ไขหัวข้อ</button>
 </div>
 <div class="flex justify-between items-center px-2">
@@ -207,7 +207,7 @@ input[type=color].inp{height:40px;padding:2px}
 <div class="space-y-2.5 pt-1">
 <button onclick="editTheme(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-palette text-pink-400 text-base"></i><span>ธีมสี</span></button>
 <button onclick="openChangePasswordModal(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-key text-amber-400 text-base"></i> <span>รหัสผ่าน</span></button>
-<button onclick="resetTheme(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-rotate-left text-sky-400 text-base"></i> <span>รีเซ็ทสี</span></button>
+<button onclick="resetTheme(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-rotate-left text-sky-400 text-base"></i> <span>รีเช็ดสี</span></button>
 <button onclick="resetAll(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-triangle-exclamation text-rose-400 text-base"></i> <span>รีเซ็ตทั้งหมด</span></button>
 <button onclick="adminLogout(); $('admin-menu-modal').classList.add('hidden');" class="w-full py-2.5 bg-rose-400 hover:bg-rose-500 text-white rounded-2xl font-bold transition text-xs shadow-sm flex items-center justify-center gap-1.5 font-handwritten mt-2"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
 </div>
@@ -277,28 +277,28 @@ input[type=color].inp{height:40px;padding:2px}
 <div id="toast" class="fixed top-24 left-1/2 -translate-x-1/2 -translate-y-6 opacity-0 z-[60] bg-soft-brown text-white px-4 py-2.5 rounded-2xl shadow-soft-float text-xs font-bold transition-all duration-300 pointer-events-none border-2 border-soft-blush" style="background-color: var(--color-text);"><span id="toast-msg"></span></div>
 <script>
 const $=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){showToast('พื้นที่เก็บข้อมูลเต็ม ลองใช้รูปที่เล็กลง')}};
 const PLACE='https://placehold.co/400x400/FFE4E9/5C4040?text=Miori+Item';
-const DEF_IMG={reviews:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1122&q=80',hero:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=500&q=80'};
+const DEF_IMG={reviews:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1122&q=80', hero:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400&q=80'};
 const DEF_THEME={bg:'#FFF9FB',card:'#FFFFFF',primary:'#FF7096',blush:'#FFE4E9',text:'#5C4040',border:'#FFB6C1',ctrl:'#FFE4E9',revbox:'#FFFFFF'};
 const DEF_MUSIC={title:'Cozy Lofi BGM',url:'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3'};
 const DEF_CONTACTS=[
-{id:'fb', name:'Facebook Page', handle:'@miori.studio.official', tag:'ทักแชท', url:'https://facebook.com',icon:'fa-brands fa-facebook-f', color:'bg-blue-50 text-blue-500 border-blue-200'},
-{id:'ig', name:'Instagram', handle:'@miori_cozy_space', tag:'ไอเดียแต่งห้อง',url:'https://instagram.com',icon:'fa-brands fa-instagram',color:'bg-pink-50 text-pink-500 border-pink-200'},
-{id:'line', name:'LINE Official', handle:'@mioristudio', tag:'รับคูปอง',url:'https://line.me', icon:'fa-brands fa-line', color:'bg-emerald-50 text-emerald-500 border-emerald-200'}
+{id:'fb', name:'Facebook Page', handle:'@miori.studio.official', tag:'ทักแชท', url:'https://facebook.com', icon:'fa-brands fa-facebook-f', color:'bg-blue-50 text-blue-500 border-blue-200'},
+{id:'ig', name:'Instagram', handle:'@miori_cozy_space', tag:'ไอเดียแต่งห้อง', url:'https://instagram.com', icon:'fa-brands fa-instagram', color:'bg-pink-50 text-pink-500 border-pink-200'},
+{id:'line', name:'LINE Official', handle:'@mioristudio', tag:'รับคูปอง', url:'https://line.me', icon:'fa-brands fa-line', color:'bg-emerald-50 text-emerald-500 border-emerald-200'}
 ];
 const DEF_CATS=[{id:'decor', name:'ของแต่งบ้าน & ห้องนอน'}, {id:'stationery', name:'เครื่องเขียน & สมุดโน้ต'}, {id:'candle', name:'เทียนหอม & อโรม่า'}];
 const B='สั่งซื้อผ่าน LINE / Inbox';
 const DEF_PRODUCTS=[
-{id:1,name:'โคมไฟตั้งโต๊ะดอกทิวลิปอบอุ่น Tulip Glow', category:'decor', price:390, rating:5, badge:'Popular',btnText:B,btnLink:'https://line.me',img:'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=500&q=80', desc:'โคมไฟตั้งโต๊ะทำจากเซรามิกละมุนสีครีมอุ่น ปรับแสงไฟวอร์มไลท์ได้ 3 ระดับ เพิ่มความอบอุ่นให้ห้องนอน', viewBtnText:'ดูน้อง'},
-{id:2,name:'สมุดแพลนเนอร์สไตล์ญี่ปุ่น Pastel Journal', category:'stationery', price:240, rating:4.9, badge:'Handmade', btnText:B,btnLink:'https://line.me',img:'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=500&q=80', desc:'แพลนเนอร์เปิดกางได้ 180 องศา กระดาษถนอมสายตาอย่างดี พร้อมสติ๊กเกอร์ไดคัทตกแต่งในเล่ม', viewBtnText:'ดูน้อง'},
-{id:3,name:'เทียนหอมไขถั่วเหลือง กลิ่น Cozy Bakery', category:'candle', price:290, rating:5, badge:'Best Aroma', btnText:B,btnLink:'https://line.me',img:'https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=500&q=80', desc:'เทียนหอมออร์แกนิกกลิ่นขนมปังอบใหม่และวนิลาอ่อนๆ ให้ความรู้สึกผ่อนคลายเหมือนอยู่คาเฟ่ออบอุ่น', viewBtnText:'ดูน้อง'},
-{id:4,name:'แก้วเซรามิกปั้นมือ ลายหมีน้อย Bear Cup',category:'decor', price:320, rating:4.8, badge:'Cutie Item', btnText:B,btnLink:'https://line.me', img:'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc:'แก้วกาแฟทำมือทรงหน้าหมี คาดจานรองเข้าเซต เข้าไมโครเวฟได้ จิบกาแฟยามเช้าอย่างมีสไตล์', viewBtnText:'ดูน้อง'}];
+{id:1, name:'โคมไฟตั้งโต๊ะดอกทิวลิปอบอุ่น Tulip Glow', category:'decor', price:390, rating:5, badge:'Popular', btnText:B, btnLink:'https://line.me', img:'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=500&q=80', desc:'โคมไฟตั้งโต๊ะทำจากเซรามิกละมุนสีครีมอุ่น ปรับแสงไฟวอร์มไลท์ได้ 3 ระดับ เพิ่มความอบอุ่นให้ห้องนอน', viewBtnText:'ดูน้อง'},
+{id:2, name:'สมุดแพลนเนอร์สไตล์ญี่ปุ่น Pastel Journal', category:'stationery', price:240, rating:4.9, badge:'Handmade', btnText:B, btnLink:'https://line.me', img:'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=500&q=80', desc:'แพลนเนอร์เปิดกางได้ 180 องศา กระดาษถนอมสายตาอย่างดี พร้อมสติ๊กเกอร์ไดคัทตกแต่งในเล่ม', viewBtnText:'ดูน้อง'},
+{id:3, name:'เทียนหอมไขถั่วเหลือง กลิ่น Cozy Bakery', category:'candle', price:290, rating:5, badge:'Best Aroma', btnText:B, btnLink:'https://line.me', img:'https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=500&q=80', desc:'เทียนหอมออร์แกนิกกลิ่นขนมปังอบใหม่และวนิลาอ่อนๆ ให้ความรู้สึกผ่อนคลายเหมือนอยู่คาเฟ่สุดอบอุ่น', viewBtnText:'ดูน้อง'},
+{id:4, name:'แก้วเซรามิกปั้นมือ ลายหมีน้อย Bear Cup', category:'decor', price:320, rating:4.8, badge:'Cutie Item', btnText:B, btnLink:'https://line.me', img:'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc:'แก้วกาแฟทำมือทรงหน้าหมี คาดจานรองเข้าเซ็ต เข้าไมโครเวฟได้ จิบกาแฟยามเช้าอย่างมีสไตล์', viewBtnText:'ดูน้อง'}];
 const DEF_REVIEWS=[
 {id:1, name:'คุณแนนซี', rating:5, date:'25 ต.ค. 2026', comment:'แกะกล่องออกมาประทับใจมากค่ะ! มีเทปวาชิแปะกล่องน่ารักมาก โคมไฟทิวลิปสว่างละมุนสุดๆ', color:'bg-pastel-yellow', rotation:'rotate-[-2deg]'},
-{id:2,name:'คุณคิณ', rating:5, date:'22 ต.ค. 2026', comment:'เทียนหอมกลิ่นหอมฟุ้งทั่วห้องเลยครับ กลิ่นเหมือนขนมปังอบจริงๆ ไว้จะกลับมาอุดหนุนใหม่แน่นอน', color:'bg-soft-blush', rotation:'rotate-[2deg]'}];
+{id:2, name:'คุณคิณ', rating:5, date:'22 ต.ค. 2026', comment:'เทียนหอมกลิ่นหอมฟุ้งทั่วห้องเลยครับ กลิ่นเหมือนขนมปังอบจริงๆ ไว้จะกลับมาอุดหนุนใหม่แน่นอน', color:'bg-soft-blush', rotation:'rotate-[2deg]'}];
 const oi=load('miori_info',null);
 const oldImg=k=>localStorage.getItem(k)||undefined;
 let categories=load('miori_categories', DEF_CATS),
@@ -307,7 +307,7 @@ reviewsData=load('miori_reviews', DEF_REVIEWS);
 let contacts=load('miori_contacts', DEF_CONTACTS);
 let texts=load('miori_texts', oi?{siteTitle:oi.title, slogan:oi.slogan}:{});
 let music=load('miori_music', oi?{title:oi.musicTitle, url:oi.musicUrl}:DEF_MUSIC);
-let images=load('miori_images',{logo:oldImg('miori_logo'), bannerStore:oldImg('miori_banner_store'), bannerReviews:oldImg('miori_banner_reviews')});
+let images=load('miori_images', {logo:oldImg('miori_logo'), bannerStore:oldImg('miori_banner_store'), bannerReviews:oldImg('miori_banner_reviews')});
 let theme={...DEF_THEME,...load('miori_theme',{})};
 let loggedIn=localStorage.getItem('miori_admin_logged')==='true', editing=loggedIn,
 currentCategory='all', selectedRating=5;
@@ -324,16 +324,16 @@ if(music.url){p.src=music.url;}
 function applyImages(){
 $('banner-reviews-img').src=images.bannerReviews||DEF_IMG.reviews;
 $('img-hero').src=images.hero||DEF_IMG.hero;
-const b=$('banner-store-img'),o=$('banner-store-overlay').classList, has=!!images.bannerStore;
+const b=$('banner-store-img'),o=$('banner-store-overlay').classList,has=!!images.bannerStore;
 if(has)b.src=images.bannerStore;
-b.classList.toggle('hidden',!has); ['bg-white/70', 'p-4', 'rounded-2xl'].forEach(c=>o.toggle(c,has));
-['site', 'contact'].forEach(p=>{const h=!!images.logo;if(h)$(p+'-logo-img').src=images.logo; $(p+'-logo-img').classList.toggle('hidden',!h); $(p+'-logo-svg').classList.toggle('hidden',h);});
+b.classList.toggle('hidden',!has); ['bg-white/70','p-4','rounded-2xl'].forEach(c=>o.toggle(c,has));
+['site','contact'].forEach(p=>{const h=!!images.logo;if(h)$(p+'-logo-img').src=images.logo; $(p+'-logo-img').classList.toggle('hidden',!h); $(p+'-logo-svg').classList.toggle('hidden',h);});
 }
 let formImgs={};
 const getText=k=>texts[k]!==undefined?texts[k]:(document.querySelector('[data-edit="'+k+'"]')?.dataset.def??'');
-function openForm(title, fields, saveData, onDelete){
-formImgs={}; formSave=saveData; formDel=onDelete||null;
-$('form-del').classList.toggle('hidden', !onDelete);
+function openForm(title, fields, onSave, onDelete){
+formImgs={}; formSave=onSave; formDel=onDelete||null;
+$('form-del').classList.toggle('hidden',!onDelete);
 $('form-title').textContent=title;
 $('form-fields').innerHTML=fields.map(f=>{
 const id='f-'+f.k, v=esc(f.value); let input;
@@ -352,15 +352,16 @@ pickImage(maxW,!!png,d=>{formImgs[k]=d;const prev=$('prev-'+k);if(prev){prev.src
 function closeForm(){$('form-modal').classList.add('hidden');}
 function formDelete(){if(confirm('ลบรายการนี้ใช่หรือไม่?')){if(formDel)formDel();closeForm();}}
 const SECTIONS={
-header:['แก้ไขส่วนหัวเว็บ', [['siteTitle', 'ชื่อร้าน'], ['siteJp','ข้อความข้างชื่อร้าน'], ['slogan', 'สโลแกน'], ['navStore', 'เมนู: หน้าร้าน'], ['navReviews', 'เมนู: รีวิว'], ['navContact', 'เมนู: ติดต่อเรา']], [[['logo','โลโก้ร้าน (วงกลม)',300,1]]]],
-banner:['แก้ไขแบนเนอร์หน้าร้าน', [['bannerBadge', 'ป้ายเล็กบนหัวข้อ'], ['bannerT1', 'หัวข้อบรรทัดที่ 1'], ['bannerT2', 'หัวข้อบรรทัดที่ 2'], ['bannerDesc', 'คำอธิบาย','t'], ['bannerBtn', 'ข้อความปุ่ม'], ['bannerShip', 'ข้อความจัดส่ง'], ['heroCaption', 'คำใต้รูปการ์ด']], [[['bannerStore', 'รูปแบนเนอร์ (1122x495)', 1122], ['hero', 'รูปการ์ดข้างแบนเนอร์', 500]]]],
-reviewsHead:['แก้ไขกล่องรีวิว', [['revTag', 'ป้ายเล็ก'], ['revTitle', 'หัวข้อ'], ['revSub', 'คำอธิบาย','t'], ['revBtn', 'ข้อความปุ่มเขียนรีวิว']],[]],
-contactHead:['แก้ไขหัวข้อหน้าติดต่อ', [['siteTitle','ชื่อร้าน'], ['contactSlogan', 'สโลแกน','t']],[]],
-footer:['แก้ไขท้ายเว็บ', [['footer1','บรรทัดที่ 1'], ['footer2', 'บรรทัดที่ 2']],[]]
+header:['แก้ไขส่วนหัวเว็บ', [['siteTitle','ชื่อร้าน'],['siteJp','ข้อความข้างชื่อร้าน'],['slogan','สโลแกน'],['navStore','เมนู: หน้าร้าน'],['navReviews','เมนู: รีวิว'],['navContact','เมนู: ติดต่อเรา']], [[['logo','โลโก้ร้าน (วงกลม)',300,1]]]],
+banner:['แก้ไขแบนเนอร์หน้าร้าน', [['bannerBadge','ป้ายเล็กบนหัวข้อ'],['bannerT1','หัวข้อบรรทัดที่ 1'],['bannerT2','หัวข้อบรรทัดที่ 2'],['bannerDesc','คำอธิบาย','t'],['bannerBtn','ข้อความปุ่ม'],['bannerShip','ข้อความจัดส่ง'],['heroCaption','คำใต้รูปการ์ด']], [[['bannerStore','รูปแบนเนอร์ (1122x495)',1122],['hero','รูปการ์ดข้างแบนเนอร์',500]]]],
+reviewsHead:['แก้ไขกล่องรีวิว', [['revTag','ป้ายเล็ก'],['revTitle','หัวข้อ'],['revSub','คำอธิบาย','t'],['revBtn','ข้อความปุ่มเขียนรีวิว']],[]],
+contactHead:['แก้ไขหัวข้อหน้าติดต่อ', [['siteTitle','ชื่อร้าน'],['contactSlogan','สโลแกน','t']],[]],
+footer:['แก้ไขท้ายเว็บ', [['footer1','บรรทัดที่ 1'],['footer2','บรรทัดที่ 2']],[]]
 };
 function editSection(n){
 const[title,tx,im]=SECTIONS[n];
-const fields=[...tx.map(([k,l,t])=>({k,label:l, type:t?'textarea':'text',rows:2, value:getText(k)})),...im.map(([k,l,w,png])=>({k,label:l,type:'image', maxW:w,png,value:images[k]||(k==='hero'?DEF_IMG.hero:'')}))];
+const fields=[...tx.map(([k,l,t])=>({k,label:l,type:t?'textarea':'text',rows:2,value:getText(k)})),
+...im.map(([k,l,w,png])=>({k,label:l,type:'image',maxW:w,png,value:images[k]||(k==='hero'?DEF_IMG.hero:'')}))];
 openForm(title,fields,v=>{
 tx.forEach(([k])=>texts[k]=v[k]);
 im.forEach(([k])=>{if(formImgs[k])images[k]=formImgs[k];});
@@ -368,28 +369,29 @@ save('miori_texts', texts); save('miori_images',images); applyTexts(); applyImag
 showToast('บันทึกสำเร็จ');});
 }
 function renderContacts(){
-$('contact-cards-container').innerHTML=contacts.map(c=>'
+$('contact-cards-container').innerHTML=contacts.map(c=>`
 <div class="relative group">
-<a href="'+esc(c.url)+'" target="_blank" class="flex items-center gap-5 bg-cream-card px-5 py-4 rounded-3xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark tilt-hover">
-<div class="w-14 h-14 rounded-2xl '+esc(c.color)+' border flex items-center justify-center text-xl shrink-0"><i class="'+esc(c.icon)+'"></i></div>
-<div class="min-w-0 flex-1"><h4 class="font-bold text-base sm:text-lg">'+esc(c.name)+'</h4><p class="text-xs sm:text-sm text-muted-brown truncate">'+esc(c.handle)+'</p></div>
-<span class="text-xs font-bold text-blush-dark bg-soft-blush px-3.5 py-1.5 rounded-full whitespace-nowrap">'+esc(c.tag)+'</span>
+<a href="${esc(c.url)}" target="_blank" class="flex items-center gap-5 bg-cream-card px-5 py-4 rounded-3xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark tilt-hover">
+<div class="w-14 h-14 rounded-2xl ${esc(c.color)} border flex items-center justify-center text-xl shrink-0"><i class="${esc(c.icon)}"></i></div>
+<div class="min-w-0 flex-1"><h4 class="font-bold text-base sm:text-lg">${esc(c.name)}</h4><p class="text-xs sm:text-sm text-muted-brown truncate">${esc(c.handle)}</p></div>
+<span class="text-xs font-bold text-blush-dark bg-soft-blush px-3.5 py-1.5 rounded-full whitespace-nowrap">${esc(c.tag)}</span>
 </a>
-<button class="admin-only absolute top-3 right-3 ebtn" title="แก้ไขช่องทางนี้" onclick="editSingleContact(\''+c.id+'\')"><i class="fa-solid fa-pen"></i></button>
-</div>').join('')+'<button class="admin-only w-full py-3.5 rounded-3xl border-2 border-dashed custom-border-dashed items-center justify-center gap-2 text-sm font-bold text-blush-dark bg-cream-card hover:bg-soft-blush" onclick="editSingleContact()"><i class="fa-solid fa-plus"></i> เพิ่มช่องทางติดต่อใหม่</button>';
+<button class="admin-only absolute top-3 right-3 ebtn" title="แก้ไขช่องทางนี้" onclick="editSingleContact('${c.id}')"><i class="fa-solid fa-pen"></i></button>
+</div>
+`).join('')+'<button class="admin-only w-full py-3.5 rounded-3xl border-2 border-dashed custom-border-dashed items-center justify-center gap-2 text-sm font-bold text-blush-dark bg-cream-card hover:bg-soft-blush" onclick="editSingleContact()"><i class="fa-solid fa-plus"></i> เพิ่มช่องทางติดต่อใหม่</button>';
 }
 function editSingleContact(id){
-const item=id?contacts.find(x=>x.id==id):{name:'',handle:'',tag:'ติดต่อเรา',url:'https://',icon:'fa-solid fa-globe', color:'bg-orange-50 text-orange-500 border-orange-200'};
+const item=id?contacts.find(x=>x.id==id):{name:'',handle:'',tag:'ติดต่อเรา',url:'https://',icon:'fa-solid fa-globe',color:'bg-orange-50 text-orange-500 border-orange-200'};
 openForm(id?'แก้ไขช่องทางติดต่อ':'เพิ่มช่องทางติดต่อ',[
-{k:'name', label:'ชื่อหัวข้อ', value:item.name},
-{k:'handle', label:'ชื่อบัญชี', value:item.handle},
-{k:'tag', label:'ข้อความป้ายเล็ก', value:item.tag},
-{k:'url', label:'ลิงก์ปลายทาง URL', value:item.url},
-{k:'icon', label:'FontAwesome Icon', value:item.icon},
-{k:'color', label:'Tailwind สีไอคอน', value:item.color}
+{k:'name',label:'ชื่อหัวข้อ',value:item.name},
+{k:'handle',label:'ชื่อบัญชี',value:item.handle},
+{k:'tag',label:'ข้อความป้ายเล็ก',value:item.tag},
+{k:'url',label:'ลิงก์ปลายทาง URL',value:item.url},
+{k:'icon',label:'FontAwesome Icon',value:item.icon},
+{k:'color',label:'Tailwind สีไอคอน',value:item.color}
 ],v=>{
 if(id){Object.assign(item,v);}else{contacts.push({id:'c'+Date.now(),...v});}
-save('miori_contacts', contacts); renderContacts();showToast('บันทึกช่องทางติดต่อสำเร็จ');
+save('miori_contacts', contacts); renderContacts(); showToast('บันทึกช่องทางติดต่อสำเร็จ');
 },id?()=>{contacts=contacts.filter(x=>x.id!=id); save('miori_contacts', contacts); renderContacts(); showToast('ลบช่องทางติดต่อสำเร็จ');}:null);
 }
 function editContactList(){editSingleContact();}
@@ -405,8 +407,8 @@ const[w,png]={logo:[300,1],bannerStore:[1122],bannerReviews:[1122],hero:[500]}[k
 pickImage(w,!!png,d=>{images[k]=d;save('miori_images',images); applyImages(); showToast('เปลี่ยนรูปสำเร็จ');});
 }
 function switchTab(n){
-['store', 'reviews', 'contact'].forEach(t=>{$('page-'+t).classList.toggle('hidden',t!==n);$('nav-'+t).classList.toggle('active',t===n);});
-window.scrollTo({top:0, behavior:'smooth'});
+['store','reviews','contact'].forEach(t=>{$('page-'+t).classList.toggle('hidden',t!==n);$('nav-'+t).classList.toggle('active',t===n);});
+window.scrollTo({top:0,behavior:'smooth'});
 }
 function toggleAudio(){
 const p=$('bgm-player'),b=$('play-btn');
@@ -427,8 +429,8 @@ showToast("ไม่สามารถเล่นเพลงได้ ตร�
 }
 }
 function editMusic(){
-openForm('แก้ไขเพลงพื้นหลัง', [{k:'title', label:'ชื่อเพลง', value:music.title}, {k:'url', label:'ลิงก์ไฟล์เพลง (.mp3)', value:music.url}],v=>{
-music={title:v.title, url:v.url}; save('miori_music',music);
+openForm('แก้ไขเพลงพื้นหลัง', [{k:'title',label:'ชื่อเพลง',value:music.title},{k:'url',label:'ลิงก์ไฟล์เพลง (.mp3)',value:music.url}],v=>{
+music={title:v.title,url:v.url}; save('miori_music',music);
 applyMusic(); showToast('บันทึกเพลงสำเร็จ');});
 }
 function handleGear(){
@@ -438,7 +440,6 @@ $('admin-menu-modal').classList.remove('hidden');
 } else {
 setEditing(true);
 showToast('เปิดโหมดแก้ไข');
-$('admin-menu-modal').classList.remove('hidden');
 }
 } else {
 $('admin-login-modal').classList.remove('hidden');
@@ -447,6 +448,9 @@ $('admin-login-modal').classList.remove('hidden');
 function setEditing(val){
 editing=val;
 document.body.classList.toggle('editing', editing);
+if(editing){
+$('admin-menu-modal').classList.remove('hidden');
+}
 }
 function handleAdminLogin(e){
 e.preventDefault();
@@ -457,7 +461,7 @@ setEditing(true); showToast('เข้าสู่โหมดแก้ไขส
 }
 function openChangePasswordModal(){
 $('new-password').value='';
-$('confirm-password').value=''; $('change-pass-modal').classList.remove('hidden');
+$('confirm-password').value='';$('change-pass-modal').classList.remove('hidden');
 }
 function handleAdminChangePassword(e){
 e.preventDefault();
@@ -475,27 +479,27 @@ showToast('เปลี่ยนรหัสผ่านสำเร็จ');
 function adminLogout(){loggedIn=false; localStorage.removeItem('miori_admin_logged'); setEditing(false); showToast('ออกจากระบบเรียบร้อย');}
 function resetAll(){if(confirm('รีเซ็ตข้อมูลทั้งหมดกลับเป็นค่าเริ่มต้น?')){localStorage.clear();location.reload();}}
 function editTheme(){
-const L={bg:'สีพื้นหลังหลัก', card:'สีการ์ด', primary:'สีปุ่ม', blush:'สีพาสเทลอ่อน', text:'สีตัวอักษร', border:'สีเส้นขอบ', ctrl:'สีปุ่มควบคุม', revbox:'สีกล่องรีวิว'};
-openForm('ปรับโทนสีเว็บไซต์', Object.keys(L).map(k=>({k,label:L[k], type:'color', value:theme[k]})),v=>{theme={...theme,...v};save('miori_theme', theme); applyTheme(); showToast('เปลี่ยนโทนสีสำเร็จ');});
+const L={bg:'สีพื้นหลังหลัก',card:'สีการ์ด',primary:'สีปุ่ม',blush:'สีพาสเทลอ่อน',text:'สีตัวอักษร',border:'สีเส้นขอบ',ctrl:'สีปุ่มควบคุม',revbox:'สีกล่องรีวิว'};
+openForm('ปรับโทนสีเว็บไซต์', Object.keys(L).map(k=>({k,label:L[k],type:'color',value:theme[k]})),v=>{theme={...theme,...v};save('miori_theme',theme); applyTheme(); showToast('เปลี่ยนโทนสีสำเร็จ');});
 }
-function resetTheme(){theme={...DEF_THEME}; save('miori_theme', theme); applyTheme(); showToast('รีเซ็ตโทนสีสำเร็จ');}
+function resetTheme(){theme={...DEF_THEME}; save('miori_theme',theme); applyTheme(); showToast('รีเซ็ตโทนสีสำเร็จ');}
 function renderCategoryChips(){
-const chip=(id,name)=>'<button onclick="filterCategory(\''+id+'\')" class="'+(currentCategory===id?'bg-soft-blush font-bold border-blush-dark':'bg-white')+' px-4 py-2 rounded-2xl text-xs sm:text-sm border-2 border-soft-blush shadow-scrapbook hover:bg-soft-blush whitespace-nowrap">'+esc(name)+'</button>';
-$('category-chips-container').innerHTML=chip('all','ทั้งหมด')+categories.map(c=>chip(c.id, c.name)).join('');
+const chip=(id,name)=>`<button onclick="filterCategory('${id}')" class="${currentCategory===id?'bg-soft-blush font-bold border-blush-dark':'bg-white'} px-4 py-2 rounded-2xl text-xs sm:text-sm border-2 border-soft-blush shadow-scrapbook hover:bg-soft-blush whitespace-nowrap">${esc(name)}</button>`;
+$('category-chips-container').innerHTML=chip('all','ทั้งหมด')+categories.map(c=>chip(c.id,c.name)).join('');
 }
 function editCategories(){
 let tempCategories = JSON.parse(JSON.stringify(categories));
 function renderCatList() {
 const container = $('form-cat-list');
 if(!container) return;
-container.innerHTML = tempCategories.map((c, idx) =>
-'<div class="flex items-center gap-2 bg-warm-cream p-2.5 rounded-2xl border border-soft-blush">'+
-'<div class="flex-1 space-y-1">'+
-'<input type="text" placeholder="ชื่อหมวดหมู่" value="'+esc(c.name)+'" oninput="tempCategories['+idx+'].name=this.value" class="inp !py-1 !text-xs">'+
-'</div>'+
-'<button type="button" onclick="tempCategories.splice('+idx+', 1); renderCatList();" class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 hover:bg-red-200"><i class="fa-solid fa-trash text-xs"></i></button>'+
-'</div>'
-).join('') || '<p class="text-xs text-muted-brown text-center py-4">ยังไม่มีหมวดหมู่ กดปุ่มด้านล่างเพื่อเพิ่ม</p>';
+container.innerHTML = tempCategories.map((c, idx) => `
+<div class="flex items-center gap-2 bg-warm-cream p-2.5 rounded-2xl border border-soft-blush">
+<div class="flex-1 space-y-1">
+<input type="text" placeholder="ชื่อหมวดหมู่" value="${esc(c.name)}" oninput="tempCategories[${idx}].name=this.value" class="inp !py-1 !text-xs">
+</div>
+<button type="button" onclick="tempCategories.splice(${idx},1); renderCatList();" class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 hover:bg-red-200"><i class="fa-solid fa-trash text-xs"></i></button>
+</div>
+`).join('') || '<p class="text-xs text-muted-brown text-center py-4">ยังไม่มีหมวดหมู่ กดปุ่มด้านล่างเพื่อเพิ่ม</p>';
 }
 window.tempCategories = tempCategories;
 window.renderCatList = renderCatList;
@@ -516,7 +520,11 @@ showToast('บันทึกหมวดหมู่สำเร็จ');
 setTimeout(() => {
 const fieldDiv = $('f-custom_cats')?.closest('div');
 if(fieldDiv) {
-fieldDiv.innerHTML = '<label class="block text-xs font-bold mb-2">แก้ไขชื่อหมวดหมู่</label><div id="form-cat-list" class="space-y-2.5 max-h-60 overflow-y-auto pr-1"></div><button type="button" onclick="tempCategories.push({id:\'cat_\'+Date.now(), name:\'\'}); renderCatList();" class="mt-3 w-full py-2 bg-soft-blush hover:bg-blush-dark hover:text-white text-xs font-bold rounded-xl text-blush-dark border border-soft-blush flex items-center justify-center gap-1.5"><i class="fa-solid fa-plus"></i> เพิ่มหมวดหมู่ใหม่</button>';
+fieldDiv.innerHTML = `
+<label class="block text-xs font-bold mb-2">แก้ไขชื่อหมวดหมู่</label>
+<div id="form-cat-list" class="space-y-2.5 max-h-60 overflow-y-auto pr-1"></div>
+<button type="button" onclick="tempCategories.push({id:'cat_'+Date.now(), name:''}); renderCatList();" class="mt-3 w-full py-2 bg-soft-blush hover:bg-blush-dark hover:text-white text-xs font-bold rounded-xl text-blush-dark border border-soft-blush flex items-center justify-center gap-1.5"><i class="fa-solid fa-plus"></i> เพิ่มหมวดหมู่ใหม่</button>
+`;
 }
 renderCatList();
 }, 50);
@@ -524,24 +532,25 @@ renderCatList();
 function filterCategory(c){currentCategory=c; renderCategoryChips(); renderProducts();}
 function renderProducts(){
 const list=currentCategory==='all'?products:products.filter(p=>p.category===currentCategory);
-$('product-grid').innerHTML=list.map(p=>'
+$('product-grid').innerHTML=list.map(p=>`
 <div class="bg-cream-card rounded-3xl p-3.5 border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark tilt-hover flex flex-col justify-between group">
 <div class="space-y-3">
 <div class="relative aspect-square rounded-2xl overflow-hidden bg-warm-cream border border-soft-brown/10">
-<img src="'+esc(p.img)+'" alt="'+esc(p.name)+'" class="w-full h-full object-cover" onerror="this.src=\''+PLACE+'\'">
-<span class="absolute top-2 left-2 bg-white/90 font-handwritten font-bold text-[10px] px-2.5 py-0.5 rounded-full border border-soft-blush">'+esc(p.badge||'New')+'</span>
-<button class="admin-only ebtn absolute bottom-2 right-2" title="แก้ไขสินค้า" onclick="editProduct('+p.id+')"><i class="fa-solid fa-pen"></i></button>
+<img src="${esc(p.img)}" alt="${esc(p.name)}" class="w-full h-full object-cover" onerror="this.src='${PLACE}'">
+<span class="absolute top-2 left-2 bg-white/90 font-handwritten font-bold text-[10px] px-2.5 py-0.5 rounded-full border border-soft-blush">${esc(p.badge||'New')}</span>
+<button class="admin-only ebtn absolute bottom-2 right-2" title="แก้ไขสินค้า" onclick="editProduct(${p.id})"><i class="fa-solid fa-pen"></i></button>
 </div>
 <div>
-<div class="text-yellow-400 text-xs mb-1"><i class="fa-solid fa-star"></i><span class="text-soft-brown font-bold ml-1">'+(p.rating||5)+'</span></div>
-<h4 class="font-bold text-sm sm:text-base line-clamp-2 leading-snug">'+esc(p.name)+'</h4>
+<div class="text-yellow-400 text-xs mb-1"><i class="fa-solid fa-star"></i><span class="text-soft-brown font-bold ml-1">${p.rating||5}</span></div>
+<h4 class="font-bold text-sm sm:text-base line-clamp-2 leading-snug">${esc(p.name)}</h4>
 </div>
 </div>
 <div class="mt-3 pt-2 border-t border-dashed border-soft-blush flex items-center justify-between">
-<span class="font-handwritten font-bold text-base">฿'+esc(p.price)+'</span>
-<button onclick="openProductModal('+p.id+')" class="px-3 py-1.5 bg-soft-blush hover:bg-blush-dark hover:text-white text-xs font-handwritten font-bold rounded-xl">'+esc(p.viewBtnText||'ดูรายละเอียด')+'</button>
+<span class="font-handwritten font-bold text-base">฿${esc(p.price)}</span>
+<button onclick="openProductModal(${p.id})" class="px-3 py-1.5 bg-soft-blush hover:bg-blush-dark hover:text-white text-xs font-handwritten font-bold rounded-xl">${esc(p.viewBtnText||'ดูรายละเอียด')}</button>
 </div>
-</div>').join('')+'<button class="admin-only min-h-[10rem] rounded-3xl border-2 border-dashed custom-border-dashed items-center justify-center gap-2 text-sm font-bold text-blush-dark bg-cream-card hover:bg-soft-blush" onclick="editProduct()"><i class="fa-solid fa-plus"></i> เพิ่มสินค้า</button>';
+</div>
+`).join('')+'<button class="admin-only min-h-[10rem] rounded-3xl border-2 border-dashed custom-border-dashed flex flex-col items-center justify-center gap-2 text-sm font-bold text-blush-dark bg-cream-card hover:bg-soft-blush" onclick="editProduct()"><i class="fa-solid fa-plus"></i> เพิ่มสินค้า</button>';
 }
 function editProduct(id){
 const p=id?products.find(x=>x.id==id):{category:categories[0]?.id, btnText:B, btnLink:'https://line.me', viewBtnText:'ดูรายละเอียด'};
@@ -560,60 +569,61 @@ v.price=parseFloat(v.price)||0;
 if(formImgs.img)v.img=formImgs.img; else if(!id)v.img=PLACE; else v.img=p.img;
 if(id)Object.assign(p,v); else products.unshift({id:Date.now(), rating:5,...v});
 save('miori_products', products); renderProducts(); showToast('บันทึกสินค้าสำเร็จ');},
-id?()=>{products=products.filter(x=>x.id!=id);save('miori_products', products); renderProducts(); showToast('ลบสินค้าสำเร็จ');}:null);
+id?()=>{products=products.filter(x=>x.id!=id); save('miori_products', products); renderProducts(); showToast('ลบสินค้าสำเร็จ');}:null);
 }
 function openProductModal(id){
 const p=products.find(x=>x.id===id);if(!p)return;
-$('modal-product-content').innerHTML='<div class="space-y-4">'+
-'<div class="aspect-square w-full rounded-2xl overflow-hidden bg-warm-cream border-2 border-soft-blush"><img src="'+esc(p.img)+'" class="w-full h-full object-cover" onerror="this.src=\''+PLACE+'\'"></div>'+
-'<div><span class="text-[11px] font-bold text-blush-dark bg-soft-blush px-3 py-1 rounded-full">'+esc(p.badge||'Handmade')+'</span>'+
-'<h3 class="font-handwritten text-xl font-bold mt-2">'+esc(p.name)+'</h3>'+
-'<p class="text-xs text-muted-brown mt-1 leading-relaxed">'+esc(p.desc||'')+'</p></div>'+
-'<div class="flex items-center justify-between pt-3 border-t-2 border-dashed border-soft-blush">'+
-'<div><p class="text-[10px] text-muted-brown">ราคาพิเศษ</p><span class="font-handwritten text-2xl font-bold">฿'+esc(p.price)+'</span></div>'+
-'<a href="'+esc(p.btnLink||'https://line.me')+'" target="_blank" class="px-5 py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-2xl shadow-scrapbook">'+esc(p.btnText||B)+'</a>'+
-'</div></div>';
+$('modal-product-content').innerHTML=`<div class="space-y-4">
+<div class="aspect-square w-full rounded-2xl overflow-hidden bg-warm-cream border-2 border-soft-blush"><img src="${esc(p.img)}" class="w-full h-full object-cover" onerror="this.src='${PLACE}'"></div>
+<div><span class="text-[11px] font-bold text-blush-dark bg-soft-blush px-3 py-1 rounded-full">${esc(p.badge||'Handmade')}</span>
+<h3 class="font-handwritten text-xl font-bold mt-2">${esc(p.name)}</h3>
+<p class="text-xs text-muted-brown mt-1 leading-relaxed">${esc(p.desc||'')}</p></div>
+<div class="flex items-center justify-between pt-3 border-t-2 border-dashed border-soft-blush">
+<div><p class="text-[10px] text-muted-brown">ราคาพิเศษ</p><span class="font-handwritten text-2xl font-bold">฿${esc(p.price)}</span></div>
+<a href="${esc(p.btnLink||'https://line.me')}" target="_blank" class="px-5 py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-2xl shadow-scrapbook">${esc(p.btnText||B)}</a>
+</div></div>`;
 $('product-modal').classList.remove('hidden');
 }
 function updateReviewStats(){
 const count=reviewsData.length;
 if(count===0){
-$('dynamic-rev-score').textContent='0.0'; $('dynamic-rev-count').textContent='จาก 0 รีวิว';
+$('dynamic-rev-score').textContent='0.0';$('dynamic-rev-count').textContent='จาก 0 รีวิว';
 return;
 }
 const sum=reviewsData.reduce((acc,curr)=>acc+Number(curr.rating||5),0);
 const avg=(sum/count).toFixed(2);
 $('dynamic-rev-score').textContent=avg;
-$('dynamic-rev-count').textContent='จาก '+count+' รีวิว';
+$('dynamic-rev-count').textContent=`จาก ${count} รีวิว`;
 }
 function renderReviews(){
-$('reviews-container').innerHTML=reviewsData.map((r,i)=>'
-<div class="'+(r.color||'bg-cream-card')+' p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook relative '+(r.rotation||'')+' space-y-3">
-<div class="washi-tape '+(i%2===0?'-top-2.5 left-8 rotate-[-3deg]':'-top-2.5 right-8 rotate-[3deg]')+'"></div>
+$('reviews-container').innerHTML=reviewsData.map((r,i)=>`
+<div class="${r.color||'bg-cream-card'} p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook relative ${r.rotation||''} space-y-3">
+<div class="washi-tape ${i%2===0?'-top-2.5 left-8 rotate-[-3deg]':'-top-2.5 right-8 rotate-[3deg]'}"></div>
 <div class="flex justify-between items-start">
-<div><h4 class="font-bold text-base">'+esc(r.name)+'</h4><p class="text-[10px] text-muted-brown">'+esc(r.date)+'</p></div>
-<div class="text-yellow-400 text-xs">'+'<i class="fa-solid fa-star"></i>'.repeat(r.rating)+'</div>
+<div><h4 class="font-bold text-base">${esc(r.name)}</h4><p class="text-[10px] text-muted-brown">${esc(r.date)}</p></div>
+<div class="text-yellow-400 text-xs">${'<i class="fa-solid fa-star"></i>'.repeat(r.rating)}</div>
 </div>
-<p class="text-xs leading-relaxed">"'+esc(r.comment)+'"</p>
-</div>').join('');
+<p class="text-xs leading-relaxed">"${esc(r.comment)}"</p>
+</div>
+`).join('');
 updateReviewStats();
 }
 function openReviewModal(){$('review-modal').classList.remove('hidden');}
 function closeReviewModal(){$('review-modal').classList.add('hidden');}
 function setStarRating(n){
 selectedRating=n;
-$('star-selector').innerHTML=[1,2,3,4,5].map(i=>'<i onclick="setStarRating('+i+')" class="fa-solid fa-star '+(i<=selectedRating?'text-yellow-400':'text-gray-300')+'"></i>').join('');
+$('star-selector').innerHTML=[1,2,3,4,5].map(i=>`<i onclick="setStarRating(${i})" class="fa-solid fa-star ${i<=n?'text-yellow-400':'text-gray-300'}"></i>`).join('');
 }
 function submitReview(e){
 e.preventDefault();
-const C=['bg-pastel-yellow', 'bg-soft-blush', 'bg-sage-green', 'bg-pastel-peach'], R=['rotate-[-2deg]', 'rotate-[2deg]', 'rotate-[-1deg]', 'rotate-[1deg]'];
-reviewsData.unshift({id:Date.now(), name:$('review-name').value, rating:selectedRating, date:new Date().toLocaleDateString('th-TH', {day:'numeric', month:'short', year:'numeric'}), comment:$('review-comment').value, color:C[Math.floor(Math.random()*C.length)], rotation:R[Math.floor(Math.random()*R.length)]});
-save('miori_reviews', reviewsData); renderReviews(); closeReviewModal();e.target.reset();
+const C=['bg-pastel-yellow','bg-soft-blush','bg-sage-green','bg-pastel-peach'], R=['rotate-[-2deg]','rotate-[2deg]','rotate-[-1deg]','rotate-[1deg]'];
+reviewsData.unshift({id:Date.now(), name:$('review-name').value, rating:selectedRating, date:new Date().toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'numeric'}), comment:$('review-comment').value, color:C[Math.floor(Math.random()*C.length)], rotation:R[Math.floor(Math.random()*R.length)]});
+save('miori_reviews', reviewsData); renderReviews(); closeReviewModal(); e.target.reset();
 setStarRating(5); showToast('ขอบคุณสำหรับรีวิว');
 }
 function showToast(m){
-const t=$('toast'); $('toast-msg').textContent=m;t.classList.remove('-translate-y-6', 'opacity-0');
-clearTimeout(showToast.t); showToast.t=setTimeout(()=>t.classList.add('-translate-y-6', 'opacity-0'),2800);
+const t=$('toast');$('toast-msg').textContent=m; t.classList.remove('-translate-y-6','opacity-0');
+clearTimeout(showToast.t); showToast.t=setTimeout(()=>t.classList.add('-translate-y-6','opacity-0'),2800);
 }
 window.onload=()=>{
 applyTheme(); applyTexts(); applyMusic(); applyImages();
