@@ -423,7 +423,7 @@ function openForm(title,fields,onSave,onDelete){
     try {
       const v={};
       for(const f of fields){
-        if(f.type==='image') continue;
+        if(f.type==='image' || f.type==='html') continue;
         const el=$('f-'+f.k);
         if(el) v[f.k]=el.value;
       }
@@ -436,6 +436,7 @@ function openForm(title,fields,onSave,onDelete){
   $('form-del').classList.toggle('hidden',!onDelete);
   $('form-title').textContent=title;
   $('form-fields').innerHTML=fields.map(f=>{
+    if(f.type==='html') return `<div id="f-${f.k}"></div>`;
     const id='f-'+f.k,v=esc(f.value);let input;
     if(f.type==='image')input=`<div class="flex items-center gap-3"><img id="prev-${f.k}" src="${esc(f.value||'')}" class="w-20 h-20 object-cover rounded-xl border-2 border-soft-blush bg-warm-cream ${f.value?'':'hidden'}"><input type="file" id="file-${f.k}" accept="image/*" class="inp !py-1 text-xs" onchange="previewFormFile('${f.k}')"></div>`;
     else if(f.type==='textarea')input=`<textarea id="${id}" rows="${f.rows||3}" class="inp resize-none">${v}</textarea>`;
@@ -485,7 +486,9 @@ async function editSection(n){
     applyTexts();applyImages();showToast('บันทึกสำเร็จ');});
 }
 function renderContacts(){
-  $('contact-cards-container').innerHTML=contacts.map(c=>`
+  const container = $('contact-cards-container');
+  if(!container) return;
+  container.innerHTML=contacts.map(c=>`
     <div class="relative group">
       <a href="${esc(c.url)}" target="_blank" class="flex items-center gap-5 bg-cream-card px-5 py-4 rounded-3xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark tilt-hover">
         <div class="w-14 h-14 rounded-2xl ${esc(c.color)} border flex items-center justify-center text-xl shrink-0"><i class="${esc(c.icon)}"></i></div>
@@ -606,30 +609,32 @@ function editTheme(){
 }
 function resetTheme(){theme={...DEF_THEME};saveToFirebase('theme', theme);applyTheme();showToast('รีเซ็ตโทนสีสำเร็จ');}
 function renderCategoryChips(){
+  const container = $('category-chips-container');
+  if(!container) return;
   const chip=(id,name)=>`<button onclick="filterCategory('${id}')" class="${currentCategory===id?'bg-soft-blush font-bold border-blush-dark':'bg-white'} px-4 py-2 rounded-2xl text-xs sm:text-sm border-2 border-soft-blush shadow-scrapbook hover:bg-soft-blush whitespace-nowrap">${esc(name)}</button>`;
-  $('category-chips-container').innerHTML=chip('all','ทั้งหมด')+categories.map(c=>chip(c.id,c.name)).join('');
+  container.innerHTML=chip('all','ทั้งหมด')+categories.map(c=>chip(c.id,c.name)).join('');
 }
 function editCategories(){
   let tempCategories = JSON.parse(JSON.stringify(categories));
   
-  function renderCatList() {
+  window.renderCatList = function() {
     const container = $('form-cat-list');
     if(!container) return;
     container.innerHTML = tempCategories.map((c, idx) => `
       <div class="flex items-center gap-2 bg-warm-cream p-2.5 rounded-2xl border border-soft-blush">
         <div class="flex-1 space-y-1">
-          <input type="text" placeholder="ชื่อหมวดหมู่" value="${esc(c.name)}" oninput="tempCategories[${idx}].name=this.value" class="inp !py-1 !text-xs">
+          <input type="text" placeholder="ชื่อหมวดหมู่" value="${esc(c.name)}" oninput="window.tempCategories[${idx}].name=this.value" class="inp !py-1 !text-xs">
         </div>
-        <button type="button" onclick="tempCategories.splice(${idx},1); renderCatList();" class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 hover:bg-red-200"><i class="fa-solid fa-trash text-xs"></i></button>
+        <button type="button" onclick="window.tempCategories.splice(${idx},1); window.renderCatList();" class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 hover:bg-red-200"><i class="fa-solid fa-trash text-xs"></i></button>
       </div>
     `).join('') || '<p class="text-xs text-muted-brown text-center py-4">ยังไม่มีหมวดหมู่ กดปุ่มด้านล่างเพื่อเพิ่ม</p>';
-  }
+  };
   window.tempCategories = tempCategories;
-  window.renderCatList = renderCatList;
+
   openForm('จัดการชื่อหมวดหมู่สินค้า',[
     {k:'custom_cats', label:'รายการหมวดหมู่', type:'html'}
   ], ()=>{
-    categories = tempCategories.filter(c => c.name.trim()).map(c => ({
+    categories = window.tempCategories.filter(c => c.name.trim()).map(c => ({
       id: c.id || ('cat_' + Math.random().toString(36).substr(2, 9)),
       name: c.name
     }));
@@ -640,21 +645,23 @@ function editCategories(){
     showToast('บันทึกหมวดหมู่สำเร็จ');
   });
   setTimeout(() => {
-    const fieldDiv = $('f-custom_cats')?.closest('div');
+    const fieldDiv = $('f-custom_cats');
     if(fieldDiv) {
       fieldDiv.innerHTML = `
         <label class="block text-xs font-bold mb-2">แก้ไขชื่อหมวดหมู่</label>
         <div id="form-cat-list" class="space-y-2.5 max-h-60 overflow-y-auto pr-1"></div>
-        <button type="button" onclick="tempCategories.push({id:'cat_'+Date.now(), name:''}); renderCatList();" class="mt-3 w-full py-2 bg-soft-blush hover:bg-blush-dark hover:text-white text-xs font-bold rounded-xl text-blush-dark border border-soft-blush flex items-center justify-center gap-1.5"><i class="fa-solid fa-plus"></i> เพิ่มหมวดหมู่ใหม่</button>
+        <button type="button" onclick="window.tempCategories.push({id:'cat_'+Date.now(), name:''}); window.renderCatList();" class="mt-3 w-full py-2 bg-soft-blush hover:bg-blush-dark hover:text-white text-xs font-bold rounded-xl text-blush-dark border border-soft-blush flex items-center justify-center gap-1.5"><i class="fa-solid fa-plus"></i> เพิ่มหมวดหมู่ใหม่</button>
       `;
-      renderCatList();
+      window.renderCatList();
     }
   }, 50);
 }
 function filterCategory(c){currentCategory=c;renderCategoryChips();renderProducts();}
 function renderProducts(){
+  const container = $('product-grid');
+  if(!container) return;
   const list=currentCategory==='all'?products:products.filter(p=>p.category===currentCategory);
-  $('product-grid').innerHTML=list.map(p=>`
+  container.innerHTML=list.map(p=>`
   <div class="bg-cream-card rounded-3xl p-3.5 border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark tilt-hover flex flex-col justify-between group">
     <div class="space-y-3">
       <div class="relative aspect-square rounded-2xl overflow-hidden bg-warm-cream border border-soft-brown/10">
@@ -722,7 +729,9 @@ function updateReviewStats(){
   $('dynamic-rev-count').textContent=`จาก ${count} รีวิว`;
 }
 function renderReviews(){
-  $('reviews-container').innerHTML=reviewsData.map((r,i)=>`
+  const container = $('reviews-container');
+  if(!container) return;
+  container.innerHTML=reviewsData.map((r,i)=>`
   <div class="${r.color||'bg-cream-card'} p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook relative ${r.rotation||''} space-y-3">
     <div class="washi-tape ${i%2===0?'-top-2.5 left-8 rotate-[-3deg]':'-top-2.5 right-8 rotate-[3deg]'}"></div>
     <div class="flex justify-between items-start">
@@ -788,6 +797,12 @@ window.onload=()=>{
   applyTheme();
   setStarRating(5);
   setEditing(editing,true);
+
+  // เรนเดอร์ข้อมูลเบื้องต้นทันทีเพื่อกันหน้าเว็บโล้นระหว่างรอ Firebase
+  renderCategoryChips();
+  renderProducts();
+  renderReviews();
+  renderContacts();
 
   setTimeout(() => {
     if(window.db && window.storage) {
