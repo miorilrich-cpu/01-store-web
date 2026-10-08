@@ -3,1268 +3,621 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Miori Studio Cozy Hand-drawn Store & Admin</title>
-<!-- Tailwind CSS CDN -->
+<title>Miori Studio</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- Google Fonts: Itim, Mali, Prompt -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css?family=Itim&family=Mali:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
-<!-- FontAwesome Icons -->
+<link href="https://fonts.googleapis.com/css?family=Itim&family=K2D:wght@400;500;700&family=Mali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        'warm-cream': 'var(--color-bg, #FAF6F0)',
-        'cream-card': 'var(--color-card, #FFFDF9)',
-        'soft-blush': 'var(--color-blush, #F7E7E6)',
-        'blush-dark': 'var(--color-primary, #E29792)',
-        'pastel-peach': '#FDE8E1',
-        'sage-green': '#E1ECE5',
-        'sage-dark': '#81A690',
-        'pastel-yellow': '#FCF4DD',
-        'soft-brown': 'var(--color-text, #65524D)',
-        'muted-brown': '#8F7D77',
-        'washi-pink': 'rgba(247, 231, 230, 0.85)',
-        'washi-yellow': 'rgba(252, 244, 221, 0.85)',
-        'washi-green': 'rgba(225, 236, 229, 0.85)',
-      },
-      fontFamily: {
-        'mali': ['Mali', 'cursive'],
-        'itim': ['Itim', 'cursive'],
-        'prompt': ['Prompt', 'sans-serif'],
-      },
-      boxShadow: {
-        'scrapbook': '4px 6px 0px rgba(101, 82, 77, 0.12)',
-        'soft-float': '0 12px 28px -6px rgba(226, 151, 146, 0.25)',
-        'sticky-note': '3px 5px 12px rgba(101, 82, 77, 0.08)',
-        'glow-circle': '0 0 18px rgba(226, 151, 146, 0.35)',
-      },
-      aspectRatio: {
-        'banner': '1122/495',
-      }
-    }
-  }
-}
+tailwind.config={theme:{extend:{colors:{
+'warm-cream':'var(--color-bg)', 'cream-card':'var(--color-card)', 'soft-blush':'var(--color-blush)', 'blush-dark':'var(--color-primary)', 'soft-brown':'var(--color-text)',
+'pastel-peach':'#FFE5EC', 'sage-green': '#E1ECE5','sage-dark': '#81A690', 'pastel-yellow':'#FFF0F5', 'muted-brown': '#8B6868',
+'ctrl-btn':'var(--color-ctrl)', 'rev-box':'var(--color-revbox)'},
+fontFamily:{mali:['Mali', 'cursive'], itim:['Itim', 'cursive'], k2d: ['K2D','sans-serif']},
+boxShadow:{scrapbook:'4px 6px 0 rgba(214,122,143,0.15)', 'soft-float':'0 12px 28px -6px rgba(255,154,162,0.3)', 'glow-circle':'0 0 18px rgba(255,154,162,0.4)'},
+aspectRatio:{banner:'1122/495'}}}
 </script>
 <style>
-:root {
-  --color-bg: #FAF6F0;
-  --color-card: #FFFDF9;
-  --color-primary: #E29792;
-  --color-blush: #F7E7E6;
-  --color-text: #65524D;
-  --color-border: #E29792;
-}
-body {
-  font-family: 'Mali', cursive;
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  background-image: radial-gradient(var(--color-primary) 0.7px, transparent 0.7px), radial-gradient(var(--color-primary) 0.7px, var(--color-bg) 0.7px);
-  background-size: 28px 28px;
-  background-position: 0 0, 14px 14px;
-  overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  padding-bottom: 90px; /* เว้นพื้นที่ให้ Floating Menu ด้านล่าง */
-}
-.custom-border-dashed { border-color: var(--color-border) !important; }
-.custom-primary-bg { background-color: var(--color-primary) !important; }
-.custom-primary-text { color: var(--color-primary) !important; }
-h1, h2, h3, h4, .font-handwritten { font-family: 'Itim', cursive; }
-
-.washi-tape {
-  position: absolute;
-  height: 24px;
-  width: 90px;
-  background-color: rgba(247, 231, 230, 0.85);
-  backdrop-filter: blur(2px);
-  border-left: 2px dashed rgba(226, 151, 146, 0.4);
-  border-right: 2px dashed rgba(226, 151, 146, 0.4);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
-  z-index: 25;
-  pointer-events: none;
-}
-@keyframes floatMusic {
-  0% { transform: translateY(0px) rotate(0deg) scale(0.8); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateY(-32px) rotate(20deg) scale(1.1); opacity: 0; }
-}
-.music-note-1 { animation: floatMusic 2s infinite ease-out; }
-.music-note-2 { animation: floatMusic 2.2s infinite ease-out 0.6s; }
-
-.tab-diary {
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
-}
-.tab-diary.active {
-  background-color: var(--color-blush);
-  color: var(--color-text);
-  font-weight: 700;
-  transform: translateY(-2px);
-  border-bottom: 3px solid var(--color-primary);
-}
-.admin-tab.active {
-  background-color: var(--color-primary);
-  color: #ffffff;
+:root{--color-bg:#FFF9FB;--color-card:#FFFFFF;--color-primary:#FF7096;--color-blush:#FFE4E9;--color-text:#5C4040;--color-border:#FFB6C1;--color-ctrl:#FFE4E9;--color-revbox:#FFFFFF}
+body{font-family: 'Mali', 'K2D', cursive; background-color:var(--color-bg); color:var(--color-text); background-image:radial-gradient(var(--color-border) 0.8px,transparent 0.8px); background-size:26px 26px; overflow-x:hidden}
+h1,h2,h3,h4,.font-handwritten{font-family:'Itim', cursive}
+.custom-border-dashed{border-color:var(--color-border)!important}
+.custom-primary-text{color:var(--color-primary)!important}
+.washi-tape{position:absolute; height:24px;width:90px;background:rgba(255,182,193,.65); border-left:2px dashed rgba(255,112,150,.4); border-right:2px dashed rgba(255,112,150,.4);z-index:25; pointer-events:none}
+.tab-diary{transition:all .25s}
+.tab-diary.active {background:var(--color-blush); font-weight:700;transform:translateY(-2px);border-bottom:3px solid var(--color-primary)}
+.tilt-hover{transition:all .3s}.tilt-hover:hover{transform:translateY(-3px) rotate(-1deg)}
+.backdrop-blur-custom{backdrop-filter:blur(8px)}
+@keyframes floatMusic{0%{transform:translateY(0); opacity:0} 50% {opacity: 1} 100% {transform:translateY(-26px) rotate(20deg);opacity:0}}
+.music-note-1{animation:floatMusic 2s infinite ease-out}
+.inp{width:100%;font-size:.8rem;padding:.6rem .9rem; border-radius: 1rem; border:2px solid var(--color-blush); background:var(--color-bg); color:var(--color-text); outline:none}
+.inp:focus {border-color:var(--color-primary)}
+input[type=color].inp{height:40px;padding:2px}
+.admin-only{display:none!important}
+.editing .admin-only{display:inline-flex!important}
+.editing #review-btn-container {display:none!important}
+[data-edit]{white-space:pre-line}
+.ebtn{width:1.75rem; height: 1.75rem; border-radius:9999px;background:#fff;border:1.5px solid var(--color-primary);color:var(--color-text); font-size:.7rem; display:inline-flex; align-items:center; justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.12); cursor:pointer}
+.ebtn:hover{background:var(--color-blush)}
+.ebtn-l{width:auto;height:1.9rem; padding:0 0.75rem; gap:.35rem;font-weight:700}
+.btn-cute-minimal {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  background-color: #FFFFFF;
+  border: 2px solid #FFB6C1;
+  color: #5C4040;
+  font-family: 'Itim', cursive;
+  font-size: 14px;
   font-weight: bold;
+  border-radius: 9999px;
+  box-shadow: 0 4px 10px rgba(255, 154, 162, 0.15);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  width: 100%;
 }
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--color-bg); }
-::-webkit-scrollbar-thumb { background: var(--color-blush); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
-
-.tilt-hover {
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.tilt-hover:hover {
-  transform: translateY(-4px) rotate(-1deg);
-}
-.backdrop-blur-custom {
-  backdrop-filter: blur(8px);
+.btn-cute-minimal:hover {
+  background-color: #FFE4E9;
+  border-color: #FF7096;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(255, 154, 162, 0.3);
 }
 </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-soft-blush selection:text-soft-brown">
-
-<!-- HEADER -->
-<header class="sticky top-0 z-40 bg-warm-cream/95 backdrop-blur-md border-b-2 border-dashed custom-border-dashed pt-3 pb-2 shadow-xs transition-colors">
-  <div class="max-w-6xl mx-auto px-4 flex justify-between items-center gap-2">
-    <!-- Circular Logo & Title Section -->
-    <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer group min-w-0" onclick="switchTab('store')">
-      <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-pastel-peach border-2 border-dashed custom-border-dashed p-1 shadow-glow-circle group-hover:rotate-12 transition-transform flex items-center justify-center overflow-hidden shrink-0">
-        <div class="w-full h-full rounded-full bg-cream-card border border-soft-blush flex items-center justify-center overflow-hidden">
-          <img id="site-logo-img" src="" alt="Miori Logo" class="w-full h-full object-cover hidden">
-          <svg id="site-logo-svg" class="w-6 h-6 sm:w-7 sm:h-7 text-blush-dark group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 011.09-.12 4 4 0 003.91-3.88 4 4 0 00-2.88-3.87A5 5 0 0013 7a5 5 0 00-4.7 3.32A4 4 0 003 15z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m-4 1-1.5 1.5M16 4l-1.5 1.5" />
-          </svg>
-        </div>
-      </div>
-      <div class="min-w-0">
-        <span id="site-title-text" class="font-handwritten text-lg sm:text-2xl font-bold tracking-wide text-soft-brown flex items-center gap-1.5 truncate">
-          Miori Studio <span class="custom-primary-text text-xs sm:text-sm bg-soft-blush px-2 py-0.5 rounded-full shrink-0">みおり</span>
-        </span>
-        <p id="site-slogan-text" class="text-[10px] sm:text-[11px] text-muted-brown font-medium mt-0.5 flex items-center gap-1 truncate">
-          <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-blush-dark inline shrink-0" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-          </svg>
-          <span class="truncate">hand-crafted & japanese cozy items</span>
-        </p>
-      </div>
-    </div>
-
-    <!-- Right Action Buttons (Music Player & Gear Button - ปรับให้ขนาดเท่ากัน) -->
-    <div class="flex items-center gap-2 shrink-0">
-      <div id="music-notes" class="absolute top-12 right-16 pointer-events-none hidden">
-        <span class="music-note-1 absolute text-blush-dark"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></span>
-      </div>
-      <!-- ปุ่มเปิดเพลงย่อให้เล็กเท่าปุ่มฟันเฟือง -->
-      <button id="play-btn" onclick="toggleAudio()" class="w-8 h-8 rounded-xl bg-pastel-yellow hover:bg-soft-blush border-2 border-soft-brown/15 text-soft-brown flex items-center justify-center text-xs transition-transform active:scale-95 shadow-scrapbook shrink-0" title="เล่น/หยุดเพลง">
-        <i class="fa-solid fa-play text-blush-dark"></i>
-      </button>
-      <!-- Admin Access Button -->
-      <button onclick="handleAdminButtonClick()" title="หลังบ้าน" class="w-8 h-8 rounded-xl bg-pastel-yellow hover:bg-soft-blush border-2 border-soft-brown/15 shadow-scrapbook text-soft-brown flex items-center justify-center text-xs transition-all active:scale-95 shrink-0">
-        <i class="fa-solid fa-gear text-blush-dark"></i>
-      </button>
-    </div>
-  </div>
+<body class="min-h-screen flex flex-col justify-between selection:bg-soft-blush">
+<header class="sticky top-0 z-40 bg-warm-cream border-b-2 border-dashed custom-border-dashed pt-3 pb-2">
+<div class="max-w-6xl mx-auto px-4 flex flex-col items-center gap-3">
+<div class="w-full flex justify-between items-center gap-2">
+<div class="flex items-center gap-2 sm:gap-3 min-w-0">
+<div class="relative shrink-0 cursor-pointer" onclick="switchTab('store')">
+<div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-pastel-peach border-2 border-dashed custom-border-dashed p-1 shadow-glow-circle flex items-center justify-center overflow-hidden">
+<div class="w-full h-full rounded-full bg-cream-card border border-soft-blush flex items-center justify-center overflow-hidden">
+<img id="site-logo-img" alt="logo" class="w-full h-full object-cover hidden">
+<svg id="site-logo-svg" class="w-7 h-7 text-blush-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 011.09-.12 4 4 0 003.91-3.88 4 4 0 00-2.88-3.87A5 5 0 0013 7a5 5 0 00-4.7 3.32A4 4 0 003 15z"/></svg>
+</div>
+</div>
+</div>
+<div class="min-w-0">
+<div class="font-handwritten text-lg sm:text-2xl font-bold text-soft-brown flex items-center gap-1.5">
+<span data-edit="siteTitle">Miori Studio</span><span data-edit="siteJp" class="custom-primary-text text-xs sm:text-sm bg-soft-blush px-2 py-0.5 rounded-full">みおり</span><button class="admin-only ebtn shrink-0" title="แก้ไขส่วนหัวเว็บ" onclick="editSection('header')"><i class="fa-solid fa-pen"></i></button>
+</div>
+<p class="text-[10px] sm:text-[11px] text-muted-brown font-medium mt-0.5"><i class="fa-solid fa-star text-blush-dark"></i> <span data-edit="slogan">hand-crafted & japanese cozy items</span></p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0 relative">
+<div id="music-notes" class="absolute -top-3 right-14 pointer-events-none hidden"><i class="fa-solid fa-music music-note-1 absolute text-blush-dark text-xs"></i></div>
+<button class="admin-only ebtn" title="แก้ไขเพลง" onclick="editMusic()"><i class="fa-solid fa-pen"></i></button>
+<button id="play-btn" onclick="toggleAudio()" title="เล่น/หยุดเพลง" class="w-9 h-9 rounded-xl bg-ctrl-btn border-2 border-soft-brown/15 shadow-scrapbook flex items-center justify-center text-sm active:scale-95 shrink-0" style="background-color: var(--color-ctrl);"><i class="fa-solid fa-play ml-0.5 text-blush-dark"></i></button>
+<button id="gear" onclick="handleGear()" title="หลังบ้าน" class="w-9 h-9 rounded-xl bg-ctrl-btn border-2 border-soft-brown/15 shadow-scrapbook flex items-center justify-center text-sm active:scale-95 shrink-0" style="background-color: var(--color-ctrl);"><i class="fa-solid fa-gear text-blush-dark"></i></button>
+</div>
+</div>
+<nav class="w-full flex justify-center pt-1">
+<div class="flex items-center gap-1 sm:gap-3 bg-cream-card px-3 py-1.5 rounded-3xl border-2 border-soft-blush shadow-scrapbook">
+<button onclick="switchTab('store')" id="nav-store" class="tab-diary active px-4 py-1.5 rounded-2xl text-xs sm:text-sm flex items-center gap-2"><i class="fa-solid fa-house text-blush-dark"></i><span data-edit="navStore">หน้าร้าน</span></button>
+<button onclick="switchTab('reviews')" id="nav-reviews" class="tab-diary px-4 py-1.5 rounded-2xl text-xs sm:text-sm flex items-center gap-2"><i class="fa-solid fa-heart text-blush-dark"></i><span data-edit="navReviews">รีวิวน้องๆ</span></button>
+<button onclick="switchTab('contact')" id="nav-contact" class="tab-diary px-4 py-1.5 rounded-2xl text-xs sm:text-sm flex items-center gap-2"><i class="fa-solid fa-comment-dots text-blush-dark"></i><span data-edit="navContact">ติดต่อเรา</span></button>
+</div>
+</nav>
+</div>
 </header>
-
-<!-- AUDIO PLAYER -->
-<audio id="bgm-player" loop preload="auto" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
-
+<audio id="bgm-player" loop preload="none"></audio>
 <main class="max-w-6xl mx-auto px-4 py-6 flex-1 w-full">
-  
-  <!-- ================= PAGE 1: STOREFRONT ================= -->
-  <section id="page-store" class="space-y-8">
-    <div class="relative w-full mt-4">
-      <div class="washi-tape top-3 left-12 rotate-[-6deg]"></div>
-      <div class="washi-tape -bottom-3 right-12 rotate-[4deg] bg-washi-yellow"></div>
-      <div class="relative w-full aspect-banner rounded-3xl overflow-hidden border-4 border-white shadow-soft-float bg-gradient-to-r from-soft-blush/60 via-pastel-yellow/50 to-sage-green/60 p-4 sm:p-8 flex items-center justify-between">
-        <img id="banner-store-img" src="" alt="Store Banner" class="absolute inset-0 w-full h-full object-cover hidden">
-        <div id="banner-store-overlay" class="relative z-10 max-w-xl space-y-2 sm:space-y-3">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 text-blush-dark text-xs sm:text-sm font-bold border border-soft-blush shadow-xs">
-            <svg class="w-4 h-4 inline" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            Handcrafted with Love
-          </span>
-          <h2 id="banner-store-title" class="font-handwritten text-2xl sm:text-4xl lg:text-5xl font-bold text-soft-brown leading-tight">
-            เปิดตู้ของสะสมละมุนใจ<br/><span class="text-blush-dark underline decoration-wavy decoration-soft-blush">สไตล์มินิมอลญี่ปุ่น</span>
-          </h2>
-          <p id="banner-store-desc" class="text-xs sm:text-sm text-muted-brown leading-relaxed hidden sm:block">
-            ทุกชิ้นคัดสรรความน่ารัก อบอุ่น และใส่ใจในรายละเอียด ส่งตรงถึงบ้านคุณพร้อมโปสการ์ดของแถมพิเศษทุกออเดอร์
-          </p>
-          <div class="pt-2 flex items-center gap-3">
-            <a href="#product-section" class="px-5 py-2.5 bg-soft-brown hover:bg-blush-dark text-white text-xs sm:text-sm font-handwritten font-bold rounded-2xl shadow-scrapbook hover:scale-105 transition-all flex items-center gap-2">
-              <span>แวะชมสินค้า</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-            </a>
-            <span class="text-xs text-muted-brown hidden sm:inline-block">จัดส่งฟรี เมื่อช้อปครบ 490.-</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Category Filter Stamps -->
-    <div id="product-section" class="space-y-4 pt-2">
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-        <div>
-          <h3 class="font-handwritten text-2xl font-bold text-soft-brown flex items-center gap-2">
-            <svg class="w-6 h-6 text-blush-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
-            <span>หมวดหมู่สินค้า</span>
-          </h3>
-          <p class="text-xs text-muted-brown">เลือกช้อปของน่ารักๆ ตามหมวดหมู่ได้เลยน้า</p>
-        </div>
-      </div>
-      <div id="category-chips-container" class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none"></div>
-    </div>
-
-    <!-- Product Cards Grid -->
-    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
-  </section>
-
-  <!-- ================= PAGE 2: REVIEWS ================= -->
-  <section id="page-reviews" class="hidden space-y-8">
-    <div class="relative w-full mt-4">
-      <div class="washi-tape top-3 left-10 rotate-[-4deg] bg-washi-yellow"></div>
-      <div class="washi-tape -bottom-3 right-10 rotate-[3deg] bg-washi-pink"></div>
-      <div class="relative w-full aspect-banner rounded-3xl overflow-hidden border-4 border-white shadow-soft-float bg-cream-card p-2 sm:p-3">
-        <div class="w-full h-full rounded-2xl overflow-hidden relative group">
-          <img id="banner-reviews-img" src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1122&q=80" alt="Miori Studio Review Banner" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-cream-card px-4 py-3 sm:p-8 rounded-3xl border-2 border-dashed border-blush-dark custom-border-dashed shadow-scrapbook flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6 relative overflow-hidden max-w-3xl mx-auto sm:max-w-none">
-      <div class="space-y-1 z-10 text-center sm:text-left">
-        <span class="inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold bg-soft-blush text-blush-dark px-2.5 py-0.5 rounded-full">
-          <svg class="w-3.5 h-3.5 inline" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          Customer Love Notes
-        </span>
-        <h2 class="font-handwritten text-lg sm:text-3xl font-bold text-soft-brown">กล่องบันทึกความประทับใจ</h2>
-        <p class="text-[10px] sm:text-sm text-muted-brown max-w-md">ความสุขเล็กๆ ของลูกค้าที่ได้รับของน่ารักจาก Miori Studio ค่ะ</p>
-      </div>
-      <div class="z-10 flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
-        <div class="text-center bg-warm-cream px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl border border-soft-brown/10">
-          <span class="font-handwritten text-2xl sm:text-3xl font-bold text-soft-brown">4.95</span>
-          <div class="text-yellow-400 text-[10px] sm:text-xs">
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-          </div>
-          <p class="text-[9px] sm:text-[10px] text-muted-brown">จาก 250+ รีวิว</p>
-        </div>
-        <button onclick="openReviewModal()" class="px-4 py-2 sm:px-5 sm:py-3 bg-blush-dark hover:bg-soft-brown text-white text-xs sm:text-sm font-handwritten font-bold rounded-2xl shadow-scrapbook transition-all hover:scale-105 flex items-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-          </svg>
-          <span>เขียนรีวิวน้องหน่อยนะ</span>
-        </button>
-      </div>
-    </div>
-
-    <div id="reviews-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2"></div>
-  </section>
-
-  <!-- ================= PAGE 3: CONTACT ================= -->
-  <section id="page-contact" class="hidden space-y-8">
-    <div class="text-center space-y-3 py-2">
-      <div class="inline-flex relative w-24 h-24 rounded-full bg-pastel-peach border-2 border-dashed border-blush-dark p-1 shadow-glow-circle mb-2 items-center justify-center overflow-hidden">
-        <div class="w-full h-full rounded-full bg-cream-card border border-soft-blush flex items-center justify-center overflow-hidden">
-          <img id="contact-logo-img" src="" alt="Contact Logo" class="w-full h-full object-cover hidden">
-          <svg id="contact-logo-svg" class="w-12 h-12 text-blush-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 011.09-.12 4 4 0 003.91-3.88 4 4 0 00-2.88-3.87A5 5 0 0013 7a5 5 0 00-4.7 3.32A4 4 0 003 15z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m-4 1-1.5 1.5M16 4l-1.5 1.5" />
-          </svg>
-        </div>
-      </div>
-      <h2 id="contact-site-title" class="font-handwritten text-3xl font-bold text-soft-brown">Miori Studio</h2>
-      <p id="contact-site-slogan" class="text-xs text-muted-brown max-w-md mx-auto">" เติมเต็มมุมโปรดในบ้านด้วยของจุกจิกดีไซน์อบอุ่นใจ สไตล์โฮมเมด "</p>
-    </div>
-
-    <div class="relative w-full mt-4">
-      <div class="washi-tape top-3 left-10 rotate-[-5deg] bg-washi-pink"></div>
-      <div class="washi-tape -bottom-3 right-10 rotate-[3deg] bg-washi-green"></div>
-      <div class="relative w-full aspect-banner rounded-3xl overflow-hidden border-4 border-white shadow-soft-float bg-cream-card p-2 sm:p-3">
-        <div class="w-full h-full rounded-2xl overflow-hidden relative group">
-          <img id="banner-contact-img" src="https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&w=1122&q=80" alt="Miori Studio Contact Banner" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-        </div>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto px-2">
-      <a id="link-facebook" href="https://facebook.com" target="_blank" class="bg-cream-card p-3.5 sm:p-4 rounded-2xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark transition-all tilt-hover text-center relative group block">
-        <div class="washi-tape -top-2 left-8 rotate-[-4deg]"></div>
-        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-500 border border-blue-200 mx-auto flex items-center justify-center text-base mb-2">
-          <i class="fa-brands fa-facebook-f"></i>
-        </div>
-        <h4 class="font-handwritten font-bold text-soft-brown text-sm">Facebook Page</h4>
-        <p id="text-facebook" class="text-[11px] text-muted-brown">@miori.studio.official</p>
-        <span class="inline-block mt-2 text-[10px] font-bold text-blush-dark bg-soft-blush/50 px-2 py-0.5 rounded-full">ทักแชทคุยกับน้อง</span>
-      </a>
-      <a id="link-instagram" href="https://instagram.com" target="_blank" class="bg-cream-card p-3.5 sm:p-4 rounded-2xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark transition-all tilt-hover text-center relative group block">
-        <div class="washi-tape -top-2 right-8 rotate-[5deg] bg-washi-yellow"></div>
-        <div class="w-9 h-9 rounded-xl bg-pink-50 text-pink-500 border border-pink-200 mx-auto flex items-center justify-center text-base mb-2">
-          <i class="fa-brands fa-instagram"></i>
-        </div>
-        <h4 class="font-handwritten font-bold text-soft-brown text-sm">Instagram</h4>
-        <p id="text-instagram" class="text-[11px] text-muted-brown">@miori_cozy_space</p>
-        <span class="inline-block mt-2 text-[10px] font-bold text-blush-dark bg-soft-blush/50 px-2 py-0.5 rounded-full">ดูรูปภาพไอเดียแต่งห้อง</span>
-      </a>
-      <a id="link-line" href="https://line.me" target="_blank" class="bg-cream-card p-3.5 sm:p-4 rounded-2xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark transition-all tilt-hover text-center relative group block">
-        <div class="washi-tape -top-2 left-8 rotate-[-2deg] bg-washi-green"></div>
-        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-500 border border-emerald-200 mx-auto flex items-center justify-center text-base mb-2">
-          <i class="fa-brands fa-line"></i>
-        </div>
-        <h4 class="font-handwritten font-bold text-soft-brown text-sm">LINE Official</h4>
-        <p id="text-line" class="text-[11px] text-muted-brown">@mioristudio</p>
-        <span class="inline-block mt-2 text-[10px] font-bold text-blush-dark bg-soft-blush/50 px-2 py-0.5 rounded-full">รับคูปองส่วนลดพิเศษ</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- ================= PAGE 4: ADMIN DASHBOARD (ดีไซน์มินิมอลน่ารัก แยกตามหน้า) ================= -->
-  <section id="page-admin" class="hidden space-y-6">
-    <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-soft-blush text-blush-dark flex items-center justify-center text-xl">
-          <i class="fa-solid fa-user-gear"></i>
-        </div>
-        <div>
-          <h2 class="font-handwritten text-2xl font-bold text-soft-brown">ระบบหลังบ้านร้านค้า (Admin Panel)</h2>
-          <p class="text-xs text-muted-brown">แก้ไขข้อมูล เนื้อหา และรูปภาพแยกตามหน้าเว็บไซต์อย่างอิสระ</p>
-        </div>
-      </div>
-      <button onclick="adminLogout()" class="px-4 py-2 bg-red-100 hover:bg-red-200 text-red-600 text-xs font-bold rounded-2xl border border-red-200 transition-colors flex items-center gap-1.5">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span>ออกจากระบบ</span>
-      </button>
-    </div>
-
-    <!-- Admin Sub-Nav Tabs แยกตามหน้าเว็บ -->
-    <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-      <button onclick="switchAdminSubTab('store')" id="admin-tab-store" class="admin-tab active px-4 py-2 rounded-2xl text-xs sm:text-sm bg-warm-cream text-soft-brown border-2 border-soft-blush transition-all">
-        <i class="fa-solid fa-store mr-1"></i> แก้ไขหน้าร้าน
-      </button>
-      <button onclick="switchAdminSubTab('reviews')" id="admin-tab-reviews" class="admin-tab px-4 py-2 rounded-2xl text-xs sm:text-sm bg-warm-cream text-soft-brown border-2 border-soft-blush transition-all">
-        <i class="fa-solid fa-heart mr-1"></i> แก้ไขหน้ารีวิว
-      </button>
-      <button onclick="switchAdminSubTab('contact')" id="admin-tab-contact" class="admin-tab px-4 py-2 rounded-2xl text-xs sm:text-sm bg-warm-cream text-soft-brown border-2 border-soft-blush transition-all">
-        <i class="fa-solid fa-address-book mr-1"></i> แก้ไขหน้าติดต่อเรา
-      </button>
-      <button onclick="switchAdminSubTab('theme')" id="admin-tab-theme" class="admin-tab px-4 py-2 rounded-2xl text-xs sm:text-sm bg-warm-cream text-soft-brown border-2 border-soft-blush transition-all">
-        <i class="fa-solid fa-palette mr-1"></i> ธีมสี & โลโก้
-      </button>
-    </div>
-
-    <!-- SUB-TAB 1: แก้ไขหน้าร้าน (จัดการสินค้า, แบนเนอร์หน้าร้าน, ข้อความหน้าร้าน) -->
-    <div id="admin-sub-store" class="space-y-6">
-      <!-- ฟอร์มเพิ่ม/แก้ไขสินค้า -->
-      <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-4">
-        <h3 id="admin-prod-form-title" class="font-handwritten text-xl font-bold text-soft-brown flex items-center gap-2">
-          <i class="fa-solid fa-plus-circle text-blush-dark"></i>
-          <span>เพิ่มหรือแก้ไขสินค้าในหน้าร้าน</span>
-        </h3>
-        <form onsubmit="handleSaveProduct(event)" class="space-y-4">
-          <input type="hidden" id="admin-prod-id">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-bold text-soft-brown mb-1">ชื่อสินค้า *</label>
-              <input type="text" id="admin-prod-name" required placeholder="เช่น โคมไฟทิวลิปอบอุ่น" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-soft-brown mb-1">หมวดหมู่ *</label>
-              <select id="admin-prod-category" required class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream"></select>
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-soft-brown mb-1">ราคาสินค้า (บาท) *</label>
-              <input type="number" id="admin-prod-price" required placeholder="290" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-soft-brown mb-1">ข้อความป้าย (Badge)</label>
-              <input type="text" id="admin-prod-badge" placeholder="เช่น Recommended" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-soft-brown mb-1">ชื่อปุ่มกดซื้อ</label>
-              <input type="text" id="admin-prod-btn-text" value="สั่งซื้อผ่าน LINE / Inbox" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-soft-brown mb-1">ลิงก์ปุ่มซื้อ (URL)</label>
-              <input type="text" id="admin-prod-btn-link" value="https://line.me" class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
-            </div>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-soft-brown mb-1">คำอธิบายสินค้า</label>
-            <textarea id="admin-prod-desc" rows="2" placeholder="รายละเอียดน่ารักๆ..." class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream resize-none"></textarea>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-soft-brown mb-1">เปลี่ยนรูปภาพสินค้าชิ้นนี้ (เลือกไฟล์เฉพาะจุด)</label>
-            <div class="flex flex-col sm:flex-row items-center gap-3">
-              <input type="file" id="admin-prod-file" accept="image/*" onchange="previewImageFile(this, 'admin-prod-img-preview')" class="text-xs text-soft-brown file:mr-3 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-xs file:font-bold file:bg-soft-blush file:text-soft-brown hover:file:bg-blush-dark hover:file:text-white cursor-pointer w-full">
-              <img id="admin-prod-img-preview" src="" class="w-16 h-16 object-cover rounded-xl border-2 border-soft-blush hidden">
-            </div>
-          </div>
-          <div class="flex items-center justify-end gap-2 pt-2">
-            <button type="button" onclick="resetProductForm()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold rounded-2xl transition-colors">ยกเลิก</button>
-            <button type="submit" class="px-5 py-2 bg-blush-dark hover:bg-soft-brown text-white text-xs font-bold rounded-2xl shadow-scrapbook transition-colors flex items-center gap-1.5">
-              <i class="fa-solid fa-floppy-disk"></i>
-              <span>บันทึกสินค้าชิ้นนี้</span>
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- รายการสินค้าทั้งหมดพร้อมปุ่มแก้ไขเฉพาะชิ้น -->
-      <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-4">
-        <h3 class="font-handwritten text-lg font-bold text-soft-brown">จัดการสินค้าในหน้าร้าน (กดปุ่มดินสอเพื่อแก้ไขทีละชิ้น)</h3>
-        <div id="admin-products-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-      </div>
-
-      <!-- เปลี่ยนรูปแบนเนอร์หน้าร้านเฉพาะจุด -->
-      <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-4">
-        <h3 class="font-handwritten text-lg font-bold text-soft-brown">เปลี่ยนรูปแบนเนอร์หน้าร้าน</h3>
-        <div class="flex flex-col sm:flex-row items-center gap-3 p-4 bg-warm-cream rounded-2xl border border-soft-blush">
-          <input type="file" id="admin-banner-store-file" accept="image/*" class="text-xs file:py-2 file:px-4 file:rounded-2xl file:border-0 file:bg-soft-blush file:text-soft-brown cursor-pointer w-full">
-          <button onclick="uploadBannerImage('store')" class="px-4 py-2 bg-blush-dark text-white text-xs font-bold rounded-2xl shrink-0">เปลี่ยนแบนเนอร์หน้าร้าน</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- SUB-TAB 2: แก้ไขหน้ารีวิว (เปลี่ยนแบนเนอร์หน้ารีวิว / จัดการข้อความ) -->
-    <div id="admin-sub-reviews" class="hidden space-y-6">
-      <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-4">
-        <h3 class="font-handwritten text-xl font-bold text-soft-brown flex items-center gap-2">
-          <i class="fa-solid fa-heart text-blush-dark"></i>
-          <span>แก้ไขหน้ารีวิวน้องๆ</span>
-        </h3>
-        <div class="space-y-3 p-4 bg-warm-cream rounded-2xl border border-soft-blush">
-          <h4 class="font-bold text-xs text-soft-brown">เปลี่ยนรูปแบนเนอร์หน้ารีวิว (เฉพาะจุด)</h4>
-          <div class="flex flex-col sm:flex-row items-center gap-3">
-            <input type="file" id="admin-banner-reviews-file" accept="image/*" class="text-xs file:py-2 file:px-4 file:rounded-2xl file:border-0 file:bg-soft-blush file:text-soft-brown cursor-pointer w-full">
-            <button onclick="uploadBannerImage('reviews')" class="px-4 py-2 bg-blush-dark text-white text-xs font-bold rounded-2xl shrink-0">อัปโหลดแบนเนอร์รีวิว</button>
-          </div>
-        </div>
-        <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-3">
-          <h4 class="font-bold text-xs text-soft-brown">ลบรีวิวที่ไม่ต้องการ</h4>
-          <div id="admin-reviews-list" class="space-y-2 max-h-60 overflow-y-auto"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SUB-TAB 3: แก้ไขหน้าติดต่อเรา (เปลี่ยนแบนเนอร์, ข้อความติดต่อ, โซเชียล) -->
-    <div id="admin-sub-contact" class="hidden space-y-6">
-      <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-6">
-        <h3 class="font-handwritten text-xl font-bold text-soft-brown flex items-center gap-2">
-          <i class="fa-solid fa-address-book text-blush-dark"></i>
-          <span>แก้ไขหน้าติดต่อเรา</span>
-        </h3>
-        <form onsubmit="handleSaveStoreInfo(event)" class="space-y-4">
-          <div class="space-y-3 p-4 bg-warm-cream rounded-2xl border border-soft-blush">
-            <h4 class="font-bold text-xs text-soft-brown">เปลี่ยนรูปแบนเนอร์หน้าติดต่อเรา (เฉพาะจุด)</h4>
-            <div class="flex flex-col sm:flex-row items-center gap-3">
-              <input type="file" id="admin-banner-contact-file" accept="image/*" class="text-xs file:py-2 file:px-4 file:rounded-2xl file:border-0 file:bg-soft-blush file:text-soft-brown cursor-pointer w-full">
-              <button type="button" onclick="uploadBannerImage('contact')" class="px-4 py-2 bg-blush-dark text-white text-xs font-bold rounded-2xl shrink-0">อัปโหลดแบนเนอร์ติดต่อ</button>
-            </div>
-          </div>
-          
-          <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-4">
-            <h4 class="font-bold text-xs text-soft-brown">แก้ไขข้อมูลร้านและโซเชียลมีเดียทุกจุด</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="block text-[11px] font-bold text-soft-brown mb-1">ชื่อร้าน</label>
-                <input type="text" id="admin-info-title" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-soft-brown mb-1">สโลแกน</label>
-                <input type="text" id="admin-info-slogan" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-soft-brown mb-1">Facebook Handle</label>
-                <input type="text" id="admin-info-fb" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-soft-brown mb-1">Facebook URL</label>
-                <input type="text" id="admin-info-fb-link" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-soft-brown mb-1">Instagram Handle</label>
-                <input type="text" id="admin-info-ig" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-soft-brown mb-1">Instagram URL</label>
-                <input type="text" id="admin-info-ig-link" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-soft-brown mb-1">LINE Official</label>
-                <input type="text" id="admin-info-line" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-soft-brown mb-1">LINE URL</label>
-                <input type="text" id="admin-info-line-link" class="w-full text-xs px-3 py-2 rounded-xl border border-soft-blush bg-white">
-              </div>
-            </div>
-          </div>
-          <button type="submit" class="w-full py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-bold rounded-2xl shadow-scrapbook">
-            บันทึกการแก้ไขข้อมูลทั้งหมด
-          </button>
-        </form>
-      </div>
-    </div>
-
-    <!-- SUB-TAB 4: ธีมสี & โลโก้ -->
-    <div id="admin-sub-theme" class="hidden space-y-6">
-      <div class="bg-cream-card p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook space-y-6">
-        <h3 class="font-handwritten text-xl font-bold text-soft-brown flex items-center gap-2">
-          <i class="fa-solid fa-palette text-blush-dark"></i>
-          <span>จัดการโลโก้ & ธีมสีเว็บไซต์มินิมอล</span>
-        </h3>
-        <div class="space-y-3 p-4 bg-warm-cream rounded-2xl border border-soft-blush">
-          <h4 class="font-bold text-xs text-soft-brown">เปลี่ยนรูปโลโก้ร้านค้า (ทรงวงกลม)</h4>
-          <div class="flex flex-col sm:flex-row items-center gap-3">
-            <input type="file" id="admin-logo-file" accept="image/*" class="text-xs file:py-2 file:px-4 file:rounded-2xl file:border-0 file:bg-soft-blush file:text-soft-brown cursor-pointer w-full">
-            <button onclick="uploadSiteLogo()" class="px-4 py-2 bg-blush-dark text-white text-xs font-bold rounded-2xl shrink-0">อัปโหลดโลโก้</button>
-          </div>
-        </div>
-        <div class="p-4 bg-warm-cream rounded-2xl border border-soft-blush space-y-3">
-          <div class="flex justify-between items-center">
-            <h4 class="font-bold text-xs text-soft-brown">ปรับแต่งโทนสีเว็บ</h4>
-            <button type="button" onclick="resetThemeColors()" class="px-3 py-1 bg-gray-200 text-gray-700 text-[10px] font-bold rounded-xl">รีเซ็ตสี</button>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-soft-blush">
-              <span class="text-xs">สีพื้นหลัง</span>
-              <input type="color" id="theme-color-bg" value="#FAF6F0" onchange="syncColorInput('bg', this.value)" class="w-8 h-8 rounded-lg cursor-pointer border-0">
-            </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-soft-blush">
-              <span class="text-xs">สีการ์ด</span>
-              <input type="color" id="theme-color-card" value="#FFFDF9" onchange="syncColorInput('card', this.value)" class="w-8 h-8 rounded-lg cursor-pointer border-0">
-            </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-soft-blush">
-              <span class="text-xs">สีปุ่มหลัก (Primary)</span>
-              <input type="color" id="theme-color-primary" value="#E29792" onchange="syncColorInput('primary', this.value)" class="w-8 h-8 rounded-lg cursor-pointer border-0">
-            </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-soft-blush">
-              <span class="text-xs">สีตัวหนังสือ</span>
-              <input type="color" id="theme-color-text" value="#65524D" onchange="syncColorInput('text', this.value)" class="w-8 h-8 rounded-lg cursor-pointer border-0">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="page-store" class="space-y-8">
+<div class="relative w-full mt-4">
+<div class="washi-tape -top-3 left-12 rotate-[-6deg]"></div>
+<div class="washi-tape -bottom-3 right-12 rotate-[4deg]"></div>
+<div class="relative w-full aspect-banner rounded-3xl overflow-hidden border-4 border-white shadow-soft-float bg-gradient-to-r from-soft-blush via-pastel-yellow to-pastel-peach p-4 sm:p-8 flex items-center justify-between">
+<img id="banner-store-img" alt="banner" class="absolute inset-0 w-full h-full object-cover hidden">
+<button class="admin-only ebtn ebtn-l absolute top-3 right-3 z-20" onclick="editSection('banner')"><i class="fa-solid fa-pen"></i> แก้ไขแบนเนอร์</button>
+<div id="banner-store-overlay" class="relative z-10 max-w-xl space-y-2 sm:space-y-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 text-blush-dark text-xs sm:text-sm font-bold border border-soft-blush"><i class="fa-solid fa-heart"></i><span data-edit="bannerBadge">Handcrafted with Love</span></span>
+<h2 class="font-handwritten text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight"><span data-edit="bannerT1">เปิดตู้ของสะสมละมุนใจ</span><br><span data-edit="bannerT2" class="text-blush-dark underline decoration-wavy decoration-soft-blush">สไตล์มินิมอลญี่ปุ่น</span></h2>
+<p data-edit="bannerDesc" class="text-xs sm:text-sm text-muted-brown leading-relaxed hidden sm:block">ทุกชิ้นคัดสรรความน่ารัก อบอุ่น และใส่ใจในรายละเอียด ส่งตรงถึงบ้านคุณพร้อมโปสการ์ดของแถมพิเศษทุกออเดอร์</p>
+<div class="pt-2 flex items-center gap-3">
+<a href="#product-section" class="px-5 py-2.5 bg-soft-brown hover:bg-blush-dark text-white text-xs sm:text-sm font-handwritten font-bold rounded-2xl shadow-scrapbook flex items-center gap-2"><span data-edit="bannerBtn">แวะชมสินค้า</span><i class="fa-solid fa-bag-shopping"></i></a>
+<span data-edit="bannerShip" class="text-xs text-muted-brown hidden sm:inline-block">จัดส่งฟรี เมื่อช้อปครบ 490.-</span>
+</div>
+</div>
+<div class="hidden md:flex relative w-64 h-full items-center justify-center z-10">
+<div class="relative w-52 h-56 bg-white p-3 rounded-2xl shadow-scrapbook rotate-3 border border-soft-brown/10 flex flex-col items-center justify-between">
+<div class="w-full h-36 bg-pastel-yellow rounded-xl overflow-hidden"><img id="img-hero" alt="" class="w-full h-full object-cover"></div>
+<p data-edit="heroCaption" class="font-handwritten text-xs text-center font-bold">~ Miori Daily Collection ~</p>
+</div>
+</div>
+</div>
+</div>
+<div id="product-section" class="space-y-4 pt-2">
+<div class="flex flex-wrap justify-between items-center gap-3">
+<div>
+<h3 class="font-handwritten text-2xl font-bold flex items-center gap-2"><i class="fa-solid fa-tags text-blush-dark"></i><span data-edit="catTitle">หมวดหมู่สินค้า</span></h3>
+<p data-edit="catSub" class="text-xs text-muted-brown">เลือกช้อปของน่ารักๆ ตามหมวดหมู่ได้เลยน้า</p>
+</div>
+<button class="admin-only ebtn ebtn-l" onclick="editCategories()"><i class="fa-solid fa-pen"></i> แก้ไขหมวดหมู่</button>
+</div>
+<div id="category-chips-container" class="flex items-center gap-2.5 overflow-x-auto pb-2"></div>
+</div>
+<div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
+</section>
+<section id="page-reviews" class="hidden space-y-8">
+<div class="relative w-full mt-4">
+<div class="washi-tape -top-3 left-10 rotate-[-4deg]"></div>
+<div class="washi-tape -bottom-3 right-10 rotate-[3deg]"></div>
+<div class="relative w-full aspect-banner rounded-3xl overflow-hidden border-4 border-white shadow-soft-float bg-cream-card p-2 sm:p-3">
+<img id="banner-reviews-img" alt="banner" class="w-full h-full object-cover rounded-2xl">
+<button class="admin-only ebtn ebtn-l absolute top-5 right-5 z-20" onclick="changeImage('bannerReviews')"><i class="fa-solid fa-camera"></i> เปลี่ยนแบนเนอร์</button>
+</div>
+</div>
+<div class="bg-[var(--color-revbox)] px-4 py-3 sm:px-6 sm:py-4 rounded-2xl border-2 border-dashed custom-border-dashed shadow-scrapbook flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4 transition-colors" style="background-color: var(--color-revbox);">
+<div class="text-center sm:text-left min-w-0">
+<span class="inline-flex items-center gap-1 text-[10px] font-bold bg-soft-blush text-blush-dark px-2 py-0.5 rounded-full"><i class="fa-solid fa-heart"></i><span data-edit="revTag">Customer Love Notes</span></span> <button class="admin-only ebtn" title="แก้ไขกล่องรีวิว" onclick="editSection('reviewsHead')"><i class="fa-solid fa-pen"></i></button>
+<h2 data-edit="revTitle" class="font-handwritten text-base sm:text-xl font-bold leading-tight mt-1">กล่องบันทึกความประทับใจ</h2>
+<p data-edit="revSub" class="hidden sm:block text-xs text-muted-brown mt-0.5">ความสุขเล็กๆ ของลูกค้าที่ได้รับของน่ารักจาก Miori Studio ค่ะ</p>
+</div>
+<div class="flex items-center gap-2 sm:gap-3">
+<div class="flex items-center gap-1.5 bg-warm-cream px-2.5 py-1 rounded-xl border border-soft-brown/10">
+<i class="fa-solid fa-star text-yellow-400 text-xs"></i>
+<span id="dynamic-rev-score" class="font-handwritten text-base font-bold">4.95</span>
+<span id="dynamic-rev-count" class="text-[10px] text-muted-brown">จาก 250+ รีวิว</span>
+</div>
+<div id="review-btn-container">
+<button onclick="openReviewModal()" class="px-3.5 py-2 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-xl shadow-scrapbook flex items-center gap-1.5"><i class="fa-solid fa-pen"></i><span data-edit="revBtn">เขียนรีวิวให้น้องหน่อยนะ</span></button>
+</div>
+</div>
+</div>
+<div id="reviews-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2"></div>
+</section>
+<section id="page-contact" class="hidden space-y-8 max-w-xl mx-auto">
+<div class="text-center space-y-3 py-2">
+<div class="relative inline-block">
+<div class="w-24 h-24 rounded-full bg-pastel-peach border-2 border-dashed custom-border-dashed p-1 shadow-glow-circle flex items-center justify-center overflow-hidden">
+<div class="w-full h-full rounded-full bg-cream-card border border-soft-blush flex items-center justify-center overflow-hidden">
+<img id="contact-logo-img" alt="logo" class="w-full h-full object-cover hidden">
+<svg id="contact-logo-svg" class="w-12 h-12 text-blush-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 011.09-.12 4 4 0 003.91-3.88 4 4 0 00-2.88-3.87A5 5 0 0013 7a5 5 0 00-4.7 3.32A4 4 0 003 15z"/></svg>
+</div>
+</div>
+</div>
+<h2 data-edit="siteTitle" class="font-handwritten text-3xl font-bold">Miori Studio</h2>
+<p data-edit="contactSlogan" class="text-xs text-muted-brown max-w-md mx-auto">" เติมเต็มมุมโปรดในบ้านด้วยของจุกจิกดีไซน์อบอุ่นใจ สไตล์โฮมเมด "</p>
+<button class="admin-only ebtn ebtn-l mx-auto" onclick="editSection('contactHead')"><i class="fa-solid fa-pen"></i> แก้ไขหัวข้อ</button>
+</div>
+<div class="flex justify-between items-center px-2">
+<h3 class="font-handwritten text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-address-book text-blush-dark"></i> ช่องทางการติดต่อ</h3>
+<button class="admin-only ebtn ebtn-l" onclick="editContactList()"><i class="fa-solid fa-plus"></i> จัดการช่องทางติดต่อ</button>
+</div>
+<div id="contact-cards-container" class="flex flex-col gap-3.5 w-full"></div>
+</section>
 </main>
-
-<!-- FLOATING MENU BAR (ย้ายเมนูหลักมาอยู่ด้านล่างของเว็บไซต์ เป็นปุ่มลอย) -->
-<div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-full max-w-sm px-4">
-  <nav class="flex items-center justify-around bg-cream-card/95 backdrop-blur-md px-4 py-2.5 rounded-full border-2 border-soft-blush shadow-soft-float">
-    <button onclick="switchTab('store')" id="nav-store" class="tab-diary active flex flex-col items-center gap-0.5 px-3 py-1 rounded-2xl text-[11px] text-soft-brown">
-      <i class="fa-solid fa-store text-blush-dark text-sm"></i>
-      <span>หน้าร้าน</span>
-    </button>
-    <button onclick="switchTab('reviews')" id="nav-reviews" class="tab-diary flex flex-col items-center gap-0.5 px-3 py-1 rounded-2xl text-[11px] text-soft-brown">
-      <i class="fa-solid fa-heart text-blush-dark text-sm"></i>
-      <span>รีวิวน้องๆ</span>
-    </button>
-    <button onclick="switchTab('contact')" id="nav-contact" class="tab-diary flex flex-col items-center gap-0.5 px-3 py-1 rounded-2xl text-[11px] text-soft-brown">
-      <i class="fa-solid fa-comment-dots text-blush-dark text-sm"></i>
-      <span>ติดต่อเรา</span>
-    </button>
-  </nav>
-</div>
-
-<!-- MODAL: ADMIN LOGIN -->
-<div id="admin-login-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-cream-card rounded-[2rem] max-w-sm w-full p-6 relative border-2 border-soft-blush shadow-soft-float space-y-4">
-    <div class="washi-tape -top-3 left-1/2 -translate-x-1/2 bg-washi-pink"></div>
-    <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-soft-blush hover:bg-blush-dark hover:text-white text-soft-brown flex items-center justify-center transition-colors text-xs">X</button>
-    <div class="text-center space-y-1">
-      <div class="w-10 h-10 rounded-2xl bg-soft-blush text-blush-dark mx-auto flex items-center justify-center text-lg">
-        <i class="fa-solid fa-lock"></i>
-      </div>
-      <h3 class="font-handwritten text-xl font-bold text-soft-brown">เข้าสู่ระบบหลังบ้าน</h3>
-      <p class="text-[11px] text-muted-brown">พื้นที่ลับสำหรับเจ้าของร้าน Miori Studio น่ารักๆ</p>
-    </div>
-    <form onsubmit="handleAdminLogin(event)" class="space-y-3 pt-1">
-      <div>
-        <label class="block text-[11px] font-bold text-soft-brown mb-1">Gmail แอดมิน</label>
-        <input type="email" id="login-email" value="admin@gmail.com" required class="w-full text-xs px-3.5 py-2.5 rounded-2xl border border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
-      </div>
-      <div>
-        <label class="block text-[11px] font-bold text-soft-brown mb-1">รหัสผ่าน</label>
-        <input type="password" id="login-password" value="admin123" required class="w-full text-xs px-3.5 py-2.5 rounded-2xl border border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream">
-      </div>
-      <div class="bg-warm-cream p-2.5 rounded-2xl border border-soft-blush text-[10px] text-muted-brown text-center leading-relaxed">
-        รหัสเข้าชมตัวอย่าง: <br/><b>Gmail:</b> admin@gmail.com | <b>Pass:</b> admin123
-      </div>
-      <button type="submit" class="w-full py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-2xl shadow-scrapbook transition-colors">
-        เข้าสู่ระบบ
-      </button>
-    </form>
-  </div>
-</div>
-
-<!-- MODAL: PRODUCT DETAIL -->
-<div id="product-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-cream-card rounded-3xl max-w-md w-full p-6 relative border-4 border-white shadow-soft-float space-y-4">
-    <button onclick="closeProductModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-soft-blush hover:bg-blush-dark hover:text-white text-soft-brown flex items-center justify-center transition-colors">X</button>
-    <div id="modal-product-content"></div>
-  </div>
-</div>
-
-<!-- MODAL: WRITE REVIEW -->
-<div id="review-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-cream-card rounded-3xl max-w-md w-full p-6 relative border-4 border-white shadow-soft-float space-y-4">
-    <div class="washi-tape -top-3 left-1/2 -translate-x-1/2 bg-washi-yellow"></div>
-    <button onclick="closeReviewModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-soft-blush hover:bg-blush-dark hover:text-white text-soft-brown flex items-center justify-center transition-colors">X</button>
-    <div class="text-center space-y-1">
-      <h3 class="font-handwritten text-xl font-bold text-soft-brown">เขียนโปสการ์ดรีวิว</h3>
-      <p class="text-xs text-muted-brown">ส่งต่อความรู้สึกดีๆ ให้กับ Miori Studio นะคะ</p>
-    </div>
-    <form onsubmit="submitReview(event)" class="space-y-3 pt-2">
-      <div>
-        <label class="block text-xs font-bold text-soft-brown mb-1">ชื่อ/นามสมมุติของคุณ</label>
-        <input type="text" id="review-name" placeholder="เช่น คุณแป้งเค้ก" required class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-soft-brown mb-1">ความประทับใจ</label>
-        <div id="star-selector" class="flex gap-1 text-xl text-yellow-400 justify-center py-2 bg-warm-cream rounded-2xl border border-soft-blush cursor-pointer">
-          <i onclick="setStarRating(1)" class="fa-solid fa-star"></i>
-          <i onclick="setStarRating(2)" class="fa-solid fa-star"></i>
-          <i onclick="setStarRating(3)" class="fa-solid fa-star"></i>
-          <i onclick="setStarRating(4)" class="fa-solid fa-star"></i>
-          <i onclick="setStarRating(5)" class="fa-solid fa-star"></i>
-        </div>
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-soft-brown mb-1">ข้อความรีวิว</label>
-        <textarea id="review-comment" rows="3" placeholder="แกะกล่องแล้วประทับใจมากๆ ค่ะ..." required class="w-full text-xs px-3.5 py-2.5 rounded-2xl border-2 border-soft-blush focus:border-blush-dark focus:outline-none bg-warm-cream font-mali resize-none"></textarea>
-      </div>
-      <button type="submit" class="w-full py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-2xl shadow-scrapbook transition-colors">
-        ส่งโปสการ์ดรีวิว
-      </button>
-    </form>
-  </div>
-</div>
-
-<!-- TOAST NOTIFICATION -->
-<div id="toast" class="fixed bottom-20 right-6 z-50 bg-soft-brown text-white px-4 py-3 rounded-2xl shadow-soft-float text-xs font-bold flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none border-2 border-soft-blush">
-  <span id="toast-msg">บันทึกข้อมูลเรียบร้อย</span>
-</div>
-
-<!-- FOOTER -->
 <footer class="bg-cream-card border-t-2 border-dashed border-soft-blush py-6 mt-12 text-center text-xs text-muted-brown space-y-2">
-  <p class="font-handwritten font-bold text-soft-brown text-sm">~ Miori Studio ~ Cozy Handcrafted Shop</p>
-  <p>© 2026 Miori Studio. All Rights Reserved. Crafted with Pastel Aesthetics</p>
+<p data-edit="footer1" class="font-handwritten font-bold text-soft-brown text-sm">~ Miori Studio Cozy Handcrafted Shop</p>
+<p data-edit="footer2">© 2026 Miori Studio. All Rights Reserved.</p>
+<button class="admin-only ebtn ebtn-l mx-auto" onclick="editSection('footer')"><i class="fa-solid fa-pen"></i> แก้ไขท้ายเว็บ</button>
 </footer>
-
+<div id="admin-menu-modal" class="fixed inset-0 bg-soft-brown/30 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
+<div class="bg-cream-card text-soft-brown rounded-[2.5rem] max-w-xs w-full p-6 relative border-4 border-white shadow-soft-float space-y-4">
+<button onclick="$('admin-menu-modal').classList.add('hidden')" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-soft-blush text-xs flex items-center justify-center hover:bg-blush-dark hover:text-white transition">X</button>
+<div class="text-center space-y-1">
+<div class="w-10 h-10 rounded-2xl bg-soft-blush text-blush-dark mx-auto flex items-center justify-center shadow-sm">
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+</div>
+<h3 class="font-handwritten text-xl font-bold">โหมดแก้ไข</h3>
+<p class="text-[11px] text-muted-brown">จัดการและตั้งค่าร้านค้าง่ายๆ</p>
+</div>
+<div class="space-y-2.5 pt-1">
+<button onclick="editTheme(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-palette text-pink-400 text-base"></i><span>ธีมสี</span></button>
+<button onclick="openChangePasswordModal(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-key text-amber-400 text-base"></i> <span>รหัสผ่าน</span></button>
+<button onclick="resetTheme(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-rotate-left text-sky-400 text-base"></i> <span>รีเซ็ทสี</span></button>
+<button onclick="resetAll(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-triangle-exclamation text-rose-400 text-base"></i> <span>รีเซ็ตทั้งหมด</span></button>
+<button onclick="adminLogout(); $('admin-menu-modal').classList.add('hidden');" class="w-full py-2.5 bg-rose-400 hover:bg-rose-500 text-white rounded-2xl font-bold transition text-xs shadow-sm flex items-center justify-center gap-1.5 font-handwritten mt-2"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
+</div>
+</div>
+</div>
+<div id="admin-login-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
+<div class="bg-cream-card rounded-[2rem] max-w-sm w-full p-6 relative border-2 border-soft-blush shadow-soft-float space-y-4">
+<button onclick="$('admin-login-modal').classList.add('hidden')" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-soft-blush text-xs">X</button>
+<div class="text-center"><div class="w-10 h-10 rounded-2xl bg-soft-blush text-blush-dark mx-auto flex items-center justify-center"><i class="fa-solid fa-lock"></i></div>
+<h3 class="font-handwritten text-xl font-bold mt-1">เข้าสู่ระบบหลังบ้าน</h3></div>
+<form onsubmit="handleAdminLogin(event)" class="space-y-3">
+<input type="email" id="login-email" required placeholder="Gmail แอดมิน" class="inp">
+<input type="password" id="login-password" required placeholder="รหัสผ่าน" class="inp">
+<button type="submit" class="w-full py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-2xl shadow-scrapbook">เข้าสู่ระบบ</button>
+</form>
+</div>
+</div>
+<div id="change-pass-modal" class="fixed inset-0 bg-soft-brown/20 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3">
+<div class="bg-cream-card rounded-2xl max-w-xs w-full p-4 relative border border-soft-blush shadow-lg space-y-3">
+<button onclick="$('change-pass-modal').classList.add('hidden')" class="absolute top-3 right-3 w-6 h-6 rounded-full bg-soft-blush text-[10px] flex items-center justify-center">X</button>
+<div class="text-center">
+<h3 class="font-handwritten text-base font-bold">เปลี่ยนรหัสผ่านแอดมิน</h3>
+</div>
+<form onsubmit="handleAdminChangePassword(event)" class="space-y-2.5">
+<div>
+<label class="block text-[10px] font-bold mb-0.5">รหัสผ่านใหม่</label>
+<input type="password" id="new-password" required placeholder="กรอกรหัสผ่านใหม่" class="inp !py-1.5 !text-xs">
+</div>
+<div>
+<label class="block text-[10px] font-bold mb-0.5">ยืนยันรหัสผ่านใหม่</label>
+<input type="password" id="confirm-password" required placeholder="กรอกรหัสผ่านใหม่ อีกครั้ง" class="inp !py-1.5 !text-xs">
+</div>
+<button type="submit" class="w-full py-2 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-xl shadow-sm">บันทึก</button>
+</form>
+</div>
+</div>
+<div id="form-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
+<form onsubmit="event.preventDefault(); if(typeof formSave === 'function') formSave();" class="bg-cream-card rounded-3xl max-w-md w-full p-5 relative border-4 border-white shadow-soft-float space-y-3 max-h-[90vh] overflow-y-auto">
+<button type="button" onclick="closeForm()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-soft-blush">X</button>
+<h3 id="form-title" class="font-handwritten text-xl font-bold pr-8"></h3>
+<div id="form-fields" class="space-y-3"></div>
+<div class="flex items-center gap-2 pt-1">
+<button type="button" id="form-del" onclick="if(typeof formDelete === 'function') formDelete();" class="hidden px-4 py-2 bg-red-100 text-red-600 text-xs font-bold rounded-2xl">ลบ</button><span class="flex-1"></span>
+<button type="button" onclick="closeForm()" class="px-4 py-2 bg-gray-100 text-gray-600 text-xs font-bold rounded-2xl">ยกเลิก</button>
+<button type="submit" class="px-5 py-2 bg-blush-dark text-white text-xs font-bold rounded-2xl shadow-scrapbook">บันทึก</button>
+</div>
+</form>
+</div>
+<div id="product-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
+<div class="bg-cream-card rounded-3xl max-w-md w-full p-6 relative border-4 border-white shadow-soft-float">
+<button onclick="$('product-modal').classList.add('hidden')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-soft-blush z-10">X</button>
+<div id="modal-product-content"></div>
+</div>
+</div>
+<div id="review-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
+<div class="bg-cream-card rounded-3xl max-w-md w-full p-6 relative border-4 border-white shadow-soft-float space-y-4">
+<button onclick="closeReviewModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-soft-blush">X</button>
+<div class="text-center"><h3 class="font-handwritten text-xl font-bold">เขียนโปสการ์ดรีวิว</h3><p class="text-xs text-muted-brown">ส่งต่อความรู้สึกดีๆ ให้กับ Miori Studio นะคะ</p></div>
+<form onsubmit="submitReview(event)" class="space-y-3">
+<input type="text" id="review-name" placeholder="ชื่อ/นามสมมุติของคุณ" required class="inp">
+<div id="star-selector" class="flex gap-1 text-xl justify-center py-2 bg-warm-cream rounded-2xl border border-soft-blush cursor-pointer"></div>
+<textarea id="review-comment" rows="3" placeholder="แกะกล่องแล้วประทับใจมากๆ ค่ะ..." required class="inp resize-none"></textarea>
+<button type="submit" class="w-full py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-2xl shadow-scrapbook">ส่งโปสการ์ดรีวิว</button>
+</form>
+</div>
+</div>
+<div id="toast" class="fixed top-24 left-1/2 -translate-x-1/2 -translate-y-6 opacity-0 z-[60] bg-soft-brown text-white px-4 py-2.5 rounded-2xl shadow-soft-float text-xs font-bold transition-all duration-300 pointer-events-none border-2 border-soft-blush" style="background-color: var(--color-text);"><span id="toast-msg"></span></div>
 <script>
-const DEFAULT_CATEGORIES = [
-  { id: 'decor', name: 'ของแต่งบ้าน & ห้องนอน' },
-  { id: 'stationery', name: 'เครื่องเขียน & สมุดโน้ต' },
-  { id: 'candle', name: 'เทียนหอม & อโรม่า' }
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){showToast('พื้นที่เก็บข้อมูลเต็ม ลองใช้รูปที่เล็กลง')}};
+const PLACE='https://placehold.co/400x400/FFE4E9/5C4040?text=Miori+Item';
+const DEF_IMG={reviews:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1122&q=80',hero:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=500&q=80'};
+const DEF_THEME={bg:'#FFF9FB',card:'#FFFFFF',primary:'#FF7096',blush:'#FFE4E9',text:'#5C4040',border:'#FFB6C1',ctrl:'#FFE4E9',revbox:'#FFFFFF'};
+const DEF_MUSIC={title:'Cozy Lofi BGM',url:'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3'};
+const DEF_CONTACTS=[
+{id:'fb', name:'Facebook Page', handle:'@miori.studio.official', tag:'ทักแชท', url:'https://facebook.com',icon:'fa-brands fa-facebook-f', color:'bg-blue-50 text-blue-500 border-blue-200'},
+{id:'ig', name:'Instagram', handle:'@miori_cozy_space', tag:'ไอเดียแต่งห้อง',url:'https://instagram.com',icon:'fa-brands fa-instagram',color:'bg-pink-50 text-pink-500 border-pink-200'},
+{id:'line', name:'LINE Official', handle:'@mioristudio', tag:'รับคูปอง',url:'https://line.me', icon:'fa-brands fa-line', color:'bg-emerald-50 text-emerald-500 border-emerald-200'}
 ];
-
-const DEFAULT_PRODUCTS = [
-  {
-    id: 1,
-    name: "โคมไฟตั้งโต๊ะดอกทิวลิปอบอุ่น Tulip Glow",
-    category: "decor",
-    price: 390,
-    rating: 5.0,
-    badge: "Popular",
-    btnText: "สั่งซื้อผ่าน LINE / Inbox",
-    btnLink: "https://line.me",
-    img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=500&q=80",
-    desc: "โคมไฟตั้งโต๊ะทำจากเซรามิกละมุนสีครีมอุ่น ปรับแสงไฟวอร์มไลท์ได้ 3 ระดับ เพิ่มความอบอุ่นให้ห้องนอน"
-  },
-  {
-    id: 2,
-    name: "สมุดแพลนเนอร์สไตล์ญี่ปุ่น Pastel Journal",
-    category: "stationery",
-    price: 240,
-    rating: 4.9,
-    badge: "Handmade",
-    btnText: "สั่งซื้อผ่าน LINE / Inbox",
-    btnLink: "https://line.me",
-    img: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=500&q=80",
-    desc: "แพลนเนอร์เปิดกางได้ 180 องศา กระดาษถนอมสายตาอย่างดี พร้อมสติ๊กเกอร์ไดคัทตกแต่งในเล่ม"
-  },
-  {
-    id: 3,
-    name: "เทียนหอมไขถั่วเหลือง กลิ่น Cozy Bakery",
-    category: "candle",
-    price: 290,
-    rating: 5.0,
-    badge: "Best Aroma",
-    btnText: "สั่งซื้อผ่าน LINE / Inbox",
-    btnLink: "https://line.me",
-    img: "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=500&q=80",
-    desc: "เทียนหอมออร์แกนิกกลิ่นขนมปังอบใหม่และวนิลาอ่อนๆ ให้ความรู้สึกผ่อนคลายเหมือนอยู่คาเฟ่อบอุ่น"
-  }
-];
-
-const DEFAULT_REVIEWS = [
-  { id: 1, name: "คุณแนนซี", rating: 5, date: "25 ต.ค. 2026", comment: "แกะกล่องออกมาประทับใจมากค่ะ! โคมไฟทิวลิปสว่างละมุนสุดๆ", color: "bg-pastel-yellow", rotation: "rotate-[-2deg]" },
-  { id: 2, name: "คุณคิณ", rating: 5, date: "22 ต.ค. 2026", comment: "เทียนหอมกลิ่นหอมฟุ้งทั่วห้องเลยครับ กลิ่นเหมือนขนมปังอบจริงๆ", color: "bg-soft-blush", rotation: "rotate-[2deg]" }
-];
-
-const DEFAULT_INFO = {
-  title: "Miori Studio",
-  slogan: "hand-crafted & japanese cozy items",
-  fb: "@miori.studio.official",
-  fbLink: "https://facebook.com",
-  ig: "@miori_cozy_space",
-  igLink: "https://instagram.com",
-  line: "@mioristudio",
-  lineLink: "https://line.me"
+const DEF_CATS=[{id:'decor', name:'ของแต่งบ้าน & ห้องนอน'}, {id:'stationery', name:'เครื่องเขียน & สมุดโน้ต'}, {id:'candle', name:'เทียนหอม & อโรม่า'}];
+const B='สั่งซื้อผ่าน LINE / Inbox';
+const DEF_PRODUCTS=[
+{id:1,name:'โคมไฟตั้งโต๊ะดอกทิวลิปอบอุ่น Tulip Glow', category:'decor', price:390, rating:5, badge:'Popular',btnText:B,btnLink:'https://line.me',img:'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=500&q=80', desc:'โคมไฟตั้งโต๊ะทำจากเซรามิกละมุนสีครีมอุ่น ปรับแสงไฟวอร์มไลท์ได้ 3 ระดับ เพิ่มความอบอุ่นให้ห้องนอน', viewBtnText:'ดูน้อง'},
+{id:2,name:'สมุดแพลนเนอร์สไตล์ญี่ปุ่น Pastel Journal', category:'stationery', price:240, rating:4.9, badge:'Handmade', btnText:B,btnLink:'https://line.me',img:'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=500&q=80', desc:'แพลนเนอร์เปิดกางได้ 180 องศา กระดาษถนอมสายตาอย่างดี พร้อมสติ๊กเกอร์ไดคัทตกแต่งในเล่ม', viewBtnText:'ดูน้อง'},
+{id:3,name:'เทียนหอมไขถั่วเหลือง กลิ่น Cozy Bakery', category:'candle', price:290, rating:5, badge:'Best Aroma', btnText:B,btnLink:'https://line.me',img:'https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=500&q=80', desc:'เทียนหอมออร์แกนิกกลิ่นขนมปังอบใหม่และวนิลาอ่อนๆ ให้ความรู้สึกผ่อนคลายเหมือนอยู่คาเฟ่ออบอุ่น', viewBtnText:'ดูน้อง'},
+{id:4,name:'แก้วเซรามิกปั้นมือ ลายหมีน้อย Bear Cup',category:'decor', price:320, rating:4.8, badge:'Cutie Item', btnText:B,btnLink:'https://line.me', img:'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc:'แก้วกาแฟทำมือทรงหน้าหมี คาดจานรองเข้าเซต เข้าไมโครเวฟได้ จิบกาแฟยามเช้าอย่างมีสไตล์', viewBtnText:'ดูน้อง'}];
+const DEF_REVIEWS=[
+{id:1, name:'คุณแนนซี', rating:5, date:'25 ต.ค. 2026', comment:'แกะกล่องออกมาประทับใจมากค่ะ! มีเทปวาชิแปะกล่องน่ารักมาก โคมไฟทิวลิปสว่างละมุนสุดๆ', color:'bg-pastel-yellow', rotation:'rotate-[-2deg]'},
+{id:2,name:'คุณคิณ', rating:5, date:'22 ต.ค. 2026', comment:'เทียนหอมกลิ่นหอมฟุ้งทั่วห้องเลยครับ กลิ่นเหมือนขนมปังอบจริงๆ ไว้จะกลับมาอุดหนุนใหม่แน่นอน', color:'bg-soft-blush', rotation:'rotate-[2deg]'}];
+const oi=load('miori_info',null);
+const oldImg=k=>localStorage.getItem(k)||undefined;
+let categories=load('miori_categories', DEF_CATS),
+products=load('miori_products', DEF_PRODUCTS),
+reviewsData=load('miori_reviews', DEF_REVIEWS);
+let contacts=load('miori_contacts', DEF_CONTACTS);
+let texts=load('miori_texts', oi?{siteTitle:oi.title, slogan:oi.slogan}:{});
+let music=load('miori_music', oi?{title:oi.musicTitle, url:oi.musicUrl}:DEF_MUSIC);
+let images=load('miori_images',{logo:oldImg('miori_logo'), bannerStore:oldImg('miori_banner_store'), bannerReviews:oldImg('miori_banner_reviews')});
+let theme={...DEF_THEME,...load('miori_theme',{})};
+let loggedIn=localStorage.getItem('miori_admin_logged')==='true', editing=loggedIn,
+currentCategory='all', selectedRating=5;
+let formSave=null, formDel=null;
+let adminPassword=localStorage.getItem('miori_admin_password')||'admin123';
+let isAudioPlaying=false;
+function applyTexts(){document.querySelectorAll('[data-edit]').forEach(el=>{if(el.dataset.def===undefined)el.dataset.def=el.textContent; const v=texts[el.dataset.edit]; el.textContent=v!==undefined?v:el.dataset.def;});}
+function applyTheme(){for(const[k,v] of Object.entries(theme))document.documentElement.style.setProperty('--color-'+k,v);}
+function applyMusic(){
+$('play-btn').title=music.title||'เล่น/หยุดเพลง';
+const p=$('bgm-player');
+if(music.url){p.src=music.url;}
+}
+function applyImages(){
+$('banner-reviews-img').src=images.bannerReviews||DEF_IMG.reviews;
+$('img-hero').src=images.hero||DEF_IMG.hero;
+const b=$('banner-store-img'),o=$('banner-store-overlay').classList, has=!!images.bannerStore;
+if(has)b.src=images.bannerStore;
+b.classList.toggle('hidden',!has); ['bg-white/70', 'p-4', 'rounded-2xl'].forEach(c=>o.toggle(c,has));
+['site', 'contact'].forEach(p=>{const h=!!images.logo;if(h)$(p+'-logo-img').src=images.logo; $(p+'-logo-img').classList.toggle('hidden',!h); $(p+'-logo-svg').classList.toggle('hidden',h);});
+}
+let formImgs={};
+const getText=k=>texts[k]!==undefined?texts[k]:(document.querySelector('[data-edit="'+k+'"]')?.dataset.def??'');
+function openForm(title, fields, saveData, onDelete){
+formImgs={}; formSave=saveData; formDel=onDelete||null;
+$('form-del').classList.toggle('hidden', !onDelete);
+$('form-title').textContent=title;
+$('form-fields').innerHTML=fields.map(f=>{
+const id='f-'+f.k, v=esc(f.value); let input;
+if(f.type==='image')input='<div class="flex items-center gap-3"><img id="prev-'+f.k+'" src="'+esc(f.value||'')+'" class="w-20 h-20 object-cover rounded-xl border-2 border-soft-blush bg-warm-cream '+(f.value?'':'hidden')+'"><button type="button" class="ebtn ebtn-l" style="display:inline-flex" onclick="pickFormImage(\''+f.k+'\','+(f.maxW||800)+','+(f.png?1:0)+')">เลือกรูปใหม่</button></div>';
+else if(f.type==='textarea')input='<textarea id="'+id+'" rows="'+(f.rows||3)+'" class="inp resize-none">'+v+'</textarea>';
+else if(f.type==='select')input='<select id="'+id+'" class="inp">'+f.options.map(o=>'<option value="'+esc(o[0])+'" '+(o[0]==f.value?'selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>';
+else if(f.type==='color')input='<div class="flex items-center gap-2"><input id="'+id+'" type="color" value="'+v+'" oninput="$(\''+id+'_txt\').value=this.value" class="w-12 h-10 p-1 rounded-xl border-2 border-soft-blush bg-warm-cream cursor-pointer shrink-0"><input id="'+id+'_txt" type="text" value="'+v+'" oninput="if(/^#[0-9A-F]{6}$/i.test(this.value))$(\''+id+'\').value=this.value" class="inp uppercase"></div>';
+else input='<input id="'+id+'" type="'+(f.type||'text')+'" value="'+v+'" '+(f.min!=null?'min="'+f.min+'" max="'+f.max+'"':'')+' class="inp">';
+return '<div><label class="block text-xs font-bold mb-1">'+f.label+'</label>'+input+'</div>';
+}).join('');
+$('form-modal').classList.remove('hidden');
+}
+function pickFormImage(k,maxW,png){
+pickImage(maxW,!!png,d=>{formImgs[k]=d;const prev=$('prev-'+k);if(prev){prev.src=d;prev.classList.remove('hidden');}});
+}
+function closeForm(){$('form-modal').classList.add('hidden');}
+function formDelete(){if(confirm('ลบรายการนี้ใช่หรือไม่?')){if(formDel)formDel();closeForm();}}
+const SECTIONS={
+header:['แก้ไขส่วนหัวเว็บ', [['siteTitle', 'ชื่อร้าน'], ['siteJp','ข้อความข้างชื่อร้าน'], ['slogan', 'สโลแกน'], ['navStore', 'เมนู: หน้าร้าน'], ['navReviews', 'เมนู: รีวิว'], ['navContact', 'เมนู: ติดต่อเรา']], [[['logo','โลโก้ร้าน (วงกลม)',300,1]]]],
+banner:['แก้ไขแบนเนอร์หน้าร้าน', [['bannerBadge', 'ป้ายเล็กบนหัวข้อ'], ['bannerT1', 'หัวข้อบรรทัดที่ 1'], ['bannerT2', 'หัวข้อบรรทัดที่ 2'], ['bannerDesc', 'คำอธิบาย','t'], ['bannerBtn', 'ข้อความปุ่ม'], ['bannerShip', 'ข้อความจัดส่ง'], ['heroCaption', 'คำใต้รูปการ์ด']], [[['bannerStore', 'รูปแบนเนอร์ (1122x495)', 1122], ['hero', 'รูปการ์ดข้างแบนเนอร์', 500]]]],
+reviewsHead:['แก้ไขกล่องรีวิว', [['revTag', 'ป้ายเล็ก'], ['revTitle', 'หัวข้อ'], ['revSub', 'คำอธิบาย','t'], ['revBtn', 'ข้อความปุ่มเขียนรีวิว']],[]],
+contactHead:['แก้ไขหัวข้อหน้าติดต่อ', [['siteTitle','ชื่อร้าน'], ['contactSlogan', 'สโลแกน','t']],[]],
+footer:['แก้ไขท้ายเว็บ', [['footer1','บรรทัดที่ 1'], ['footer2', 'บรรทัดที่ 2']],[]]
 };
-
-const DEFAULT_THEME = { bg: "#FAF6F0", card: "#FFFDF9", primary: "#E29792", blush: "#F7E7E6", text: "#65524D" };
-
-let categories = JSON.parse(localStorage.getItem('miori_categories')) || DEFAULT_CATEGORIES;
-let products = JSON.parse(localStorage.getItem('miori_products')) || DEFAULT_PRODUCTS;
-let reviewsData = JSON.parse(localStorage.getItem('miori_reviews')) || DEFAULT_REVIEWS;
-let storeInfo = JSON.parse(localStorage.getItem('miori_info')) || DEFAULT_INFO;
-let themeColors = JSON.parse(localStorage.getItem('miori_theme')) || DEFAULT_THEME;
-let isAdminLoggedIn = localStorage.getItem('miori_admin_logged') === 'true';
-let currentCategory = 'all';
-let selectedRating = 5;
-let isAudioPlaying = false;
-
-function applyAllSavedSettings() {
-  document.getElementById('site-title-text').childNodes[0].nodeValue = storeInfo.title + " ";
-  document.getElementById('contact-site-title').innerText = storeInfo.title;
-  document.getElementById('site-slogan-text').childNodes[2].nodeValue = " " + storeInfo.slogan;
-  document.getElementById('contact-site-slogan').innerText = '"' + storeInfo.slogan + '"';
-  document.getElementById('text-facebook').innerText = storeInfo.fb;
-  document.getElementById('link-facebook').href = storeInfo.fbLink || "https://facebook.com";
-  document.getElementById('text-instagram').innerText = storeInfo.ig;
-  document.getElementById('link-instagram').href = storeInfo.igLink || "https://instagram.com";
-  document.getElementById('text-line').innerText = storeInfo.line;
-  document.getElementById('link-line').href = storeInfo.lineLink || "https://line.me";
-
-  const savedStoreBanner = localStorage.getItem('miori_banner_store');
-  if (savedStoreBanner) {
-    document.getElementById('banner-store-img').src = savedStoreBanner;
-    document.getElementById('banner-store-img').classList.remove('hidden');
-    document.getElementById('banner-store-overlay').classList.add('bg-white/70', 'p-4', 'rounded-2xl', 'backdrop-blur-xs');
-  }
-  const savedReviewsBanner = localStorage.getItem('miori_banner_reviews');
-  if (savedReviewsBanner) document.getElementById('banner-reviews-img').src = savedReviewsBanner;
-  
-  const savedContactBanner = localStorage.getItem('miori_banner_contact');
-  if (savedContactBanner) document.getElementById('banner-contact-img').src = savedContactBanner;
-
-  const savedLogo = localStorage.getItem('miori_logo');
-  if (savedLogo) {
-    document.getElementById('site-logo-img').src = savedLogo;
-    document.getElementById('site-logo-img').classList.remove('hidden');
-    document.getElementById('site-logo-svg').classList.add('hidden');
-    document.getElementById('contact-logo-img').src = savedLogo;
-    document.getElementById('contact-logo-img').classList.remove('hidden');
-    document.getElementById('contact-logo-svg').classList.add('hidden');
-  }
-
-  for (const [key, val] of Object.entries(themeColors)) {
-    applyThemeColor(key, val, false);
-  }
-  renderCategoryChips();
-  renderAdminCategorySelect();
-  populateInfoFormInputs();
+function editSection(n){
+const[title,tx,im]=SECTIONS[n];
+const fields=[...tx.map(([k,l,t])=>({k,label:l, type:t?'textarea':'text',rows:2, value:getText(k)})),...im.map(([k,l,w,png])=>({k,label:l,type:'image', maxW:w,png,value:images[k]||(k==='hero'?DEF_IMG.hero:'')}))];
+openForm(title,fields,v=>{
+tx.forEach(([k])=>texts[k]=v[k]);
+im.forEach(([k])=>{if(formImgs[k])images[k]=formImgs[k];});
+save('miori_texts', texts); save('miori_images',images); applyTexts(); applyImages();
+showToast('บันทึกสำเร็จ');});
 }
-
-function populateInfoFormInputs() {
-  document.getElementById('admin-info-title').value = storeInfo.title || "";
-  document.getElementById('admin-info-slogan').value = storeInfo.slogan || "";
-  document.getElementById('admin-info-fb').value = storeInfo.fb || "";
-  document.getElementById('admin-info-fb-link').value = storeInfo.fbLink || "";
-  document.getElementById('admin-info-ig').value = storeInfo.ig || "";
-  document.getElementById('admin-info-ig-link').value = storeInfo.igLink || "";
-  document.getElementById('admin-info-line').value = storeInfo.line || "";
-  document.getElementById('admin-info-line-link').value = storeInfo.lineLink || "";
+function renderContacts(){
+$('contact-cards-container').innerHTML=contacts.map(c=>'
+<div class="relative group">
+<a href="'+esc(c.url)+'" target="_blank" class="flex items-center gap-5 bg-cream-card px-5 py-4 rounded-3xl border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark tilt-hover">
+<div class="w-14 h-14 rounded-2xl '+esc(c.color)+' border flex items-center justify-center text-xl shrink-0"><i class="'+esc(c.icon)+'"></i></div>
+<div class="min-w-0 flex-1"><h4 class="font-bold text-base sm:text-lg">'+esc(c.name)+'</h4><p class="text-xs sm:text-sm text-muted-brown truncate">'+esc(c.handle)+'</p></div>
+<span class="text-xs font-bold text-blush-dark bg-soft-blush px-3.5 py-1.5 rounded-full whitespace-nowrap">'+esc(c.tag)+'</span>
+</a>
+<button class="admin-only absolute top-3 right-3 ebtn" title="แก้ไขช่องทางนี้" onclick="editSingleContact(\''+c.id+'\')"><i class="fa-solid fa-pen"></i></button>
+</div>').join('')+'<button class="admin-only w-full py-3.5 rounded-3xl border-2 border-dashed custom-border-dashed items-center justify-center gap-2 text-sm font-bold text-blush-dark bg-cream-card hover:bg-soft-blush" onclick="editSingleContact()"><i class="fa-solid fa-plus"></i> เพิ่มช่องทางติดต่อใหม่</button>';
 }
-
-function applyThemeColor(type, color, save = true) {
-  document.documentElement.style.setProperty(`--color-${type}`, color);
-  themeColors[type] = color;
-  if (save) localStorage.setItem('miori_theme', JSON.stringify(themeColors));
+function editSingleContact(id){
+const item=id?contacts.find(x=>x.id==id):{name:'',handle:'',tag:'ติดต่อเรา',url:'https://',icon:'fa-solid fa-globe', color:'bg-orange-50 text-orange-500 border-orange-200'};
+openForm(id?'แก้ไขช่องทางติดต่อ':'เพิ่มช่องทางติดต่อ',[
+{k:'name', label:'ชื่อหัวข้อ', value:item.name},
+{k:'handle', label:'ชื่อบัญชี', value:item.handle},
+{k:'tag', label:'ข้อความป้ายเล็ก', value:item.tag},
+{k:'url', label:'ลิงก์ปลายทาง URL', value:item.url},
+{k:'icon', label:'FontAwesome Icon', value:item.icon},
+{k:'color', label:'Tailwind สีไอคอน', value:item.color}
+],v=>{
+if(id){Object.assign(item,v);}else{contacts.push({id:'c'+Date.now(),...v});}
+save('miori_contacts', contacts); renderContacts();showToast('บันทึกช่องทางติดต่อสำเร็จ');
+},id?()=>{contacts=contacts.filter(x=>x.id!=id); save('miori_contacts', contacts); renderContacts(); showToast('ลบช่องทางติดต่อสำเร็จ');}:null);
 }
-
-function syncColorInput(type, color) {
-  applyThemeColor(type, color, true);
+function editContactList(){editSingleContact();}
+function pickImage(maxW,png,cb){
+const i=document.createElement('input');i.type='file';i.accept='image/*';
+i.onchange=()=>{const f=i.files[0];if(!f)return; const r=new FileReader();
+r.onload=e=>{const im=new Image();im.onload=()=>{const s=Math.min(1,maxW/im.width),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height); cb(c.toDataURL(png?'image/png':'image/jpeg',.85));};im.src=e.target.result;};
+r.readAsDataURL(f);};
+i.click();
 }
-
-function resetThemeColors() {
-  themeColors = {...DEFAULT_THEME};
-  localStorage.setItem('miori_theme', JSON.stringify(themeColors));
-  for (const [key, val] of Object.entries(themeColors)) {
-    applyThemeColor(key, val, false);
-  }
-  showToast("รีเซ็ตโทนสีเป็นค่าเริ่มต้นเรียบร้อย");
+function changeImage(k){
+const[w,png]={logo:[300,1],bannerStore:[1122],bannerReviews:[1122],hero:[500]}[k];
+pickImage(w,!!png,d=>{images[k]=d;save('miori_images',images); applyImages(); showToast('เปลี่ยนรูปสำเร็จ');});
 }
-
-function toggleAudio() {
-  const player = document.getElementById('bgm-player');
-  const playBtn = document.getElementById('play-btn');
-  const musicNotes = document.getElementById('music-notes');
-  if (isAudioPlaying) {
-    player.pause();
-    isAudioPlaying = false;
-    playBtn.innerHTML = '<i class="fa-solid fa-play text-blush-dark"></i>';
-    musicNotes.classList.add('hidden');
-  } else {
-    player.play().then(() => {
-      isAudioPlaying = true;
-      playBtn.innerHTML = '<i class="fa-solid fa-pause text-blush-dark"></i>';
-      musicNotes.classList.remove('hidden');
-    }).catch(err => {
-      showToast("ไม่สามารถเล่นไฟล์เพลงได้");
-    });
-  }
+function switchTab(n){
+['store', 'reviews', 'contact'].forEach(t=>{$('page-'+t).classList.toggle('hidden',t!==n);$('nav-'+t).classList.toggle('active',t===n);});
+window.scrollTo({top:0, behavior:'smooth'});
 }
-
-function switchTab(tabName) {
-  document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
-  document.querySelectorAll('.tab-diary').forEach(btn => btn.classList.remove('active'));
-  const targetSection = document.getElementById(`page-${tabName}`);
-  const targetBtn = document.getElementById(`nav-${tabName}`);
-  if (targetSection) targetSection.classList.remove('hidden');
-  if (targetBtn) targetBtn.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function toggleAudio(){
+const p=$('bgm-player'),b=$('play-btn');
+if(!p.src && music.url) p.src = music.url;
+if(isAudioPlaying){
+p.pause();
+isAudioPlaying=false;
+b.innerHTML='<i class="fa-solid fa-play ml-0.5 text-blush-dark"></i>';
+$('music-notes').classList.add('hidden');
+} else {
+p.play().then(()=>{
+isAudioPlaying=true;
+b.innerHTML='<i class="fa-solid fa-pause text-blush-dark"></i>';
+$('music-notes').classList.remove('hidden');
+}).catch(err=>{
+showToast("ไม่สามารถเล่นเพลงได้ ตรวจสอบลิงก์");
+});
 }
-
-function switchAdminSubTab(subTabName) {
-  ['store', 'reviews', 'contact', 'theme'].forEach(t => {
-    const sub = document.getElementById(`admin-sub-${t}`);
-    const btn = document.getElementById(`admin-tab-${t}`);
-    if (sub) sub.classList.add('hidden');
-    if (btn) btn.classList.remove('active');
-  });
-  const targetSub = document.getElementById(`admin-sub-${subTabName}`);
-  const targetBtn = document.getElementById(`admin-tab-${subTabName}`);
-  if (targetSub) targetSub.classList.remove('hidden');
-  if (targetBtn) targetBtn.classList.add('active');
 }
-
-function renderCategoryChips() {
-  const container = document.getElementById('category-chips-container');
-  if (!container) return;
-  container.innerHTML = `
-    <button onclick="filterCategory('all')" class="cat-chip ${currentCategory === 'all' ? 'active bg-soft-blush font-bold border-blush-dark': 'bg-white'} px-4 py-2 rounded-2xl text-xs sm:text-sm text-soft-brown border-2 border-soft-blush shadow-scrapbook hover:bg-soft-blush transition-all whitespace-nowrap">
-      <span>ทั้งหมด (All)</span>
-    </button>
-  `;
-  categories.forEach(cat => {
-    const isActive = currentCategory === cat.id;
-    container.innerHTML += `
-      <button onclick="filterCategory('${cat.id}')" class="cat-chip ${isActive ? 'active bg-soft-blush font-bold border-blush-dark': 'bg-white'} px-4 py-2 rounded-2xl text-xs sm:text-sm text-soft-brown border-2 border-soft-blush shadow-scrapbook hover:bg-soft-blush transition-all whitespace-nowrap">
-        <span>${cat.name}</span>
-      </button>
-    `;
-  });
+function editMusic(){
+openForm('แก้ไขเพลงพื้นหลัง', [{k:'title', label:'ชื่อเพลง', value:music.title}, {k:'url', label:'ลิงก์ไฟล์เพลง (.mp3)', value:music.url}],v=>{
+music={title:v.title, url:v.url}; save('miori_music',music);
+applyMusic(); showToast('บันทึกเพลงสำเร็จ');});
 }
-
-function renderAdminCategorySelect() {
-  const select = document.getElementById('admin-prod-category');
-  if (!select) return;
-  select.innerHTML = "";
-  categories.forEach(cat => {
-    select.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
-  });
+function handleGear(){
+if(loggedIn){
+if(editing){
+$('admin-menu-modal').classList.remove('hidden');
+} else {
+setEditing(true);
+showToast('เปิดโหมดแก้ไข');
+$('admin-menu-modal').classList.remove('hidden');
 }
-
-function renderProducts() {
-  const grid = document.getElementById('product-grid');
-  if (!grid) return;
-  grid.innerHTML = "";
-  const filtered = currentCategory === 'all' ? products : products.filter(p => p.category === currentCategory);
-  filtered.forEach((product) => {
-    const card = document.createElement('div');
-    card.className = "bg-cream-card rounded-3xl p-3.5 border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark transition-all duration-300 tilt-hover flex flex-col justify-between group relative";
-    card.innerHTML = `
-      <div class="space-y-3">
-        <div class="relative aspect-square rounded-2xl overflow-hidden bg-warm-cream border border-soft-brown/10">
-          <img src="${product.img}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x400/F7E7E6/65524D?text=Miori+Item'">
-          <span class="absolute top-2 left-2 bg-white/90 text-soft-brown font-handwritten font-bold text-[10px] px-2.5 py-0.5 rounded-full shadow-xs border border-soft-blush">
-            ${product.badge || 'New'}
-          </span>
-        </div>
-        <div>
-          <div class="flex items-center gap-1 text-yellow-400 text-xs mb-1">
-            <i class="fa-solid fa-star"></i>
-            <span class="text-soft-brown font-bold text-xs ml-0.5">${product.rating || 5.0}</span>
-          </div>
-          <h4 class="font-handwritten font-bold text-soft-brown text-sm sm:text-base line-clamp-2 leading-snug">
-            ${product.name}
-          </h4>
-        </div>
-      </div>
-      <div class="mt-3 pt-2 border-t border-dashed border-soft-blush flex items-center justify-between">
-        <span class="font-handwritten font-bold text-soft-brown text-base">฿${product.price}</span>
-        <button onclick="openProductModal(${product.id})" class="px-3 py-1.5 bg-soft-blush hover:bg-blush-dark hover:text-white text-soft-brown text-xs font-handwritten font-bold rounded-xl transition-colors flex items-center gap-1">
-          <span>ดูน้อง</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        </button>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
+} else {
+$('admin-login-modal').classList.remove('hidden');
 }
-
-function filterCategory(cat) {
-  currentCategory = cat;
-  renderCategoryChips();
-  renderProducts();
 }
-
-function openProductModal(id) {
-  const product = products.find(p => p.id === id);
-  if (!product) return;
-  const modalContent = document.getElementById('modal-product-content');
-  const btnText = product.btnText || 'สั่งซื้อผ่าน LINE / Inbox';
-  const btnLink = product.btnLink || 'https://line.me';
-  modalContent.innerHTML = `
-    <div class="space-y-4">
-      <div class="aspect-video w-full rounded-2xl overflow-hidden bg-warm-cream border-2 border-soft-blush">
-        <img src="${product.img}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/500x300/F7E7E6/65524D?text=Miori+Item'">
-      </div>
-      <div>
-        <span class="text-[11px] font-bold text-blush-dark bg-soft-blush px-3 py-1 rounded-full">${product.badge || 'Handmade'}</span>
-        <h3 class="font-handwritten text-xl font-bold text-soft-brown mt-2">${product.name}</h3>
-        <p class="text-xs text-muted-brown mt-1 leading-relaxed">${product.desc || 'สินค้าโฮมเมดน่ารักๆ จาก Miori Studio'}</p>
-      </div>
-      <div class="flex items-center justify-between pt-3 border-t-2 border-dashed border-soft-blush">
-        <div>
-          <p class="text-[10px] text-muted-brown">ราคาพิเศษ</p>
-          <span class="font-handwritten text-2xl font-bold text-soft-brown">฿${product.price}</span>
-        </div>
-        <a href="${btnLink}" target="_blank" onclick="closeProductModal()" class="px-5 py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-2xl shadow-scrapbook transition-all flex items-center gap-1.5">
-          <span>${btnText}</span>
-          <i class="fa-solid fa-cart-shopping"></i>
-        </a>
-      </div>
-    </div>
-  `;
-  document.getElementById('product-modal').classList.remove('hidden');
+function setEditing(val){
+editing=val;
+document.body.classList.toggle('editing', editing);
 }
-
-function closeProductModal() {
-  document.getElementById('product-modal').classList.add('hidden');
+function handleAdminLogin(e){
+e.preventDefault();
+if($('login-email').value==='admin@gmail.com'&&$('login-password').value===adminPassword){
+loggedIn=true;localStorage.setItem('miori_admin_logged','true'); $('admin-login-modal').classList.add('hidden');
+setEditing(true); showToast('เข้าสู่โหมดแก้ไขสำเร็จ');
+}else showToast('Gmail หรือรหัสผ่านไม่ถูกต้อง');
 }
-
-function renderReviews() {
-  const container = document.getElementById('reviews-container');
-  if (!container) return;
-  container.innerHTML = "";
-  reviewsData.forEach((rev, index) => {
-    const isEven = (index % 2 === 0);
-    const tapePositionClass = isEven ? '-top-2.5 left-8 rotate-[-3deg]' : '-top-2.5 right-8 rotate-[3deg]';
-    const card = document.createElement('div');
-    card.className = `${rev.color || 'bg-cream-card'} p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook relative ${rev.rotation || ""} space-y-3`;
-    card.innerHTML = `
-      <div class="washi-tape ${tapePositionClass}"></div>
-      <div class="flex justify-between items-start">
-        <div>
-          <h4 class="font-handwritten font-bold text-soft-brown text-base">${rev.name}</h4>
-          <p class="text-[10px] text-muted-brown">${rev.date}</p>
-        </div>
-        <div class="text-yellow-400 text-xs">
-          ${'<i class="fa-solid fa-star"></i>'.repeat(rev.rating)}
-        </div>
-      </div>
-      <p class="text-xs text-soft-brown leading-relaxed font-mali">"${rev.comment}"</p>
-    `;
-    container.appendChild(card);
-  });
+function openChangePasswordModal(){
+$('new-password').value='';
+$('confirm-password').value=''; $('change-pass-modal').classList.remove('hidden');
 }
-
-function renderAdminReviewsList() {
-  const container = document.getElementById('admin-reviews-list');
-  if (!container) return;
-  container.innerHTML = "";
-  reviewsData.forEach(rev => {
-    container.innerHTML += `
-      <div class="flex items-center justify-between p-2.5 bg-white rounded-xl border border-soft-blush text-xs">
-        <div><b>${rev.name}</b>: ${rev.comment.substring(0, 30)}...</div>
-        <button onclick="deleteReview(${rev.id})" class="text-red-500 hover:text-red-700 px-2 py-1"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    `;
-  });
+function handleAdminChangePassword(e){
+e.preventDefault();
+const newPass=$('new-password').value;
+const confirmPass=$('confirm-password').value;
+if(newPass!==confirmPass){
+showToast('รหัสผ่านใหม่ไม่ตรงกัน');
+return;
 }
-
-function deleteReview(id) {
-  if (confirm("ต้องการลบรีวิวนี้ใช่หรือไม่?")) {
-    reviewsData = reviewsData.filter(r => r.id !== id);
-    localStorage.setItem('miori_reviews', JSON.stringify(reviewsData));
-    renderReviews();
-    renderAdminReviewsList();
-    showToast("ลบรีวิวเรียบร้อย");
-  }
+adminPassword=newPass;
+localStorage.setItem('miori_admin_password', adminPassword);
+$('change-pass-modal').classList.add('hidden');
+showToast('เปลี่ยนรหัสผ่านสำเร็จ');
 }
-
-function openReviewModal() { document.getElementById('review-modal').classList.remove('hidden'); }
-function closeReviewModal() { document.getElementById('review-modal').classList.add('hidden'); }
-
-function setStarRating(rating) {
-  selectedRating = rating;
-  const stars = document.querySelectorAll('#star-selector i');
-  stars.forEach((star, idx) => {
-    if (idx < rating) star.className = "fa-solid fa-star text-yellow-400";
-    else star.className = "fa-solid fa-star text-gray-300";
-  });
+function adminLogout(){loggedIn=false; localStorage.removeItem('miori_admin_logged'); setEditing(false); showToast('ออกจากระบบเรียบร้อย');}
+function resetAll(){if(confirm('รีเซ็ตข้อมูลทั้งหมดกลับเป็นค่าเริ่มต้น?')){localStorage.clear();location.reload();}}
+function editTheme(){
+const L={bg:'สีพื้นหลังหลัก', card:'สีการ์ด', primary:'สีปุ่ม', blush:'สีพาสเทลอ่อน', text:'สีตัวอักษร', border:'สีเส้นขอบ', ctrl:'สีปุ่มควบคุม', revbox:'สีกล่องรีวิว'};
+openForm('ปรับโทนสีเว็บไซต์', Object.keys(L).map(k=>({k,label:L[k], type:'color', value:theme[k]})),v=>{theme={...theme,...v};save('miori_theme', theme); applyTheme(); showToast('เปลี่ยนโทนสีสำเร็จ');});
 }
-
-function submitReview(event) {
-  event.preventDefault();
-  const name = document.getElementById('review-name').value;
-  const comment = document.getElementById('review-comment').value;
-  const colors = ['bg-pastel-yellow', 'bg-soft-blush', 'bg-sage-green', 'bg-pastel-peach'];
-  const rotations = ['rotate-[-2deg]', 'rotate-[2deg]', 'rotate-[-1deg]', 'rotate-[1deg]'];
-  const newRev = {
-    id: Date.now(),
-    name: name,
-    rating: selectedRating,
-    date: "วันนี้",
-    comment: comment,
-    color: colors[Math.floor(Math.random()*colors.length)],
-    rotation: rotations[Math.floor(Math.random()*rotations.length)]
-  };
-  reviewsData.unshift(newRev);
-  localStorage.setItem('miori_reviews', JSON.stringify(reviewsData));
-  renderReviews();
-  renderAdminReviewsList();
-  closeReviewModal();
-  showToast("ขอบคุณสำหรับโปสการ์ดรีวิวนะคะ!");
-  event.target.reset();
-  setStarRating(5);
+function resetTheme(){theme={...DEF_THEME}; save('miori_theme', theme); applyTheme(); showToast('รีเซ็ตโทนสีสำเร็จ');}
+function renderCategoryChips(){
+const chip=(id,name)=>'<button onclick="filterCategory(\''+id+'\')" class="'+(currentCategory===id?'bg-soft-blush font-bold border-blush-dark':'bg-white')+' px-4 py-2 rounded-2xl text-xs sm:text-sm border-2 border-soft-blush shadow-scrapbook hover:bg-soft-blush whitespace-nowrap">'+esc(name)+'</button>';
+$('category-chips-container').innerHTML=chip('all','ทั้งหมด')+categories.map(c=>chip(c.id, c.name)).join('');
 }
-
-function handleAdminButtonClick() {
-  if (isAdminLoggedIn) switchTab('admin');
-  else document.getElementById('admin-login-modal').classList.remove('hidden');
+function editCategories(){
+let tempCategories = JSON.parse(JSON.stringify(categories));
+function renderCatList() {
+const container = $('form-cat-list');
+if(!container) return;
+container.innerHTML = tempCategories.map((c, idx) =>
+'<div class="flex items-center gap-2 bg-warm-cream p-2.5 rounded-2xl border border-soft-blush">'+
+'<div class="flex-1 space-y-1">'+
+'<input type="text" placeholder="ชื่อหมวดหมู่" value="'+esc(c.name)+'" oninput="tempCategories['+idx+'].name=this.value" class="inp !py-1 !text-xs">'+
+'</div>'+
+'<button type="button" onclick="tempCategories.splice('+idx+', 1); renderCatList();" class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 hover:bg-red-200"><i class="fa-solid fa-trash text-xs"></i></button>'+
+'</div>'
+).join('') || '<p class="text-xs text-muted-brown text-center py-4">ยังไม่มีหมวดหมู่ กดปุ่มด้านล่างเพื่อเพิ่ม</p>';
 }
-
-function closeAdminLoginModal() { document.getElementById('admin-login-modal').classList.add('hidden'); }
-
-function handleAdminLogin(event) {
-  event.preventDefault();
-  const email = document.getElementById('login-email').value;
-  const pass = document.getElementById('login-password').value;
-  if (email === 'admin@gmail.com' && pass === 'admin123') {
-    isAdminLoggedIn = true;
-    localStorage.setItem('miori_admin_logged', 'true');
-    closeAdminLoginModal();
-    switchTab('admin');
-    renderAdminProductsTable();
-    renderAdminReviewsList();
-    showToast("เข้าสู่ระบบหลังบ้านสำเร็จ!");
-  } else {
-    showToast("Gmail หรือรหัสผ่านไม่ถูกต้อง");
-  }
+window.tempCategories = tempCategories;
+window.renderCatList = renderCatList;
+openForm('จัดการชื่อหมวดหมู่สินค้า',[
+{k:'custom_cats', label:'รายการหมวดหมู่', type:'html'}
+], ()=>{
+categories = tempCategories.filter(c => c.name.trim()).map(c => ({
+id: c.id || ('cat_' + Math.random().toString(36).substr(2, 9)),
+name: c.name
+}));
+save('miori_categories', categories);
+if(currentCategory !== 'all' && !categories.some(c => c.id === currentCategory))
+currentCategory = 'all';
+renderCategoryChips();
+renderProducts();
+showToast('บันทึกหมวดหมู่สำเร็จ');
+});
+setTimeout(() => {
+const fieldDiv = $('f-custom_cats')?.closest('div');
+if(fieldDiv) {
+fieldDiv.innerHTML = '<label class="block text-xs font-bold mb-2">แก้ไขชื่อหมวดหมู่</label><div id="form-cat-list" class="space-y-2.5 max-h-60 overflow-y-auto pr-1"></div><button type="button" onclick="tempCategories.push({id:\'cat_\'+Date.now(), name:\'\'}); renderCatList();" class="mt-3 w-full py-2 bg-soft-blush hover:bg-blush-dark hover:text-white text-xs font-bold rounded-xl text-blush-dark border border-soft-blush flex items-center justify-center gap-1.5"><i class="fa-solid fa-plus"></i> เพิ่มหมวดหมู่ใหม่</button>';
 }
-
-function adminLogout() {
-  isAdminLoggedIn = false;
-  localStorage.removeItem('miori_admin_logged');
-  switchTab('store');
-  showToast("ออกจากระบบเรียบร้อย");
+renderCatList();
+}, 50);
 }
-
-function previewImageFile(input, previewId) {
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const preview = document.getElementById(previewId);
-      preview.src = e.target.result;
-      preview.classList.remove('hidden');
-    }
-    reader.readAsDataURL(input.files[0]);
-  }
+function filterCategory(c){currentCategory=c; renderCategoryChips(); renderProducts();}
+function renderProducts(){
+const list=currentCategory==='all'?products:products.filter(p=>p.category===currentCategory);
+$('product-grid').innerHTML=list.map(p=>'
+<div class="bg-cream-card rounded-3xl p-3.5 border-2 border-soft-blush shadow-scrapbook hover:border-blush-dark tilt-hover flex flex-col justify-between group">
+<div class="space-y-3">
+<div class="relative aspect-square rounded-2xl overflow-hidden bg-warm-cream border border-soft-brown/10">
+<img src="'+esc(p.img)+'" alt="'+esc(p.name)+'" class="w-full h-full object-cover" onerror="this.src=\''+PLACE+'\'">
+<span class="absolute top-2 left-2 bg-white/90 font-handwritten font-bold text-[10px] px-2.5 py-0.5 rounded-full border border-soft-blush">'+esc(p.badge||'New')+'</span>
+<button class="admin-only ebtn absolute bottom-2 right-2" title="แก้ไขสินค้า" onclick="editProduct('+p.id+')"><i class="fa-solid fa-pen"></i></button>
+</div>
+<div>
+<div class="text-yellow-400 text-xs mb-1"><i class="fa-solid fa-star"></i><span class="text-soft-brown font-bold ml-1">'+(p.rating||5)+'</span></div>
+<h4 class="font-bold text-sm sm:text-base line-clamp-2 leading-snug">'+esc(p.name)+'</h4>
+</div>
+</div>
+<div class="mt-3 pt-2 border-t border-dashed border-soft-blush flex items-center justify-between">
+<span class="font-handwritten font-bold text-base">฿'+esc(p.price)+'</span>
+<button onclick="openProductModal('+p.id+')" class="px-3 py-1.5 bg-soft-blush hover:bg-blush-dark hover:text-white text-xs font-handwritten font-bold rounded-xl">'+esc(p.viewBtnText||'ดูรายละเอียด')+'</button>
+</div>
+</div>').join('')+'<button class="admin-only min-h-[10rem] rounded-3xl border-2 border-dashed custom-border-dashed items-center justify-center gap-2 text-sm font-bold text-blush-dark bg-cream-card hover:bg-soft-blush" onclick="editProduct()"><i class="fa-solid fa-plus"></i> เพิ่มสินค้า</button>';
 }
-
-function handleSaveProduct(event) {
-  event.preventDefault();
-  const id = document.getElementById('admin-prod-id').value;
-  const name = document.getElementById('admin-prod-name').value;
-  const category = document.getElementById('admin-prod-category').value;
-  const price = parseFloat(document.getElementById('admin-prod-price').value);
-  const badge = document.getElementById('admin-prod-badge').value;
-  const btnText = document.getElementById('admin-prod-btn-text').value;
-  const btnLink = document.getElementById('admin-prod-btn-link').value;
-  const desc = document.getElementById('admin-prod-desc').value;
-  const fileInput = document.getElementById('admin-prod-file');
-
-  const saveProcess = (imgUrl) => {
-    if (id) {
-      const prod = products.find(p => p.id == id);
-      if (prod) {
-        prod.name = name;
-        prod.category = category;
-        prod.price = price;
-        prod.badge = badge || prod.badge;
-        prod.btnText = btnText;
-        prod.btnLink = btnLink;
-        prod.desc = desc;
-        if (imgUrl) prod.img = imgUrl;
-        showToast("แก้ไขข้อมูลสินค้าสำเร็จ!");
-      }
-    } else {
-      const newProd = {
-        id: Date.now(),
-        name: name,
-        category: category,
-        price: price,
-        rating: 5.0,
-        badge: badge || 'New',
-        btnText: btnText || 'สั่งซื้อผ่าน LINE / Inbox',
-        btnLink: btnLink || 'https://line.me',
-        img: imgUrl || 'https://placehold.co/400x400/F7E7E6/65524D?text=Miori+Item',
-        desc: desc
-      };
-      products.unshift(newProd);
-      showToast("เพิ่มสินค้าใหม่สำเร็จ!");
-    }
-    localStorage.setItem('miori_products', JSON.stringify(products));
-    renderProducts();
-    renderAdminProductsTable();
-    resetProductForm();
-  };
-
-  if (fileInput.files && fileInput.files[0]) {
-    const reader = new FileReader();
-    reader.onload = function(e) { saveProcess(e.target.result); }
-    reader.readAsDataURL(fileInput.files[0]);
-  } else {
-    const existingImg = id ? (products.find(p => p.id == id)?.img || "") : "";
-    saveProcess(existingImg);
-  }
+function editProduct(id){
+const p=id?products.find(x=>x.id==id):{category:categories[0]?.id, btnText:B, btnLink:'https://line.me', viewBtnText:'ดูรายละเอียด'};
+openForm(id?'แก้ไขสินค้า':'เพิ่มสินค้าใหม่',[
+{k:'img', label:'รูปสินค้า', type:'image', maxW:560, value:id?p.img:''},
+{k:'name', label:'ชื่อสินค้า', value:p.name||''},
+{k:'category', label:'หมวดหมู่', type:'select', options:categories.map(c=>[c.id,c.name]), value:p.category},
+{k:'price', label:'ราคา (บาท)', type:'number', value:p.price??''},
+{k:'badge', label:'ข้อความป้าย', value:p.badge||''},
+{k:'desc', label:'คำอธิบายสินค้า', type:'textarea', value:p.desc||''},
+{k:'viewBtnText', label:'ข้อความปุ่มดูสินค้า', value:p.viewBtnText||'ดูรายละเอียด'},
+{k:'btnText', label:'ชื่อปุ่มสั่งซื้อ', value:p.btnText||''},
+{k:'btnLink', label:'ลิงก์ปุ่มสั่งซื้อ', value:p.btnLink||''}
+],v=>{
+v.price=parseFloat(v.price)||0;
+if(formImgs.img)v.img=formImgs.img; else if(!id)v.img=PLACE; else v.img=p.img;
+if(id)Object.assign(p,v); else products.unshift({id:Date.now(), rating:5,...v});
+save('miori_products', products); renderProducts(); showToast('บันทึกสินค้าสำเร็จ');},
+id?()=>{products=products.filter(x=>x.id!=id);save('miori_products', products); renderProducts(); showToast('ลบสินค้าสำเร็จ');}:null);
 }
-
-function resetProductForm() {
-  document.getElementById('admin-prod-id').value = "";
-  document.getElementById('admin-prod-name').value = "";
-  document.getElementById('admin-prod-price').value = "";
-  document.getElementById('admin-prod-badge').value = "";
-  document.getElementById('admin-prod-desc').value = "";
-  document.getElementById('admin-prod-file').value = "";
-  document.getElementById('admin-prod-img-preview').classList.add('hidden');
-  document.getElementById('admin-prod-form-title').innerHTML = '<i class="fa-solid fa-plus-circle text-blush-dark"></i><span>เพิ่มหรือแก้ไขสินค้าในหน้าร้าน</span>';
+function openProductModal(id){
+const p=products.find(x=>x.id===id);if(!p)return;
+$('modal-product-content').innerHTML='<div class="space-y-4">'+
+'<div class="aspect-square w-full rounded-2xl overflow-hidden bg-warm-cream border-2 border-soft-blush"><img src="'+esc(p.img)+'" class="w-full h-full object-cover" onerror="this.src=\''+PLACE+'\'"></div>'+
+'<div><span class="text-[11px] font-bold text-blush-dark bg-soft-blush px-3 py-1 rounded-full">'+esc(p.badge||'Handmade')+'</span>'+
+'<h3 class="font-handwritten text-xl font-bold mt-2">'+esc(p.name)+'</h3>'+
+'<p class="text-xs text-muted-brown mt-1 leading-relaxed">'+esc(p.desc||'')+'</p></div>'+
+'<div class="flex items-center justify-between pt-3 border-t-2 border-dashed border-soft-blush">'+
+'<div><p class="text-[10px] text-muted-brown">ราคาพิเศษ</p><span class="font-handwritten text-2xl font-bold">฿'+esc(p.price)+'</span></div>'+
+'<a href="'+esc(p.btnLink||'https://line.me')+'" target="_blank" class="px-5 py-2.5 bg-blush-dark hover:bg-soft-brown text-white text-xs font-handwritten font-bold rounded-2xl shadow-scrapbook">'+esc(p.btnText||B)+'</a>'+
+'</div></div>';
+$('product-modal').classList.remove('hidden');
 }
-
-function renderAdminProductsTable() {
-  const container = document.getElementById('admin-products-list');
-  if (!container) return;
-  container.innerHTML = "";
-  products.forEach(p => {
-    container.innerHTML += `
-      <div class="bg-warm-cream p-3 rounded-2xl border border-soft-blush flex items-center justify-between gap-2">
-        <div class="flex items-center gap-2.5 overflow-hidden">
-          <img src="${p.img}" class="w-12 h-12 object-cover rounded-xl shrink-0" onerror="this.src='https://placehold.co/100x100'">
-          <div class="min-w-0">
-            <h5 class="font-handwritten font-bold text-soft-brown text-xs truncate">${p.name}</h5>
-            <p class="text-[10px] text-muted-brown">฿${p.price}</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-1 shrink-0">
-          <button onclick="editProduct(${p.id})" class="p-1.5 bg-white text-blue-600 rounded-xl border border-blue-200 text-xs" title="แก้ไข"><i class="fa-solid fa-pen"></i></button>
-          <button onclick="deleteProduct(${p.id})" class="p-1.5 bg-white text-red-600 rounded-xl border border-red-200 text-xs" title="ลบ"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      </div>
-    `;
-  });
+function updateReviewStats(){
+const count=reviewsData.length;
+if(count===0){
+$('dynamic-rev-score').textContent='0.0'; $('dynamic-rev-count').textContent='จาก 0 รีวิว';
+return;
 }
-
-function editProduct(id) {
-  const p = products.find(item => item.id == id);
-  if (!p) return;
-  document.getElementById('admin-prod-id').value = p.id;
-  document.getElementById('admin-prod-name').value = p.name;
-  document.getElementById('admin-prod-category').value = p.category;
-  document.getElementById('admin-prod-price').value = p.price;
-  document.getElementById('admin-prod-badge').value = p.badge || "";
-  document.getElementById('admin-prod-btn-text').value = p.btnText || "";
-  document.getElementById('admin-prod-btn-link').value = p.btnLink || "";
-  document.getElementById('admin-prod-desc').value = p.desc || "";
-  document.getElementById('admin-prod-form-title').innerHTML = '<i class="fa-solid fa-pen text-blush-dark"></i><span>แก้ไขข้อมูลสินค้า: ' + p.name + '</span>';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+const sum=reviewsData.reduce((acc,curr)=>acc+Number(curr.rating||5),0);
+const avg=(sum/count).toFixed(2);
+$('dynamic-rev-score').textContent=avg;
+$('dynamic-rev-count').textContent='จาก '+count+' รีวิว';
 }
-
-function deleteProduct(id) {
-  if (confirm("คุณต้องการลบสินค้านี้ใช่หรือไม่?")) {
-    products = products.filter(p => p.id != id);
-    localStorage.setItem('miori_products', JSON.stringify(products));
-    renderProducts();
-    renderAdminProductsTable();
-    showToast("ลบสินค้าเรียบร้อย");
-  }
+function renderReviews(){
+$('reviews-container').innerHTML=reviewsData.map((r,i)=>'
+<div class="'+(r.color||'bg-cream-card')+' p-6 rounded-3xl border-2 border-soft-blush shadow-scrapbook relative '+(r.rotation||'')+' space-y-3">
+<div class="washi-tape '+(i%2===0?'-top-2.5 left-8 rotate-[-3deg]':'-top-2.5 right-8 rotate-[3deg]')+'"></div>
+<div class="flex justify-between items-start">
+<div><h4 class="font-bold text-base">'+esc(r.name)+'</h4><p class="text-[10px] text-muted-brown">'+esc(r.date)+'</p></div>
+<div class="text-yellow-400 text-xs">'+'<i class="fa-solid fa-star"></i>'.repeat(r.rating)+'</div>
+</div>
+<p class="text-xs leading-relaxed">"'+esc(r.comment)+'"</p>
+</div>').join('');
+updateReviewStats();
 }
-
-function uploadSiteLogo() {
-  const input = document.getElementById('admin-logo-file');
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      localStorage.setItem('miori_logo', e.target.result);
-      applyAllSavedSettings();
-      showToast("อัปโหลดโลโก้ร้านค้าสำเร็จ!");
-    }
-    reader.readAsDataURL(input.files[0]);
-  } else {
-    showToast("กรุณาเลือกไฟล์รูปภาพโลโก้");
-  }
+function openReviewModal(){$('review-modal').classList.remove('hidden');}
+function closeReviewModal(){$('review-modal').classList.add('hidden');}
+function setStarRating(n){
+selectedRating=n;
+$('star-selector').innerHTML=[1,2,3,4,5].map(i=>'<i onclick="setStarRating('+i+')" class="fa-solid fa-star '+(i<=selectedRating?'text-yellow-400':'text-gray-300')+'"></i>').join('');
 }
-
-function uploadBannerImage(type) {
-  const input = document.getElementById(`admin-banner-${type}-file`);
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      localStorage.setItem(`miori_banner_${type}`, e.target.result);
-      applyAllSavedSettings();
-      showToast(`เปลี่ยนแบนเนอร์${type === 'store' ? 'หน้าร้าน' : type === 'reviews' ? 'หน้ารีวิว' : 'หน้าติดต่อ'}สำเร็จ!`);
-    }
-    reader.readAsDataURL(input.files[0]);
-  } else {
-    showToast("กรุณาเลือกไฟล์รูปภาพแบนเนอร์");
-  }
+function submitReview(e){
+e.preventDefault();
+const C=['bg-pastel-yellow', 'bg-soft-blush', 'bg-sage-green', 'bg-pastel-peach'], R=['rotate-[-2deg]', 'rotate-[2deg]', 'rotate-[-1deg]', 'rotate-[1deg]'];
+reviewsData.unshift({id:Date.now(), name:$('review-name').value, rating:selectedRating, date:new Date().toLocaleDateString('th-TH', {day:'numeric', month:'short', year:'numeric'}), comment:$('review-comment').value, color:C[Math.floor(Math.random()*C.length)], rotation:R[Math.floor(Math.random()*R.length)]});
+save('miori_reviews', reviewsData); renderReviews(); closeReviewModal();e.target.reset();
+setStarRating(5); showToast('ขอบคุณสำหรับรีวิว');
 }
-
-function handleSaveStoreInfo(event) {
-  event.preventDefault();
-  storeInfo.title = document.getElementById('admin-info-title').value;
-  storeInfo.slogan = document.getElementById('admin-info-slogan').value;
-  storeInfo.fb = document.getElementById('admin-info-fb').value;
-  storeInfo.fbLink = document.getElementById('admin-info-fb-link').value;
-  storeInfo.ig = document.getElementById('admin-info-ig').value;
-  storeInfo.igLink = document.getElementById('admin-info-ig-link').value;
-  storeInfo.line = document.getElementById('admin-info-line').value;
-  storeInfo.lineLink = document.getElementById('admin-info-line-link').value;
-
-  localStorage.setItem('miori_info', JSON.stringify(storeInfo));
-  applyAllSavedSettings();
-  showToast("บันทึกข้อมูลเรียบร้อยแล้ว!");
+function showToast(m){
+const t=$('toast'); $('toast-msg').textContent=m;t.classList.remove('-translate-y-6', 'opacity-0');
+clearTimeout(showToast.t); showToast.t=setTimeout(()=>t.classList.add('-translate-y-6', 'opacity-0'),2800);
 }
-
-function showToast(msg) {
-  const toast = document.getElementById('toast');
-  document.getElementById('toast-msg').innerText = msg;
-  toast.classList.remove('translate-y-20', 'opacity-0');
-  setTimeout(() => {
-    toast.classList.add('translate-y-20', 'opacity-0');
-  }, 3000);
-}
-
-window.onload = function() {
-  applyAllSavedSettings();
-  renderProducts();
-  renderReviews();
-  if (isAdminLoggedIn) {
-    renderAdminProductsTable();
-    renderAdminReviewsList();
-  }
+window.onload=()=>{
+applyTheme(); applyTexts(); applyMusic(); applyImages();
+renderCategoryChips(); renderProducts(); renderReviews(); renderContacts(); setStarRating(5); setEditing(editing);
 };
 </script>
 </body>
