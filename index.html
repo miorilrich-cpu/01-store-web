@@ -10,10 +10,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Itim&family=K2D:wght@400;500;700&family=Mali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- Firebase SDK (Modular) -->
+<!-- Firebase SDK (Modular + Storage) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBQ-DaMwk9jvfq5YTkoZkS6WnIOI8_urYY",
@@ -28,9 +29,12 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  const storage = getStorage(app);
 
   window.db = db;
+  window.storage = storage;
   window.dbModules = { doc, getDoc, setDoc, onSnapshot };
+  window.storageModules = { ref, uploadBytes, getDownloadURL };
 </script>
 
 <script>
@@ -161,7 +165,7 @@ input[type=color].inp{height:40px;padding:2px}
       <div class="washi-tape -bottom-3 right-12 rotate-[4deg]"></div>
       <div class="relative w-full aspect-banner rounded-3xl overflow-hidden border-4 border-white shadow-soft-float bg-gradient-to-r from-soft-blush via-pastel-yellow to-pastel-peach p-4 sm:p-8 flex items-center justify-between">
         <img id="banner-store-img" alt="banner" class="absolute inset-0 w-full h-full object-cover hidden">
-        <button class="admin-only ebtn ebtn-l absolute top-3 right-3 z-20" onclick="editSection('banner')"><i class="fa-solid fa-pen"></i> แก้ไขแบนเนอร์</button>
+        <button class="admin-only ebtn ebtn-l absolute top-3 right-3 z-20" onclick="changeImage('bannerStore')"><i class="fa-solid fa-camera"></i> เปลี่ยนแบนเนอร์</button>
         <div id="banner-store-overlay" class="relative z-10 max-w-xl space-y-2 sm:space-y-3">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 text-blush-dark text-xs sm:text-sm font-bold border border-soft-blush"><i class="fa-solid fa-heart"></i><span data-edit="bannerBadge">Handcrafted with Love</span></span>
           <h2 class="font-handwritten text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight"><span data-edit="bannerT1">เปิดตู้ของสะสมละมุนใจ</span><br><span data-edit="bannerT2" class="text-blush-dark underline decoration-wavy decoration-soft-blush">สไตล์มินิมอลญี่ปุ่น</span></h2>
@@ -305,7 +309,7 @@ input[type=color].inp{height:40px;padding:2px}
     <div class="flex items-center gap-2 pt-1">
       <button type="button" id="form-del" onclick="if(typeof formDelete === 'function') formDelete();" class="hidden px-4 py-2 bg-red-100 text-red-600 text-xs font-bold rounded-2xl">ลบ</button><span class="flex-1"></span>
       <button type="button" onclick="closeForm()" class="px-4 py-2 bg-gray-100 text-gray-600 text-xs font-bold rounded-2xl">ยกเลิก</button>
-      <button type="submit" class="px-5 py-2 bg-blush-dark text-white text-xs font-bold rounded-2xl shadow-scrapbook">บันทึก</button>
+      <button type="submit" id="form-submit-btn" class="px-5 py-2 bg-blush-dark text-white text-xs font-bold rounded-2xl shadow-scrapbook">บันทึก</button>
     </div>
   </form>
 </div>
@@ -376,6 +380,23 @@ async function saveToFirebase(key, data) {
   }
 }
 
+// ฟังก์ชันอัปโหลดไฟล์รูปภาพขึ้น Firebase Storage
+async function uploadImageToStorage(file) {
+  try {
+    const { ref, uploadBytes, getDownloadURL } = window.storageModules;
+    const fileName = 'miori_' + Date.now() + '_' + file.name;
+    const storageRef = ref(window.storage, 'store_images/' + fileName);
+    showToast('กำลังอัปโหลดรูปภาพขนาดใหญ่...');
+    const snapshot = await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    return downloadURL;
+  } catch (e) {
+    console.error("Storage upload error:", e);
+    showToast('อัปโหลดรูปไม่สำเร็จ กรุณาลองใหม่อีกครั้ง');
+    return null;
+  }
+}
+
 function applyTexts(){document.querySelectorAll('[data-edit]').forEach(el=>{if(el.dataset.def===undefined)el.dataset.def=el.textContent;const v=texts[el.dataset.edit];el.textContent=v!==undefined?v:el.dataset.def;});}
 function applyTheme(){for(const[k,v] of Object.entries(theme))document.documentElement.style.setProperty('--color-'+k,v);}
 function applyMusic(){
@@ -391,21 +412,32 @@ function applyImages(){
   b.classList.toggle('hidden',!has);['bg-white/70','p-4','rounded-2xl'].forEach(c=>o.toggle(c,has));
   ['site','contact'].forEach(p=>{const h=!!images.logo;if(h)$(p+'-logo-img').src=images.logo;$(p+'-logo-img').classList.toggle('hidden',!h);$(p+'-logo-svg').classList.toggle('hidden',h);});
 }
-let formImgs={};
+let formFiles={};
 const getText=k=>texts[k]!==undefined?texts[k]:(document.querySelector('[data-edit="'+k+'"]')?.dataset.def??'');
 function openForm(title,fields,onSave,onDelete){
-  formImgs={}; formDel=onDelete||null;
-  formSave=()=>{
-    const v={};
-    fields.forEach(f=>{if(f.type==='image')return;const el=$('f-'+f.k);if(el)v[f.k]=el.value;});
-    onSave(v);
-    closeForm();
+  formFiles={}; formDel=onDelete||null;
+  formSave=async()=>{
+    const submitBtn = $('form-submit-btn');
+    if(submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'กำลังบันทึก...'; }
+    
+    try {
+      const v={};
+      for(const f of fields){
+        if(f.type==='image') continue;
+        const el=$('f-'+f.k);
+        if(el) v[f.k]=el.value;
+      }
+      onSave(v);
+      closeForm();
+    } finally {
+      if(submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'บันทึก'; }
+    }
   };
   $('form-del').classList.toggle('hidden',!onDelete);
   $('form-title').textContent=title;
   $('form-fields').innerHTML=fields.map(f=>{
     const id='f-'+f.k,v=esc(f.value);let input;
-    if(f.type==='image')input=`<div class="flex items-center gap-3"><img id="prev-${f.k}" src="${esc(f.value||'')}" class="w-20 h-20 object-cover rounded-xl border-2 border-soft-blush bg-warm-cream ${f.value?'':'hidden'}"><button type="button" class="ebtn ebtn-l" style="display:inline-flex" onclick="pickFormImage('${f.k}',${f.maxW||800},${f.png?1:0})">เลือกรูปใหม่</button></div>`;
+    if(f.type==='image')input=`<div class="flex items-center gap-3"><img id="prev-${f.k}" src="${esc(f.value||'')}" class="w-20 h-20 object-cover rounded-xl border-2 border-soft-blush bg-warm-cream ${f.value?'':'hidden'}"><input type="file" id="file-${f.k}" accept="image/*" class="inp !py-1 text-xs" onchange="previewFormFile('${f.k}')"></div>`;
     else if(f.type==='textarea')input=`<textarea id="${id}" rows="${f.rows||3}" class="inp resize-none">${v}</textarea>`;
     else if(f.type==='select')input=`<select id="${id}" class="inp">${f.options.map(o=>`<option value="${esc(o[0])}" ${o[0]==f.value?'selected':''}>${esc(o[1])}</option>`).join('')}</select>`;
     else if(f.type==='color')input=`<div class="flex items-center gap-2"><input id="${id}" type="color" value="${v}" oninput="$('${id}_txt').value=this.value" class="w-12 h-10 p-1 rounded-xl border-2 border-soft-blush bg-warm-cream cursor-pointer shrink-0"><input id="${id}_txt" type="text" value="${v}" oninput="if(/^#[0-9A-F]{6}$/i.test(this.value))$('${id}').value=this.value" class="inp uppercase"></div>`;
@@ -414,26 +446,40 @@ function openForm(title,fields,onSave,onDelete){
   }).join('');
   $('form-modal').classList.remove('hidden');
 }
-function pickFormImage(k,maxW,png){
-  pickImage(maxW,!!png,d=>{formImgs[k]=d;const prev=$('prev-'+k);if(prev){prev.src=d;prev.classList.remove('hidden');}});
+function previewFormFile(k){
+  const fileInput = $('file-'+k);
+  if(fileInput && fileInput.files[0]){
+    const file = fileInput.files[0];
+    formFiles[k] = file;
+    const prev = $('prev-'+k);
+    if(prev){
+      prev.src = URL.createObjectURL(file);
+      prev.classList.remove('hidden');
+    }
+  }
 }
 function closeForm(){$('form-modal').classList.add('hidden');}
 function formDelete(){if(confirm('ลบรายการนี้ใช่หรือไม่?')){if(formDel)formDel();closeForm();}}
 const SECTIONS={
- header:['แก้ไขส่วนหัวเว็บ',[['siteTitle','ชื่อร้าน'],['siteJp','ข้อความข้างชื่อร้าน'],['slogan','สโลแกน'],['navStore','เมนู: หน้าร้าน'],['navReviews','เมนู: รีวิว'],['navContact','เมนู: ติดต่อเรา']],[[['logo','โลโก้ร้าน (วงกลม)',300,1]]]],
+ header:['แก้ไขส่วนหัวเว็บ',[['siteTitle','ชื่อร้าน'],['siteJp','ข้อความข้างชื่อร้าน'],['slogan','สโลแกน'],['navStore','เมนู: หน้าร้าน'],['navReviews','เมนู: รีวิว'],['navContact','เมนู: ติดต่อเรา']],[[['logo','โลโก้ร้าน (วงกลม)']]],
  nav:['แก้ไขชื่อเมนู',[['navStore','เมนู: หน้าร้าน'],['navReviews','เมนู: รีวิว'],['navContact','เมนู: ติดต่อเรา']],[]],
- banner:['แก้ไขแบนเนอร์หน้าร้าน',[['bannerBadge','ป้ายเล็กบนหัวข้อ'],['bannerT1','หัวข้อบรรทัดที่ 1'],['bannerT2','หัวข้อบรรทัดที่ 2'],['bannerDesc','คำอธิบาย','t'],['bannerBtn','ข้อความปุ่ม'],['bannerShip','ข้อความจัดส่ง'],['heroCaption','คำใต้รูปการ์ด']],[[['bannerStore','รูปแบนเนอร์ (1122x495)',1122],['hero','รูปการ์ดข้างแบนเนอร์',500]]]],
+ banner:['แก้ไขแบนเนอร์หน้าร้าน',[['bannerBadge','ป้ายเล็กบนหัวข้อ'],['bannerT1','หัวข้อบรรทัดที่ 1'],['bannerT2','หัวข้อบรรทัดที่ 2'],['bannerDesc','คำอธิบาย','t'],['bannerBtn','ข้อความปุ่ม'],['bannerShip','ข้อความจัดส่ง'],['heroCaption','คำใต้รูปการ์ด']],[[['bannerStore','รูปแบนเนอร์'],['hero','รูปการ์ดข้างแบนเนอร์']]]],
  reviewsHead:['แก้ไขกล่องรีวิว',[['revTag','ป้ายเล็ก'],['revTitle','หัวข้อ'],['revSub','คำอธิบาย','t'],['revBtn','ข้อความปุ่มเขียนรีวิว']],[]],
  contactHead:['แก้ไขหัวข้อหน้าติดต่อ',[['siteTitle','ชื่อร้าน'],['contactSlogan','สโลแกน','t']],[]],
  footer:['แก้ไขท้ายเว็บ',[['footer1','บรรทัดที่ 1'],['footer2','บรรทัดที่ 2']],[]]
 };
-function editSection(n){
+async function editSection(n){
   const[title,tx,im]=SECTIONS[n];
   const fields=[...tx.map(([k,l,t])=>({k,label:l,type:t?'textarea':'text',rows:2,value:getText(k)})),
-    ...im.map(([k,l,w,png])=>({k,label:l,type:'image',maxW:w,png,value:images[k]||(k==='hero'?DEF_IMG.hero:'')}))];
-  openForm(title,fields,v=>{
+    ...im.map(([k,l])=>({k,label:l,type:'image',value:images[k]||(k==='hero'?DEF_IMG.hero:'')}))];
+  openForm(title,fields,async v=>{
     tx.forEach(([k])=>texts[k]=v[k]);
-    im.forEach(([k])=>{if(formImgs[k])images[k]=formImgs[k];});
+    for(const[k] of im){
+      if(formFiles[k]){
+        const url = await uploadImageToStorage(formFiles[k]);
+        if(url) images[k] = url;
+      }
+    }
     saveToFirebase('texts', texts);
     saveToFirebase('images', images);
     applyTexts();applyImages();showToast('บันทึกสำเร็จ');});
@@ -466,16 +512,20 @@ function editSingleContact(id){
   },id?()=>{contacts=contacts.filter(x=>x.id!=id);saveToFirebase('contacts', contacts);renderContacts();showToast('ลบช่องทางติดต่อสำเร็จ');}:null);
 }
 function editContactList(){editSingleContact();}
-function pickImage(maxW,png,cb){
-  const i=document.createElement('input');i.type='file';i.accept='image/*';
-  i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();
-    r.onload=e=>{const im=new Image();im.onload=()=>{const s=Math.min(1,maxW/im.width),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL(png?'image/png':'image/jpeg',.85));};im.src=e.target.result;};
-    r.readAsDataURL(f);};
-  i.click();
-}
-function changeImage(k){
-  const[w,png]={logo:[300,1],bannerStore:[1122],bannerReviews:[1122],hero:[500]}[k];
-  pickImage(w,!!png,d=>{images[k]=d;saveToFirebase('images', images);applyImages();showToast('เปลี่ยนรูปสำเร็จ');});
+async function changeImage(k){
+  const input=document.createElement('input');input.type='file';input.accept='image/*';
+  input.onchange=async()=>{
+    const file=input.files[0];
+    if(!file)return;
+    const url = await uploadImageToStorage(file);
+    if(url){
+      images[k]=url;
+      saveToFirebase('images', images);
+      applyImages();
+      showToast('เปลี่ยนรูปสำเร็จ');
+    }
+  };
+  input.click();
 }
 function switchTab(n){
   ['store','reviews','contact'].forEach(t=>{$('page-'+t).classList.toggle('hidden',t!==n);$('nav-'+t).classList.toggle('active',t===n);});
@@ -626,7 +676,7 @@ function renderProducts(){
 function editProduct(id){
   const p=id?products.find(x=>x.id==id):{category:categories[0]?.id,btnText:B,btnLink:'https://line.me',viewBtnText:'ดูรายละเอียด'};
   openForm(id?'แก้ไขสินค้า':'เพิ่มสินค้าใหม่',[
-    {k:'img',label:'รูปสินค้า',type:'image',maxW:560,value:id?p.img:''},
+    {k:'img',label:'รูปสินค้า',type:'image',value:id?p.img:''},
     {k:'name',label:'ชื่อสินค้า',value:p.name||''},
     {k:'category',label:'หมวดหมู่',type:'select',options:categories.map(c=>[c.id,c.name]),value:p.category},
     {k:'price',label:'ราคา (บาท)',type:'number',value:p.price??''},
@@ -634,9 +684,14 @@ function editProduct(id){
     {k:'desc',label:'คำอธิบายสินค้า',type:'textarea',value:p.desc||''},
     {k:'viewBtnText',label:'ข้อความปุ่มดูสินค้า',value:p.viewBtnText||'ดูรายละเอียด'},
     {k:'btnText',label:'ชื่อปุ่มสั่งซื้อ',value:p.btnText||''},
-    {k:'btnLink',label:'ลิงก์ปุ่มสั่งซื้อ',value:p.btnLink||''}],v=>{
+    {k:'btnLink',label:'ลิงก์ปุ่มสั่งซื้อ',value:p.btnLink||''}],async v=>{
     v.price=parseFloat(v.price)||0;
-    if(formImgs.img)v.img=formImgs.img; else if(!id)v.img=PLACE; else v.img=p.img;
+    if(formFiles.img){
+      const url = await uploadImageToStorage(formFiles.img);
+      if(url) v.img = url;
+    } else {
+      v.img = id ? p.img : PLACE;
+    }
     if(id)Object.assign(p,v);else products.unshift({id:Date.now(),rating:5,...v});
     saveToFirebase('products', products);
     renderProducts();showToast('บันทึกสินค้าสำเร็จ');},
@@ -715,14 +770,12 @@ function initRealtimeListeners() {
   collectionsToListen.forEach(item => {
     const docRef = doc(dbInstance, "miori_store", item.key);
     
-    // ดึงค่าครั้งแรกหรือสร้างเริ่มต้นถ้ายังไม่มีใน Firestore
     getDoc(docRef).then(docSnap => {
       if (!docSnap.exists()) {
         saveToFirebase(item.key, item.defaultVal);
       }
     });
 
-    // ฟังการเปลี่ยนแปลงแบบ Real-time
     onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists() && docSnap.data().data) {
         item.callback(docSnap.data().data);
@@ -736,9 +789,8 @@ window.onload=()=>{
   setStarRating(5);
   setEditing(editing,true);
 
-  // เริ่มต้นเชื่อมต่อ Firebase Real-time listeners
   setTimeout(() => {
-    if(window.db) {
+    if(window.db && window.storage) {
       initRealtimeListeners();
     } else {
       showToast('ไม่สามารถเชื่อมต่อฐานข้อมูลได้');
